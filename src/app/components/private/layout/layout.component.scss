@@ -1,0 +1,58 @@
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+.container-layout {
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+}
+
+.menu {
+  background-color: $color-white-smoke;
+}
+
+:host {
+  ::ng-deep .p-tree {
+    border: initial !important;
+    background: initial !important;
+    color: initial !important;
+    padding: initial !important;
+    border-radius: initial !important;
+  }
+  ::ng-deep .p-treenode[aria-expanded='true'] > .p-treenode-content {
+    transition: color 0.5s ease;
+    color: $color-dodger-blue !important;
+    background-color: $color-light-gray;
+    font-weight: 500;
+  }
+  ::ng-deep .ui-panel .ui-panel-titlebar-icon {
+    float: left;
+  }
+}
+
+.p-tree .p-component {
+  border: initial !important;
+  background: initial !important;
+  color: initial !important;
+  padding: initial !important;
+  border-radius: initial !important;
+}
+
+.header {
+  height: 50px;
+  background-color: $color-dodger-blue;
+  &-img {
+    margin: 0px 20px;
+    height: 40px;
+  }
+}
+
+.item-label {
+  color: $color-gray;
+}
+.item-label-select {
+  color: $color-dodger-blue !important;
+}
+.content-data {
+  padding: 20px;
+  padding-right: 30px;
+}

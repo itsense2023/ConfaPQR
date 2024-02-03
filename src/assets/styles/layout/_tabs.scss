@@ -1,0 +1,52 @@
+@import '../abstracts/variables';
+.p-tabview .p-tabview-nav {
+  background-color: $color-platinum;
+  margin-top: 20px;
+  display: flex;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  background-color: $color-platinum;
+  font-weight: 400;
+  font-size: 13px;
+  &:hover {
+    color: $color-white;
+    border-top-right-radius: 10;
+  }
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link[aria-selected='true'] {
+  background-color: $color-jelly-bean-blue;
+  color: $color-white;
+  border: 0;
+}
+.p-tabview .p-tabview-nav li .p-tabview-nav-link {
+  padding: 13px;
+  margin-bottom: -1px;
+  font-family: $font-medium;
+}
+
+.p-tabview .p-tabview-nav li {
+  flex: 1;
+}
+.p-tabview-title {
+  //color: #acaeae;
+  margin: auto;
+}
+
+.p-tabview .p-tabview-panels {
+  padding: 0;
+}
+
+.p-tabview .p-tabview-nav-content {
+  margin-bottom: -18px;
+  height: 80px;
+}
+
+.p-accordion .p-accordion-header .p-accordion-header-link {
+  background-color: $color-jelly-bean-blue;
+  padding: 10px;
+  font-family: $font-light;
+  font-size: 14px;
+  color: $color-white;
+}

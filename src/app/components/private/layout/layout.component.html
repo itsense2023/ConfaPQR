@@ -1,0 +1,42 @@
+<div class="container-layout">
+  <div class="row header">
+    <div class="col-12 d-flex align-items-center">
+      <img src="../../../assets/images/logo-blanco.svg" class="header-img" />
+    </div>
+  </div>
+  <div class="row h-100">
+    <div class="col-3 pe-0 menu">
+      <div class="login-form-header">
+        <div class="login-form-header__item login-form-header__item_1"></div>
+        <div class="login-form-header__item login-form-header__item_2"></div>
+        <div class="login-form-header__item login-form-header__item_3"></div>
+        <div class="login-form-header__item login-form-header__item_4"></div>
+        <div class="login-form-header__item login-form-header__item_5"></div>
+        <div class="login-form-header__item login-form-header__item_6"></div>
+      </div>
+      <div class="flex justify-content-center">
+        <p-tree
+          [value]="nodes"
+          class="w-full md:w-30rem"
+          (onNodeExpand)="nodeExpand($event)"
+          (onNodeCollapse)="nodeCollapse($event)"
+          (onNodeSelect)="nodeSelect($event)"
+          (onNodeUnselect)="nodeUnselect($event)">
+          <ng-template let-node pTemplate="url">
+            <div class="item-label" [ngClass]="{ 'item-label-select': node.expanded === true }">
+              {{ node.label }}
+            </div>
+          </ng-template>
+          <ng-template let-node pTemplate="default">
+            <div class="item-label" [ngClass]="{ 'item-label-select': node.expanded === true }">
+              {{ node.label }}
+            </div>
+          </ng-template>
+        </p-tree>
+      </div>
+    </div>
+    <div class="col-9 content-data">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
+</div>
