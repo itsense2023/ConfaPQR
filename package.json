@@ -4,9 +4,9 @@
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:develop": " ng build --configuration=develop",
-    "build:qa": " ng build --configuration=qa",
-    "build:production": " ng build --configuration=production",
+    "build:develop": "ng build --configuration=develop",
+    "build:qa": "ng build --configuration=qa",
+    "build:production": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
