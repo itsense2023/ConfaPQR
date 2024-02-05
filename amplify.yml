@@ -22,8 +22,9 @@ frontend:
         - npm run build:$AWS_BRANCH
         - ls -ltr
         - pwd
-        - cd dist
+        - cd dist/confa
         - ls -ltr
+        - pwd
   artifacts:
     baseDirectory: dist/confa
     files:
