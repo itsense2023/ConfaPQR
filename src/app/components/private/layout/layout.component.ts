@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { TreeNode } from 'primeng/api';
+import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-layout',
@@ -9,60 +11,11 @@ import { TreeNode } from 'primeng/api';
 export class LayoutComponent implements OnInit {
   nodes!: TreeNode[];
 
+  constructor(private router: Router) {}
+
   ngOnInit() {
-    this.nodes = [
-      {
-        key: '0',
-        label: 'Introduction',
-        type: 'url',
-        children: [
-          { key: '0-0', label: 'What is Angular', data: 'https://angular.io', type: 'url' },
-          {
-            key: '0-1',
-            label: 'Getting Started',
-            data: 'https://angular.io/guide/setup-local',
-            type: 'url',
-          },
-          {
-            key: '0-2',
-            label: 'Learn and Explore',
-            data: 'https://angular.io/guide/architecture',
-            type: 'url',
-          },
-          { key: '0-3', label: 'Take a Look', data: 'https://angular.io/start', type: 'url' },
-        ],
-      },
-      {
-        key: '1',
-        label: 'Components In-Depth',
-        children: [
-          {
-            key: '1-0',
-            label: 'Component Registration',
-            data: 'https://angular.io/guide/component-interaction',
-            type: 'url',
-          },
-          {
-            key: '1-1',
-            label: 'User Input',
-            data: 'https://angular.io/guide/user-input',
-            type: 'url',
-          },
-          {
-            key: '1-2',
-            label: 'Hooks',
-            data: 'https://angular.io/guide/lifecycle-hooks',
-            type: 'url',
-          },
-          {
-            key: '1-3',
-            label: 'Attribute Directives',
-            data: 'https://angular.io/guide/attribute-directives',
-            type: 'url',
-          },
-        ],
-      },
-    ];
+    const arrayAlmacenado = sessionStorage.getItem(SessionStorageItems.MENU);
+    this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado) : [];
   }
 
   onNodeSelect(event: any): void {
@@ -87,5 +40,19 @@ export class LayoutComponent implements OnInit {
 
   nodeUnselect(event: any) {
     console.log('Nodo seleccionado:', event.node);
+  }
+
+  logout(): void {
+    // Eliminar información de autenticación (por ejemplo, token)
+    this.clearAuthenticationData();
+
+    // Redirigir a la página de inicio de sesión
+    this.router.navigate(['/login']);
+  }
+
+  // Método para limpiar la información de autenticación
+  private clearAuthenticationData(): void {
+    // Eliminar token u otra información de autenticación del almacenamiento local
+    sessionStorage.clear();
   }
 }

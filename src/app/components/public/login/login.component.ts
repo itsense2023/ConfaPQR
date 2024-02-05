@@ -6,6 +6,9 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
+import { jwtDecode } from 'jwt-decode';
+import { ILink, ISession } from '../../../models/login/session.interface';
+import { TreeNode } from 'primeng/api';
 
 @Component({
   selector: 'app-login',
@@ -16,6 +19,10 @@ export class LoginComponent {
   ingredient!: string;
   visibleDialog = false;
   message = '';
+
+  jwt =
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c3VhcmlvSWQiOjI2NCwidXN1YXJpbyI6ImV4dF9wcnVlYmExIiwiY29udHJhc2VuYSI6IiIsInRlbWEiOiIiLCJwbGF6YUlkIjoiIiwiZXN0YWRvIjp0cnVlLCJmZWNoYVZlbmNpbWllbnRvIjoiIiwicGVyZmlsZXMiOlt7InBlcmZpbElkIjoxMDYsInNpc3RlbWEiOnsic2lzdGVtYUlkIjo1NCwibm9tYnJlIjoiUFFSUyIsImVzdGFkbyI6dHJ1ZX0sIm5vbWJyZSI6IkZVTkNJT05BTCIsImRlc2NyaXBjaW9uIjoiIiwiZXN0YWRvIjp0cnVlfV0sImxpbmtzIjpbeyJtb2R1bG9faWQiOiIxODQiLCJtb2R1bG9Ob21icmUiOiJSRVBPUlRFUyIsIm5vbWJyZSI6IlJFUE9SVEVTIiwidXJsIjoiL3JlcG9ydGVzL3JlcG9ydGVzLnhodG1sIiwiZXN0YWRvIjp0cnVlLCJ1c3VhcmlvTGlua3MiOltdLCJwZXJmaWxMaW5rcyI6W119XSwiZXhwaXJlIjoiMjAyOS0xMC0xNiAwNjowNzowOSJ9.VlWO2rMDUZdoyG0OC5XdpFrIAL38KIH7xUvyoASGlTA';
+
   constructor(
     private loginService: LoginService,
     private formBuilder: FormBuilder,
@@ -44,6 +51,11 @@ export class LoginComponent {
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           sessionStorage.setItem(SessionStorageItems.SESSION, response.data);
+          const decodedToken: ISession = jwtDecode(response.data);
+          const menu: TreeNode[] = this.convertirLinks(decodedToken.links);
+          if (menu) {
+            sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
+          }
           this.router.navigate([RoutesApp.REQUEST_MANAGER]);
         } else {
           this.message = response.data;
@@ -59,6 +71,29 @@ export class LoginComponent {
         console.log('La suscripción ha sido completada.');
       },
     });
+  }
+
+  convertirLinks(links: ILink[]): TreeNode[] {
+    const arrayResultante: TreeNode[] = [];
+
+    links.forEach(link => {
+      if (link.url) {
+        const objetoConvertido: TreeNode = {
+          key: `${link.modulo_id}-${link.moduloNombre}`,
+          label: link.nombre,
+          data: link.url,
+          type: link.perfilLinks && link.perfilLinks.length > 0 ? 'default' : 'url',
+        };
+
+        if (link.perfilLinks && link.perfilLinks.length > 0) {
+          objetoConvertido['children'] = this.convertirLinks(link.perfilLinks);
+        }
+
+        arrayResultante.push(objetoConvertido);
+      }
+    });
+
+    return arrayResultante;
   }
 
   closeDialog() {

@@ -8,6 +8,16 @@
 
 .menu {
   background-color: $color-white-smoke;
+  height: calc(100vh - 50px);
+}
+
+.label-logout {
+  position: absolute;
+  bottom: 0px;
+  margin-bottom: 30px;
+  padding-left: 20px;
+  cursor: pointer;
+  color: $color-gray;
 }
 
 :host {
