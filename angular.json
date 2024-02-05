@@ -24,7 +24,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:application",
           "options": {
-            "outputPath": "dist/confa-web",
+            "outputPath": "dist/confa",
             "index": "src/index.html",
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
@@ -106,13 +106,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "buildTarget": "confa-web:build:production"
+              "buildTarget": "confa:build:production"
             },
             "qa": {
-              "buildTarget": "confa-web:build:qa"
+              "buildTarget": "confa:build:qa"
             },
             "develop": {
-              "buildTarget": "confa-web:build:develop"
+              "buildTarget": "confa:build:develop"
             }
           },
           "defaultConfiguration": "develop"
@@ -120,7 +120,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "buildTarget": "confa-web:build"
+            "buildTarget": "confa:build"
           }
         },
         "test": {

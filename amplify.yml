@@ -9,6 +9,7 @@ frontend:
   phases:
     preBuild:
       commands:
+        - 
         - nvm use 18.13
         - npm ci
     build:
@@ -18,9 +19,10 @@ frontend:
         - echo "La rama actual es:" $AWS_BRANCH
         - echo "La rama actual es:" $BUILD_ENV
         - echo "${AWS_BRANCH}"
+        - pwd
         - npm run build:$AWS_BRANCH
   artifacts:
-    baseDirectory: dist/confa-web
+    baseDirectory: dist/confa
     files:
       - '**/*'
   cache:
