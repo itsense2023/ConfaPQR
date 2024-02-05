@@ -9,7 +9,6 @@ frontend:
   phases:
     preBuild:
       commands:
-        - 
         - nvm use 18.13
         - npm ci
     build:
