@@ -1,15 +1,15 @@
 <div class="row mb-2">
   <div class="col-10">
-    <div class="title-page">Parametrizar responsables de solicitud</div>
+    <div class="title-page">Parametrizar tipo de solicitud</div>
   </div>
   <div class="col-2">
-    <p-button label="Crear responsable" (click)="createUser()"></p-button>
+    <p-button label="Crear tipo de solicitud" (click)="createUser()"></p-button>
   </div>
 </div>
 <div class="row">
   <div class="col-12">
     <p-table
-      [value]="userList"
+      [value]="requestTypeList"
       [paginator]="true"
       [rows]="5"
       [showCurrentPageReport]="true"
@@ -18,32 +18,29 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 35%">Nombre de colaborador</th>
-          <th style="width: 35%">Correo electrónico</th>
+          <th style="width: 35%">Nombre de tipo de solicitud</th>
           <th style="width: 15%">Estado</th>
           <th style="width: 15%"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-userList>
+      <ng-template pTemplate="body" let-requestTypeList>
         <tr>
-          <td>{{ userList.user_name }}</td>
-          <td>{{ userList.user_email }}</td>
+          <td>{{ requestTypeList.request_type_name }}</td>
           <td class="d-flex">
             <p-inputSwitch
-              [(ngModel)]="userList.is_active"
-              (click)="inactive(userList)"></p-inputSwitch>
+              [(ngModel)]="requestTypeList.is_active"
+              (click)="inactive(requestTypeList)"></p-inputSwitch>
             <div
               class="d-flex align-items-center ms-2"
-              [ngClass]="{ 'input-switch-label': userList.is_active === 1 }">
-              {{ userList.is_active === 1 ? 'Activo' : 'Inactivo' }}
+              [ngClass]="{ 'input-switch-label': requestTypeList.is_active === 1 }">
+              {{ requestTypeList.is_active === 1 ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
           <td>
             <p-button
-              icon="pi pi-trash"
+              icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
-              (click)="delete(userList)"></p-button>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
+              (click)="editRequest(requestTypeList)"></p-button>
           </td>
         </tr>
       </ng-template>

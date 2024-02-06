@@ -3,16 +3,15 @@ import { IRequestManager } from '../../../models/request-manager/request-manager
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { UserList } from '../../../models/users.interface';
+import { ApplicantTypeList, RequestTypeList, UserList } from '../../../models/users.interface';
 
 @Component({
-  selector: 'app-request-manager',
-  templateUrl: './request-manager.component.html',
-  styleUrl: './request-manager.component.scss',
+  selector: 'app-request-type',
+  templateUrl: './request-type.component.html',
+  styleUrl: './request-type.component.scss',
 })
-export class RequestManagerComponent implements OnInit {
-  data!: IRequestManager[];
-  userList!: UserList[];
+export class RequestTypeComponent implements OnInit {
+  requestTypeList!: RequestTypeList[];
   ingredient!: string;
   visibleDialog = false;
   message = '';
@@ -23,17 +22,17 @@ export class RequestManagerComponent implements OnInit {
 
   ngOnInit() {
     //this.data = this.generateTestData(10);
-    this.getUsersTable();
+    this.getRequestTypesList();
     //console.log(this.data);
   }
 
-  getUsersTable() {
-    this.userService.getUsersList().subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
+  getRequestTypesList() {
+    this.userService.getRequestTypesList().subscribe({
+      next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
-          this.userList = response.data;
+          this.requestTypeList = response.data;
         } else {
-          console.log(this.userList);
+          console.log(this.requestTypeList);
         }
       },
       error: (err: any) => {
@@ -45,19 +44,19 @@ export class RequestManagerComponent implements OnInit {
     });
   }
 
-  inactive(user_details: UserList) {
-    console.log(user_details);
-    if (user_details.is_active) {
+  inactive(request_details: RequestTypeList) {
+    console.log(request_details);
+    if (request_details.is_active) {
       console.log('Inactivar');
       this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 0;
-      this.userService.inactivateUser(user_details).subscribe({
-        next: (response: BodyResponse<UserList[]>) => {
+      request_details.is_active = 0;
+      this.userService.inactivateRequest(request_details).subscribe({
+        next: (response: BodyResponse<RequestTypeList[]>) => {
           if (response.code === 200) {
-            this.userList = response.data;
+            this.requestTypeList = response.data;
           } else {
-            console.log(this.userList);
+            console.log(this.requestTypeList);
           }
         },
         error: (err: any) => {
@@ -71,13 +70,13 @@ export class RequestManagerComponent implements OnInit {
       console.log('Activar');
       this.message = '¿Seguro que desea activar este responsable de solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 1;
-      this.userService.inactivateUser(user_details).subscribe({
-        next: (response: BodyResponse<UserList[]>) => {
+      request_details.is_active = 1;
+      this.userService.inactivateRequest(request_details).subscribe({
+        next: (response: BodyResponse<RequestTypeList[]>) => {
           if (response.code === 200) {
-            this.userList = response.data;
+            this.requestTypeList = response.data;
           } else {
-            console.log(this.userList);
+            console.log(this.requestTypeList);
           }
         },
         error: (err: any) => {
@@ -89,8 +88,8 @@ export class RequestManagerComponent implements OnInit {
       });
     }
   }
-  delete(user_details: UserList) {
-    this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
+  editRequest(request_details: ApplicantTypeList) {
+    /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
     this.visibleDialog = true;
     user_details.is_visible = 0;
     this.userService.invisibleUser(user_details).subscribe({
@@ -107,7 +106,7 @@ export class RequestManagerComponent implements OnInit {
       complete: () => {
         console.log('La suscripción ha sido completada.');
       },
-    });
+    });*/
   }
   createUser() {}
   generateTestData = (count: number): IRequestManager[] => {

@@ -1,5 +1,15 @@
 export enum RoutesApp {
   LOGIN = 'login',
   REQUEST_MANAGER = 'request-manager',
+  APPLICANT_TYPE = 'applicant-type',
+  REQUEST_TYPE = 'request-type',
+  APPLICANT_REQUEST = 'applicant-request',
   LOGOUT = 'logout',
+  USERS_LIST = 'db/users',
+  INACTIVATE_USER = 'user/in-activate',
+  INVISIBLE_USER = 'user/in-visible',
+  APPLICANT_TYPE_LIST = 'db/applicant_type',
+  INACTIVATE_APPLICANT = 'applicant/in-activate',
+  REQUEST_TYPE_LIST = 'db/request_type',
+  INACTIVATE_REQUEST = 'request/in-active',
 }

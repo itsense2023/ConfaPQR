@@ -16,6 +16,33 @@ const routes: Routes = [
         m => m.RequestManagerModule
       ),
   },
+  {
+    path: RoutesApp.APPLICANT_TYPE,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/applicant-type/applicant-type.module').then(
+        m => m.ApplicantTypeModule
+      ),
+  },
+  {
+    path: RoutesApp.REQUEST_TYPE,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/request-type/request-type.module').then(
+        m => m.RequestTypeModule
+      ),
+  },
+  {
+    path: RoutesApp.APPLICANT_REQUEST,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/applicant-request/applicant-request.module').then(
+        m => m.ApplicantRequestModule
+      ),
+  },
   { path: '', redirectTo: '/' + RoutesApp.LOGIN, pathMatch: 'full' },
   // Puedes agregar una ruta comodín para manejar rutas no encontradas (opcional)
   { path: '**', redirectTo: '/login' + RoutesApp.LOGIN, pathMatch: 'full' },
