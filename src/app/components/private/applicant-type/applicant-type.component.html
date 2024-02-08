@@ -3,7 +3,7 @@
     <div class="title-page">Parametrizar tipo de solicitante</div>
   </div>
   <div class="col-2">
-    <p-button label="Crear tipo de solicitante" (click)="createUser()"></p-button>
+    <p-button label="Crear tipo de solicitante" (click)="createApplicantType()"></p-button>
   </div>
 </div>
 <div class="row">
@@ -29,11 +29,11 @@
           <td class="d-flex">
             <p-inputSwitch
               [(ngModel)]="applicantTypeList.is_active"
-              (click)="inactive(applicantTypeList)"></p-inputSwitch>
+              (onChange)="inActiveApplicant(applicantTypeList)"></p-inputSwitch>
             <div
               class="d-flex align-items-center ms-2"
-              [ngClass]="{ 'input-switch-label': applicantTypeList.is_active === 1 }">
-              {{ applicantTypeList.is_active === 1 ? 'Activo' : 'Inactivo' }}
+              [ngClass]="{ 'input-switch-label': applicantTypeList.is_active }">
+              {{ applicantTypeList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
           <td>
@@ -54,3 +54,14 @@
   [visible]="visibleDialog"
   [message]="message"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-input
+  *ngIf="visibleDialogInput"
+  [select]="true"
+  [visible]="visibleDialogInput"
+  [message]="message"
+  [buttonmsg]="buttonmsg"
+  [parameter]="parameter"
+  [twoFields]="true"
+  (setRta)="closeDialogInput($event)"
+  (setRtaParameter)="setParameter($event)"></app-modal-input>

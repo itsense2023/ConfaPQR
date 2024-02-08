@@ -5,7 +5,16 @@ import { BodyResponse } from '../models/shared/body-response.inteface';
 import { ILogin } from '../models/login/login.interface';
 import { RoutesApp } from '../enums/routes.enum';
 import { SessionStorageItems } from '../enums/session-storage-items.enum';
-import { ApplicantTypeList, RequestTypeList, UserList } from '../models/users.interface';
+import {
+  ApplicantTypeList,
+  AssociateApplicantRequest,
+  AssociationApplicantRequestList,
+  CreateApplicantType,
+  CreateRequestType,
+  RequestTypeList,
+  UserCreate,
+  UserList,
+} from '../models/users.interface';
 import { log } from 'console';
 
 @Injectable({
@@ -15,15 +24,25 @@ export class Users {
   constructor(private http: HttpClient) {}
 
   getUsersList() {
-    // Set the authorization token in the headers
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
-    console.log(token);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<UserList[]>>(
       `${environment.API_PUBLIC}${RoutesApp.USERS_LIST}`,
+      { headers }
+    );
+  }
+  createUser(payload: UserCreate) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.CREATE_USER}`,
+      payload,
       { headers }
     );
   }
@@ -79,6 +98,18 @@ export class Users {
       { headers }
     );
   }
+  createApplicantType(payload: CreateApplicantType) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.CREATE_APPLICANT_TYPE}`,
+      payload,
+      { headers }
+    );
+  }
 
   getRequestTypesList() {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
@@ -99,6 +130,54 @@ export class Users {
     });
     return this.http.post<BodyResponse<RequestTypeList[]>>(
       `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  createRequestType(payload: CreateRequestType) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.CREATE_REQUEST_TYPE}`,
+      payload,
+      { headers }
+    );
+  }
+  getApplicantTypeRequestsAssociation() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<AssociationApplicantRequestList[]>>(
+      `${environment.API_PUBLIC}${RoutesApp.APPLICANTYPE_REQUESTYPE}`,
+      { headers }
+    );
+  }
+  //INACTIVE_ASSOCIATE_REQUEST_APPLICANT
+  inactivateAssociationApplicantRequest(payload: AssociationApplicantRequestList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.INACTIVE_ASSOCIATE_REQUEST_APPLICANT}`,
+      payload,
+      { headers }
+    );
+  }
+  createAssociationApplicantRequest(payload: AssociateApplicantRequest) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.ASSOCIATE_REQUEST_APPLICANT}`,
       payload,
       { headers }
     );

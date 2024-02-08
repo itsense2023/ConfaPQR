@@ -31,11 +31,11 @@
           <td class="d-flex">
             <p-inputSwitch
               [(ngModel)]="userList.is_active"
-              (click)="inactive(userList)"></p-inputSwitch>
+              (onChange)="inactive(userList)"></p-inputSwitch>
             <div
               class="d-flex align-items-center ms-2"
-              [ngClass]="{ 'input-switch-label': userList.is_active === 1 }">
-              {{ userList.is_active === 1 ? 'Activo' : 'Inactivo' }}
+              [ngClass]="{ 'input-switch-label': userList.is_active }">
+              {{ userList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
           <td>
@@ -57,3 +57,14 @@
   [visible]="visibleDialog"
   [message]="message"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-input
+  *ngIf="visibleDialogInput"
+  [select]="true"
+  [visible]="visibleDialogInput"
+  [message]="message"
+  [buttonmsg]="buttonmsg"
+  [parameter]="parameter"
+  [twoFields]="twoFields"
+  (setRta)="closeDialogInput($event)"
+  (setRtaParameter)="setParameter($event)"></app-modal-input>

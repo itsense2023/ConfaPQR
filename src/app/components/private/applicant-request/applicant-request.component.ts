@@ -3,36 +3,47 @@ import { IRequestManager } from '../../../models/request-manager/request-manager
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { ApplicantTypeList } from '../../../models/users.interface';
+import {
+  ApplicantTypeList,
+  AssociateApplicantRequest,
+  AssociationApplicantRequestList,
+  RequestTypeList,
+} from '../../../models/users.interface';
 @Component({
   selector: 'app-applicant-request',
   templateUrl: './applicant-request.component.html',
   styleUrl: './applicant-request.component.scss',
 })
 export class ApplicantRequestComponent implements OnInit {
-  data!: IRequestManager[];
+  requestTypeList!: RequestTypeList[];
   applicantTypeList!: ApplicantTypeList[];
+  applicantTypeRequestsList!: AssociationApplicantRequestList[];
+  applicant_request_association!: AssociationApplicantRequestList;
   ingredient!: string;
   visibleDialog = false;
+  visibleDialogSelector = false;
   message = '';
+  buttonmsg = '';
+  parameter = [''];
   constructor(
     private userService: Users,
     private router: Router
   ) {}
 
   ngOnInit() {
-    //this.data = this.generateTestData(10);
-    this.getApplicantTypesList();
-    //console.log(this.data);
+    this.getApplicantTypeRequestsAssociation();
   }
 
-  getApplicantTypesList() {
-    this.userService.getApplicantTypesList().subscribe({
-      next: (response: BodyResponse<ApplicantTypeList[]>) => {
+  getApplicantTypeRequestsAssociation() {
+    this.userService.getApplicantTypeRequestsAssociation().subscribe({
+      next: (response: BodyResponse<AssociationApplicantRequestList[]>) => {
         if (response.code === 200) {
-          this.applicantTypeList = response.data;
+          this.applicantTypeRequestsList = response.data;
+          this.applicantTypeRequestsList.forEach(item => {
+            item.is_active = item.is_active === 1 ? true : false;
+          });
         } else {
-          console.log(this.applicantTypeList);
+          console.log(this.applicantTypeRequestsList);
         }
       },
       error: (err: any) => {
@@ -44,60 +55,65 @@ export class ApplicantRequestComponent implements OnInit {
     });
   }
 
-  inactive(user_details: ApplicantTypeList) {
-    console.log(user_details);
-    if (user_details.is_active) {
+  in_active_association(applicant_request_association: AssociationApplicantRequestList) {
+    console.log(applicant_request_association);
+    if (!applicant_request_association.is_active) {
       console.log('Inactivar');
-      this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Inactivar la relación del solicitante con la solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 0;
-      this.userService.inactivateApplicant(user_details).subscribe({
-        next: (response: BodyResponse<ApplicantTypeList[]>) => {
-          if (response.code === 200) {
-            this.applicantTypeList = response.data;
-          } else {
-            console.log(this.applicantTypeList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      applicant_request_association.is_active = 0;
     } else {
       console.log('Activar');
-      this.message = '¿Seguro que desea activar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Activar la relación del solicitante con la solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 1;
-      this.userService.inactivateApplicant(user_details).subscribe({
-        next: (response: BodyResponse<ApplicantTypeList[]>) => {
-          if (response.code === 200) {
-            this.applicantTypeList = response.data;
-          } else {
-            console.log(this.applicantTypeList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      applicant_request_association.is_active = 1;
+    }
+    this.applicant_request_association = applicant_request_association;
+  }
+  closeDialog(value: boolean) {
+    this.visibleDialog = false;
+    if (value) {
+      this.userService
+        .inactivateAssociationApplicantRequest(this.applicant_request_association)
+        .subscribe({
+          next: (response: BodyResponse<string>) => {
+            if (response.code === 200) {
+              this.ngOnInit();
+              console.log(response.data);
+            } else {
+              console.log(response.data);
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            console.log('La suscripción ha sido completada.');
+          },
+        });
     }
   }
-  editApplicant(applicant_details: ApplicantTypeList) {
-    /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
-    this.visibleDialog = true;
-    user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
+
+  closeDialogSelector(value: boolean) {
+    this.visibleDialogSelector = false;
+    if (value) {
+      // accion de eliminar
+    }
+  }
+
+  associateRequestsType() {
+    this.visibleDialogSelector = true;
+    this.buttonmsg = 'Asociar';
+    this.parameter = ['Tipo de solicitante', 'Tipo de solicitud'];
+    this.message = 'Asociar solicitante a tipo de solicitud';
+  }
+
+  setParameter(inputValue: AssociateApplicantRequest) {
+    this.userService.createAssociationApplicantRequest(inputValue).subscribe({
+      next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
-          this.userList = response.data;
+          this.ngOnInit();
         } else {
-          console.log(this.userList);
         }
       },
       error: (err: any) => {
@@ -106,29 +122,6 @@ export class ApplicantRequestComponent implements OnInit {
       complete: () => {
         console.log('La suscripción ha sido completada.');
       },
-    });*/
-  }
-  createUser() {}
-  generateTestData = (count: number): IRequestManager[] => {
-    const testData: IRequestManager[] = [];
-
-    for (let i = 0; i < count; i++) {
-      const requestManager: IRequestManager = {
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        status: i % 2 === 0, // Alternar entre true y false
-      };
-
-      testData.push(requestManager);
-    }
-
-    return testData;
-  };
-
-  closeDialog(value: boolean) {
-    this.visibleDialog = false;
-    if (value) {
-      // accion de eliminar
-    }
+    });
   }
 }

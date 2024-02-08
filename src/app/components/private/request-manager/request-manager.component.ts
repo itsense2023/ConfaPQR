@@ -15,7 +15,12 @@ export class RequestManagerComponent implements OnInit {
   userList!: UserList[];
   ingredient!: string;
   visibleDialog = false;
+  visibleDialogInput = false;
   message = '';
+  parameter = [''];
+  buttonmsg = '';
+  twoFields = false;
+  user_details!: UserList;
   constructor(
     private userService: Users,
     private router: Router
@@ -24,7 +29,6 @@ export class RequestManagerComponent implements OnInit {
   ngOnInit() {
     //this.data = this.generateTestData(10);
     this.getUsersTable();
-    //console.log(this.data);
   }
 
   getUsersTable() {
@@ -32,6 +36,9 @@ export class RequestManagerComponent implements OnInit {
       next: (response: BodyResponse<UserList[]>) => {
         if (response.code === 200) {
           this.userList = response.data;
+          this.userList.forEach(item => {
+            item.is_active = item.is_active === 1 ? true : false;
+          });
         } else {
           console.log(this.userList);
         }
@@ -47,53 +54,54 @@ export class RequestManagerComponent implements OnInit {
 
   inactive(user_details: UserList) {
     console.log(user_details);
-    if (user_details.is_active) {
-      console.log('Inactivar');
+    if (!user_details.is_active) {
+      /*console.log('Inactivar');
       this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
-      this.visibleDialog = true;
+      this.visibleDialog = true;*/
       user_details.is_active = 0;
-      this.userService.inactivateUser(user_details).subscribe({
-        next: (response: BodyResponse<UserList[]>) => {
-          if (response.code === 200) {
-            this.userList = response.data;
-          } else {
-            console.log(this.userList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
     } else {
-      console.log('Activar');
+      /*console.log('Activar');
       this.message = '¿Seguro que desea activar este responsable de solicitud?';
-      this.visibleDialog = true;
+      this.visibleDialog = true;*/
       user_details.is_active = 1;
-      this.userService.inactivateUser(user_details).subscribe({
-        next: (response: BodyResponse<UserList[]>) => {
-          if (response.code === 200) {
-            this.userList = response.data;
-          } else {
-            console.log(this.userList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
     }
+    this.userService.inactivateUser(user_details).subscribe({
+      next: (response: BodyResponse<UserList[]>) => {
+        if (response.code === 200) {
+          this.ngOnInit();
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
   delete(user_details: UserList) {
     this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
     this.visibleDialog = true;
     user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
+    this.user_details = user_details;
+  }
+  generateTestData = (count: number): IRequestManager[] => {
+    const testData: IRequestManager[] = [];
+    for (let i = 0; i < count; i++) {
+      const requestManager: IRequestManager = {
+        name: `User ${i + 1}`,
+        email: `user${i + 1}@example.com`,
+        status: i % 2 === 0, // Alternar entre true y false
+      };
+      testData.push(requestManager);
+    }
+    return testData;
+  };
+
+  closeDialog(value: boolean) {
+    this.visibleDialog = false;
+    this.userService.invisibleUser(this.user_details).subscribe({
       next: (response: BodyResponse<UserList[]>) => {
         if (response.code === 200) {
           this.userList = response.data;
@@ -109,27 +117,41 @@ export class RequestManagerComponent implements OnInit {
       },
     });
   }
-  createUser() {}
-  generateTestData = (count: number): IRequestManager[] => {
-    const testData: IRequestManager[] = [];
-
-    for (let i = 0; i < count; i++) {
-      const requestManager: IRequestManager = {
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        status: i % 2 === 0, // Alternar entre true y false
-      };
-
-      testData.push(requestManager);
-    }
-
-    return testData;
-  };
-
-  closeDialog(value: boolean) {
-    this.visibleDialog = false;
+  createUser() {
+    this.visibleDialogInput = true;
+    this.buttonmsg = 'Crear';
+    this.twoFields = false;
+    this.parameter = [
+      'tipo de solicitante',
+      'Escriba nombre',
+      'Descripción del solicitante',
+      'Escriba descripción',
+    ];
+    this.message = 'Crear tipo de solicitante';
+  }
+  closeDialogInput(value: boolean) {
+    this.visibleDialogInput = false;
     if (value) {
       // accion de eliminar
     }
+  }
+  setParameter(inputValue: string[]) {
+    const payload = {
+      user_name: inputValue[0],
+    };
+    this.userService.createUser(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.ngOnInit();
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
 }

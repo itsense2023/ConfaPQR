@@ -16,8 +16,8 @@ export class ModalDinamicComponent {
     this.visible = true;
   }
 
-  closeDialog() {
-    this.setRta.emit(false);
+  closeDialog(value: boolean) {
+    this.setRta.emit(value);
     this.visible = false;
   }
 }

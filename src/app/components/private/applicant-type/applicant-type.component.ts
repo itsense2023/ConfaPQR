@@ -13,18 +13,20 @@ import { ApplicantTypeList } from '../../../models/users.interface';
 export class ApplicantTypeComponent implements OnInit {
   data!: IRequestManager[];
   applicantTypeList!: ApplicantTypeList[];
+  applicant_type_details!: ApplicantTypeList;
   ingredient!: string;
   visibleDialog = false;
+  visibleDialogInput = false;
   message = '';
+  buttonmsg = '';
+  parameter = [''];
   constructor(
     private userService: Users,
     private router: Router
   ) {}
 
   ngOnInit() {
-    //this.data = this.generateTestData(10);
     this.getApplicantTypesList();
-    //console.log(this.data);
   }
 
   getApplicantTypesList() {
@@ -32,6 +34,9 @@ export class ApplicantTypeComponent implements OnInit {
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
         if (response.code === 200) {
           this.applicantTypeList = response.data;
+          this.applicantTypeList.forEach(item => {
+            item.is_active = item.is_active === 1 ? true : false;
+          });
         } else {
           console.log(this.applicantTypeList);
         }
@@ -45,49 +50,19 @@ export class ApplicantTypeComponent implements OnInit {
     });
   }
 
-  inactive(user_details: ApplicantTypeList) {
-    console.log(user_details);
-    if (user_details.is_active) {
+  inActiveApplicant(applicant_type_details: ApplicantTypeList) {
+    if (!applicant_type_details.is_active) {
       console.log('Inactivar');
       this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 0;
-      this.userService.inactivateApplicant(user_details).subscribe({
-        next: (response: BodyResponse<ApplicantTypeList[]>) => {
-          if (response.code === 200) {
-            this.applicantTypeList = response.data;
-          } else {
-            console.log(this.applicantTypeList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      applicant_type_details.is_active = 0;
     } else {
       console.log('Activar');
       this.message = '¿Seguro que desea activar este responsable de solicitud?';
       this.visibleDialog = true;
-      user_details.is_active = 1;
-      this.userService.inactivateApplicant(user_details).subscribe({
-        next: (response: BodyResponse<ApplicantTypeList[]>) => {
-          if (response.code === 200) {
-            this.applicantTypeList = response.data;
-          } else {
-            console.log(this.applicantTypeList);
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      applicant_type_details.is_active = 1;
     }
+    this.applicant_type_details = applicant_type_details;
   }
   editApplicant(applicant_details: ApplicantTypeList) {
     /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
@@ -109,27 +84,64 @@ export class ApplicantTypeComponent implements OnInit {
       },
     });*/
   }
-  createUser() {}
-  generateTestData = (count: number): IRequestManager[] => {
-    const testData: IRequestManager[] = [];
-
-    for (let i = 0; i < count; i++) {
-      const requestManager: IRequestManager = {
-        name: `User ${i + 1}`,
-        email: `user${i + 1}@example.com`,
-        status: i % 2 === 0, // Alternar entre true y false
-      };
-
-      testData.push(requestManager);
-    }
-
-    return testData;
-  };
+  createApplicantType() {
+    this.visibleDialogInput = true;
+    this.buttonmsg = 'Crear';
+    this.parameter = [
+      'tipo de solicitante',
+      'Escriba nombre',
+      'Descripción del solicitante',
+      'Escriba descripción',
+    ];
+    this.message = 'Crear tipo de solicitante';
+  }
 
   closeDialog(value: boolean) {
     this.visibleDialog = false;
+    console.log(value);
+    if (value) {
+      this.userService.inactivateApplicant(this.applicant_type_details).subscribe({
+        next: (response: BodyResponse<ApplicantTypeList[]>) => {
+          if (response.code === 200) {
+            this.ngOnInit();
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
+  }
+  closeDialogInput(value: boolean) {
+    this.visibleDialogInput = false;
     if (value) {
       // accion de eliminar
     }
+  }
+  setParameter(inputValue: string[]) {
+    console.log(inputValue);
+    const payload = {
+      applicant_type_name: inputValue[0],
+      applicant_type_description: inputValue[1],
+    };
+    console.log(payload);
+    this.userService.createApplicantType(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.ngOnInit();
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
 }
