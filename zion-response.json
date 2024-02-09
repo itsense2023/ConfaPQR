@@ -1,0 +1,99 @@
+{
+    "usuarioId":264,
+    "usuario":"ext_prueba1",
+    "contrasena":"",
+    "tema":"",
+    "plazaId":"",
+    "estado":true,
+    "fechaVencimiento":"",
+    "perfiles":[
+       {
+          "perfilId":106,
+          "sistema":{
+             "sistemaId":54,
+             "nombre":"PQRS",
+             "estado":true
+          },
+          "nombre":"ADMINISTRACION",
+          "descripcion":"",
+          "estado":true
+       }
+    ],
+    "links":[
+       {
+          "modulo_id":"184",
+          "moduloNombre":"Configuración",
+          "nombre":"Configuración",
+          "url":"",
+          "estado":true,
+          "usuarioLinks":[
+             
+          ],
+          "perfilLinks":[
+             {
+                "modulo_id":"184",
+                "moduloNombre":"Configurar notificaciones",
+                "nombre":"Configurar notificaciones",
+                "url":"/configure-notifications",
+                "estado":true,
+                "usuarioLinks":[
+                   
+                ]
+             },
+             {
+                "modulo_id":"184",
+                "moduloNombre":"Parametrizar solicitantes, solicitudes y asociados",
+                "nombre":"Parametrizar solicitantes, solicitudes y asociados",
+                "url":"/",
+                "estado":true,
+                "perfilLinks":[
+                   {
+                      "modulo_id":"184",
+                      "moduloNombre":"Tipo solicitante",
+                      "nombre":"Tipo solicitante",
+                      "url":"/applicant-type",
+                      "estado":true
+                   },
+                   {
+                      "modulo_id":"184",
+                      "moduloNombre":"Tipo solicitud",
+                      "nombre":"Tipo solicitud",
+                      "url":"/request-type",
+                      "estado":true
+                   },
+                   {
+                      "modulo_id":"184",
+                      "moduloNombre":"Asociar tipos de solicitud de un solicitante",
+                      "nombre":"Asociar tipos de solicitud de un solicitante",
+                      "url":"/applicant-request-association",
+                      "estado":true
+                   }
+                ]
+             },
+             {
+                "modulo_id":"184",
+                "moduloNombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
+                "nombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
+                "url":"/modality",
+                "estado":true,
+                "perfilLinks":[
+                   
+                ]
+             }
+          ]
+       },
+       {
+          "modulo_id":"184",
+          "moduloNombre":"Consultar solicitudes",
+          "nombre":"Consultar solicitudes",
+          "url":"/search-requests",
+          "estado":true,
+          "usuarioLinks":[
+             
+          ],
+          "perfilLinks":[
+             
+          ]
+       }
+    ]
+ }

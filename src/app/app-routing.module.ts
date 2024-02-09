@@ -43,6 +43,22 @@ const routes: Routes = [
         m => m.ApplicantRequestModule
       ),
   },
+  {
+    path: RoutesApp.MODALITY,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/modality/modality.module').then(m => m.ModalityModule),
+  },
+  {
+    path: RoutesApp.SEARCH_REQUEST,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/search-request/search-request.module').then(
+        m => m.SearchRequestModule
+      ),
+  },
   { path: '', redirectTo: '/' + RoutesApp.LOGIN, pathMatch: 'full' },
   // Puedes agregar una ruta comodín para manejar rutas no encontradas (opcional)
   { path: '**', redirectTo: '/login' + RoutesApp.LOGIN, pathMatch: 'full' },

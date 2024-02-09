@@ -2,15 +2,27 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { ApplicantTypeList, RequestTypeList } from '../../../models/users.interface';
+import { RequestTypeList, RequestsList } from '../../../models/users.interface';
+//import * as FileSaver from 'file-saver';
+
+interface Column {
+  field: string;
+  header: string;
+  customExportHeader?: string;
+}
+
+interface ExportColumn {
+  title: string;
+  dataKey: string;
+}
 
 @Component({
-  selector: 'app-request-type',
-  templateUrl: './request-type.component.html',
-  styleUrl: './request-type.component.scss',
+  selector: 'app-search-request',
+  templateUrl: './search-request.component.html',
+  styleUrl: './search-request.component.scss',
 })
-export class RequestTypeComponent implements OnInit {
-  requestTypeList!: RequestTypeList[];
+export class SearchRequestComponent implements OnInit {
+  requestList: RequestsList[] = [];
   ingredient!: string;
   visibleDialog = false;
   visibleDialogInput = false;
@@ -18,23 +30,62 @@ export class RequestTypeComponent implements OnInit {
   buttonmsg = '';
   parameter = [''];
   request_details!: RequestTypeList;
+
+  selectedProducts!: RequestsList[];
+  cols!: Column[];
+
+  exportColumns!: ExportColumn[];
   constructor(
     private userService: Users,
     private router: Router
   ) {}
 
   ngOnInit() {
-    this.getRequestTypesList();
+    this.getRequestList();
+    this.cols = [
+      { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
+      { field: 'name', header: 'Name' },
+      { field: 'category', header: 'Category' },
+      { field: 'quantity', header: 'Quantity' },
+    ];
+
+    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
 
-  getRequestTypesList() {
-    this.userService.getRequestTypesList().subscribe({
-      next: (response: BodyResponse<RequestTypeList[]>) => {
+  /*exportPdf() {
+    import('jspdf').then(jsPDF => {
+      import('jspdf-autotable').then(x => {
+        const doc = new jsPDF.default('p', 'px', 'a4');
+        (doc as any).autoTable(this.exportColumns, this.requestList);
+        doc.save('products.pdf');
+      });
+    });
+  }
+
+  exportExcel() {
+    import('xlsx').then(xlsx => {
+      const worksheet = xlsx.utils.json_to_sheet(this.requestList);
+      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
+      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
+      this.saveAsExcelFile(excelBuffer, 'products');
+    });
+  }
+
+  saveAsExcelFile(buffer: any, fileName: string): void {
+    let EXCEL_TYPE =
+      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
+    let EXCEL_EXTENSION = '.xlsx';
+    const data: Blob = new Blob([buffer], {
+      type: EXCEL_TYPE,
+    });
+    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
+  }*/
+
+  getRequestList() {
+    this.userService.getRequestList().subscribe({
+      next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
-          this.requestTypeList = response.data;
-          this.requestTypeList.forEach(item => {
-            item.is_active = item.is_active === 1 ? true : false;
-          });
+          this.requestList = response.data;
         } else {
         }
       },
@@ -59,10 +110,11 @@ export class RequestTypeComponent implements OnInit {
     }
     this.request_details = request_details;
   }
-  editRequest(request_details: ApplicantTypeList) {
-    /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
-    this.visibleDialog = true;
-    user_details.is_visible = 0;
+  assignRequest(request_details: RequestsList) {
+    this.message = 'Asignar responsable al requerimiento';
+    this.visibleDialogInput = true;
+    this.buttonmsg = 'Asignar';
+    /*user_details.is_visible = 0;
     this.userService.invisibleUser(user_details).subscribe({
       next: (response: BodyResponse<UserList[]>) => {
         if (response.code === 200) {
@@ -118,14 +170,9 @@ export class RequestTypeComponent implements OnInit {
       // accion de eliminar
     }
   }
-  setParameter(inputValue: string[]) {
+  setParameter(inputValue: string) {
     console.log(inputValue);
-    const payload = {
-      request_type_name: inputValue[0],
-      request_type_description: inputValue[1],
-    };
-    console.log(payload);
-    this.userService.createRequestType(payload).subscribe({
+    /*this.userService.createRequestType(inputValue).subscribe({
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           this.ngOnInit();
@@ -138,6 +185,6 @@ export class RequestTypeComponent implements OnInit {
       complete: () => {
         console.log('La suscripción ha sido completada.');
       },
-    });
+    });*/
   }
 }

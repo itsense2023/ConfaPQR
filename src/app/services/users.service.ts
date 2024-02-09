@@ -11,7 +11,9 @@ import {
   AssociationApplicantRequestList,
   CreateApplicantType,
   CreateRequestType,
+  ModalityList,
   RequestTypeList,
+  RequestsList,
   UserCreate,
   UserList,
 } from '../models/users.interface';
@@ -31,6 +33,17 @@ export class Users {
     });
     return this.http.get<BodyResponse<UserList[]>>(
       `${environment.API_PUBLIC}${RoutesApp.USERS_LIST}`,
+      { headers }
+    );
+  }
+  getRequestList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestsList[]>>(
+      `${environment.API_PUBLIC}${RoutesApp.ALL_REQUESTS}`,
       { headers }
     );
   }
@@ -178,6 +191,53 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${RoutesApp.ASSOCIATE_REQUEST_APPLICANT}`,
+      payload,
+      { headers }
+    );
+  }
+  getModalityList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<ModalityList[]>>(
+      `${environment.API_PUBLIC}${RoutesApp.MODALITY_LIST}`,
+      { headers }
+    );
+  }
+  createModality(payload: ModalityList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.CREATE_MODALITY}`,
+      payload,
+      { headers }
+    );
+  }
+  modifyModality(payload: ModalityList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.UPDATE_MODALITY}`,
+      payload,
+      { headers }
+    );
+  }
+  inactivateModality(payload: ModalityList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_MODALITY}`,
       payload,
       { headers }
     );

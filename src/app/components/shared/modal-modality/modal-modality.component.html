@@ -1,0 +1,81 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '40vw' }" [modal]="true">
+  <ng-template pTemplate="headless">
+    <div class="modal-content">
+      <div class="login-form-header">
+        <div class="login-form-header__item login-form-header__item_1"></div>
+        <div class="login-form-header__item login-form-header__item_2"></div>
+        <div class="login-form-header__item login-form-header__item_3"></div>
+        <div class="login-form-header__item login-form-header__item_4"></div>
+        <div class="login-form-header__item login-form-header__item_5"></div>
+        <div class="login-form-header__item login-form-header__item_6"></div>
+      </div>
+      <div class="row my-4 px-5">
+        <div class="col-12 text-center">{{ message }}</div>
+      </div>
+      <form [formGroup]="formGroup">
+        <div class="row my-4 px-5">
+          <div class="col-12">
+            <label> Código </label>
+            <input
+              [readonly]="read_only"
+              formControlName="modality_id"
+              pInputText
+              pKeyFilter="integer"
+              placeholder="000" />
+          </div>
+          <div class="col-12">
+            <label> Nombre de modalidad </label>
+            <input
+              [readonly]="read_only"
+              formControlName="modality_name"
+              pInputText
+              pKeyFilter="string"
+              placeholder="Escriba nombre" />
+          </div>
+          <div class="col-12">
+            <label> Categoría </label>
+            <input
+              [readonly]="read_only"
+              formControlName="category_name"
+              pInputText
+              pKeyFilter="string"
+              placeholder="Escriba mensaje" />
+          </div>
+          <div class="col-12">
+            <label> Tipología </label>
+            <input
+              [readonly]="read_only"
+              formControlName="tipology_name"
+              pInputText
+              pKeyFilter="string"
+              placeholder="Escriba mensaje" />
+          </div>
+          <div class="col-12">
+            <label> Causa </label>
+            <input
+              [readonly]="read_only"
+              formControlName="cause"
+              pInputText
+              pKeyFilter="string"
+              placeholder="Escriba mensaje" />
+          </div>
+        </div>
+      </form>
+      <div *ngIf="read_only">
+        <div class="row my-4 px-5">
+          <div class="col-12 d-flex justify-content-evenly">
+            <p-button label="Cerrar" severity="secondary" (click)="closeDialog(false)"></p-button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!read_only">
+        <div class="row my-4 px-5">
+          <div class="col-12 d-flex justify-content-evenly">
+            <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
+            <p-button [label]="buttonmsg" (click)="closeDialog(true)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>

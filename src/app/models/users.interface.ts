@@ -8,6 +8,29 @@ export interface UserList {
   is_active: number | boolean;
   is_visible: number | boolean;
 }
+export interface RequestsList {
+  request_id: number;
+  filing_number: number;
+  filing_date: string;
+  filing_time: string;
+  request_status: number;
+  applicant_type: number;
+  request_type: number;
+  doc_type: number;
+  doc_id: string;
+  applicant_name: string;
+  applicant_email: string;
+  applicant_cellphone: string;
+  request_description: string;
+  request_days: number;
+  assigned_user: string;
+  request_answer: string;
+  data_treatment: boolean;
+  applicant_attachments: string[];
+  assigned_attachments: string[];
+  form_id: number;
+}
+
 export interface UserCreate {
   user_name: string;
 }
@@ -58,4 +81,16 @@ export interface CreateRequestType {
 export interface AssociateApplicantRequest {
   applicant_type_id: number;
   request_type_id: number;
+}
+export interface ModalityList {
+  modality_id: number;
+  modality_name: string;
+  category_name: string;
+  tipology_name: string;
+  cause: string;
+  is_active?: number | boolean;
+  created_by?: string;
+  created_date?: string;
+  updated_by?: string;
+  updated_date?: string;
 }
