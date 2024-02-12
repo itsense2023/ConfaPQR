@@ -46,8 +46,24 @@ export class LoginComponent {
       contrasena: this.userForm.controls['contrasena'].value,
       sistema: 54,
     };
-
-    this.loginService.login(payload).subscribe({
+    this.loginService
+      .login(payload)
+      .then(response => {
+        console.log(response.data);
+        sessionStorage.setItem(SessionStorageItems.SESSION, response.data.data);
+        const decodedToken: ISession = jwtDecode(response.data.data);
+        const menu: TreeNode[] = this.convertirLinks(decodedToken.links);
+        if (menu) {
+          sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
+        }
+        this.router.navigate([RoutesApp.REQUEST_MANAGER]);
+        console.log('Respuesta exitosa:', response);
+      })
+      .catch(error => {
+        // Handle errors
+        console.error('Error fetching data:', error);
+      });
+    /*this.loginService.login(payload).subscribe({
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           sessionStorage.setItem(SessionStorageItems.SESSION, response.data);
@@ -70,7 +86,7 @@ export class LoginComponent {
       complete: () => {
         console.log('La suscripción ha sido completada.');
       },
-    });
+    });*/
   }
 
   convertirLinks(links: ILink[]): TreeNode[] {
