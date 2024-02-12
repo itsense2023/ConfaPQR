@@ -20,6 +20,9 @@ export class ApplicantTypeComponent implements OnInit {
   message = '';
   buttonmsg = '';
   parameter = [''];
+  inputForm: any[] = [];
+  enableCreate: boolean = false;
+  enableAction: boolean = false;
   constructor(
     private userService: Users,
     private router: Router
@@ -53,39 +56,37 @@ export class ApplicantTypeComponent implements OnInit {
   inActiveApplicant(applicant_type_details: ApplicantTypeList) {
     if (!applicant_type_details.is_active) {
       console.log('Inactivar');
-      this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Inactivar tipo de aplicante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 0;
     } else {
       console.log('Activar');
-      this.message = '¿Seguro que desea activar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Activar tipo de aplicante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 1;
     }
     this.applicant_type_details = applicant_type_details;
   }
   editApplicant(applicant_details: ApplicantTypeList) {
-    /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
-    this.visibleDialog = true;
-    user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
-        if (response.code === 200) {
-          this.userList = response.data;
-        } else {
-          console.log(this.userList);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });*/
+    this.inputForm = [
+      applicant_details['applicant_type_name'],
+      applicant_details['applicant_type_description'],
+      applicant_details['applicant_type_id'],
+    ];
+    this.visibleDialogInput = true;
+    this.enableCreate = false;
+    this.message = 'Crear tipo de solicitante';
+    this.buttonmsg = 'Modificar';
+    this.parameter = [
+      'tipo de solicitante',
+      'Escriba nombre',
+      'Descripción del solicitante',
+      'Escriba descripción',
+    ];
   }
   createApplicantType() {
     this.visibleDialogInput = true;
+    this.enableCreate = true;
     this.buttonmsg = 'Crear';
     this.parameter = [
       'tipo de solicitante',
@@ -98,10 +99,39 @@ export class ApplicantTypeComponent implements OnInit {
 
   closeDialog(value: boolean) {
     this.visibleDialog = false;
-    console.log(value);
     if (value) {
       this.userService.inactivateApplicant(this.applicant_type_details).subscribe({
         next: (response: BodyResponse<ApplicantTypeList[]>) => {
+          if (response.code === 200) {
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
+    this.ngOnInit();
+  }
+  closeDialogInput(value: boolean) {
+    this.visibleDialogInput = false;
+    this.enableAction = value;
+  }
+  setParameter(inputValue: string[]) {
+    if (!this.enableAction) {
+      return;
+    } else if (this.enableCreate) {
+      console.log(inputValue);
+      const payload = {
+        applicant_type_name: inputValue[0],
+        applicant_type_description: inputValue[1],
+      };
+      console.log(payload);
+      this.userService.createApplicantType(payload).subscribe({
+        next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
             this.ngOnInit();
           } else {
@@ -114,34 +144,26 @@ export class ApplicantTypeComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
+    } else {
+      const payload = {
+        applicant_type_name: inputValue[0],
+        applicant_type_description: inputValue[1],
+        applicant_type_id: Number(inputValue[2]),
+      };
+      this.userService.modifyApplicantType(payload).subscribe({
+        next: (response: BodyResponse<string>) => {
+          if (response.code === 200) {
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
     }
-  }
-  closeDialogInput(value: boolean) {
-    this.visibleDialogInput = false;
-    if (value) {
-      // accion de eliminar
-    }
-  }
-  setParameter(inputValue: string[]) {
-    console.log(inputValue);
-    const payload = {
-      applicant_type_name: inputValue[0],
-      applicant_type_description: inputValue[1],
-    };
-    console.log(payload);
-    this.userService.createApplicantType(payload).subscribe({
-      next: (response: BodyResponse<string>) => {
-        if (response.code === 200) {
-          this.ngOnInit();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
+    this.ngOnInit();
   }
 }

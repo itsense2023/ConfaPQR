@@ -9,7 +9,6 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptor } from './services/interceptors/http-request.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
-import { SearchRequestComponent } from './components/private/search-request/search-request.component';
 
 @NgModule({
   declarations: [AppComponent],

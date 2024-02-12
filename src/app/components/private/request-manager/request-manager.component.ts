@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { IRequestManager } from '../../../models/request-manager/request-manager.interface';
 import { Router } from '@angular/router';
-import { BodyResponse } from '../../../models/shared/body-response.inteface';
+import { BodyResponse, ZionResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { UserList } from '../../../models/users.interface';
 
@@ -21,6 +21,9 @@ export class RequestManagerComponent implements OnInit {
   buttonmsg = '';
   twoFields = false;
   user_details!: UserList;
+  enableAction: boolean = false;
+  enableDelete: boolean = false;
+  informative: boolean = false;
   constructor(
     private userService: Users,
     private router: Router
@@ -53,7 +56,6 @@ export class RequestManagerComponent implements OnInit {
   }
 
   inactive(user_details: UserList) {
-    console.log(user_details);
     if (!user_details.is_active) {
       /*console.log('Inactivar');
       this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
@@ -81,10 +83,11 @@ export class RequestManagerComponent implements OnInit {
     });
   }
   delete(user_details: UserList) {
-    this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
+    this.message = '¿Seguro que desea Eliminar responsable?';
     this.visibleDialog = true;
     user_details.is_visible = 0;
     this.user_details = user_details;
+    this.enableDelete = true;
   }
   generateTestData = (count: number): IRequestManager[] => {
     const testData: IRequestManager[] = [];
@@ -101,21 +104,26 @@ export class RequestManagerComponent implements OnInit {
 
   closeDialog(value: boolean) {
     this.visibleDialog = false;
-    this.userService.invisibleUser(this.user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
-        if (response.code === 200) {
-          this.userList = response.data;
-        } else {
-          console.log(this.userList);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
+    if (this.informative) {
+      return;
+    } else if (!this.enableDelete) {
+      this.userService.invisibleUser(this.user_details).subscribe({
+        next: (response: BodyResponse<UserList[]>) => {
+          if (response.code === 200) {
+            this.userList = response.data;
+          } else {
+            console.log(this.userList);
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
+    this.ngOnInit();
   }
   createUser() {
     this.visibleDialogInput = true;
@@ -128,30 +136,35 @@ export class RequestManagerComponent implements OnInit {
       'Escriba descripción',
     ];
     this.message = 'Crear tipo de solicitante';
+    this.informative = true;
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
-    if (value) {
-      // accion de eliminar
-    }
+    this.enableAction = value;
   }
   setParameter(inputValue: string[]) {
-    const payload = {
-      user_name: inputValue[0],
-    };
-    this.userService.createUser(payload).subscribe({
-      next: (response: BodyResponse<string>) => {
-        if (response.code === 200) {
-          this.ngOnInit();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
+    if (!this.enableAction) {
+      return;
+    } else {
+      const payload = {
+        user_name: inputValue[0],
+      };
+      this.userService.createUser(payload).subscribe({
+        next: (response: BodyResponse<ZionResponse>) => {
+          if (response.code === 200) {
+          } else {
+            this.message = response.data.estado;
+            this.visibleDialog = true;
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
+    this.ngOnInit();
   }
 }

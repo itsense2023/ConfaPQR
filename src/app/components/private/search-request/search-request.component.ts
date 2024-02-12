@@ -2,19 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { RequestTypeList, RequestsList } from '../../../models/users.interface';
-//import * as FileSaver from 'file-saver';
-
-interface Column {
-  field: string;
-  header: string;
-  customExportHeader?: string;
-}
-
-interface ExportColumn {
-  title: string;
-  dataKey: string;
-}
+import { AssignUserRequest, RequestsList } from '../../../models/users.interface';
 
 @Component({
   selector: 'app-search-request',
@@ -29,12 +17,8 @@ export class SearchRequestComponent implements OnInit {
   message = '';
   buttonmsg = '';
   parameter = [''];
-  request_details!: RequestTypeList;
-
-  selectedProducts!: RequestsList[];
-  cols!: Column[];
-
-  exportColumns!: ExportColumn[];
+  request_details!: RequestsList;
+  selectedRequests!: RequestsList[];
   constructor(
     private userService: Users,
     private router: Router
@@ -42,44 +26,7 @@ export class SearchRequestComponent implements OnInit {
 
   ngOnInit() {
     this.getRequestList();
-    this.cols = [
-      { field: 'code', header: 'Code', customExportHeader: 'Product Code' },
-      { field: 'name', header: 'Name' },
-      { field: 'category', header: 'Category' },
-      { field: 'quantity', header: 'Quantity' },
-    ];
-
-    this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
   }
-
-  /*exportPdf() {
-    import('jspdf').then(jsPDF => {
-      import('jspdf-autotable').then(x => {
-        const doc = new jsPDF.default('p', 'px', 'a4');
-        (doc as any).autoTable(this.exportColumns, this.requestList);
-        doc.save('products.pdf');
-      });
-    });
-  }
-
-  exportExcel() {
-    import('xlsx').then(xlsx => {
-      const worksheet = xlsx.utils.json_to_sheet(this.requestList);
-      const workbook = { Sheets: { data: worksheet }, SheetNames: ['data'] };
-      const excelBuffer: any = xlsx.write(workbook, { bookType: 'xlsx', type: 'array' });
-      this.saveAsExcelFile(excelBuffer, 'products');
-    });
-  }
-
-  saveAsExcelFile(buffer: any, fileName: string): void {
-    let EXCEL_TYPE =
-      'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8';
-    let EXCEL_EXTENSION = '.xlsx';
-    const data: Blob = new Blob([buffer], {
-      type: EXCEL_TYPE,
-    });
-    FileSaver.saveAs(data, fileName + '_export_' + new Date().getTime() + EXCEL_EXTENSION);
-  }*/
 
   getRequestList() {
     this.userService.getRequestList().subscribe({
@@ -98,22 +45,18 @@ export class SearchRequestComponent implements OnInit {
     });
   }
 
-  inActiveRequest(request_details: RequestTypeList) {
-    if (!request_details.is_active) {
-      this.message = '¿Seguro que desea Inactivar este responsable de solicitud?';
-      this.visibleDialog = true;
-      request_details.is_active = 0;
-    } else {
-      this.message = '¿Seguro que desea Activar este responsable de solicitud?';
-      this.visibleDialog = true;
-      request_details.is_active = 1;
-    }
-    this.request_details = request_details;
-  }
   assignRequest(request_details: RequestsList) {
-    this.message = 'Asignar responsable al requerimiento';
+    if (request_details.assigned_user == null) {
+      this.message = 'Asignar responsable al requerimiento';
+      this.buttonmsg = 'Asignar';
+    } else {
+      this.message = 'Reasignar responsable al requerimiento';
+      this.buttonmsg = 'Reasignar';
+    }
     this.visibleDialogInput = true;
-    this.buttonmsg = 'Asignar';
+    this.parameter = ['Usuario'];
+    this.request_details = request_details;
+    console.log(request_details);
     /*user_details.is_visible = 0;
     this.userService.invisibleUser(user_details).subscribe({
       next: (response: BodyResponse<UserList[]>) => {
@@ -131,25 +74,25 @@ export class SearchRequestComponent implements OnInit {
       },
     });*/
   }
-  createUser() {}
-
-  createRequestType() {
-    this.visibleDialogInput = true;
-    this.buttonmsg = 'Crear';
-    this.parameter = [
-      'tipo de solicitud',
-      'Escriba nombre',
-      'Descripción de solicitud',
-      'Escriba descripción',
-    ];
-    this.message = 'Crear tipo de solicitud';
-  }
 
   closeDialog(value: boolean) {
     this.visibleDialog = false;
     if (value) {
-      this.userService.inactivateRequest(this.request_details).subscribe({
-        next: (response: BodyResponse<RequestTypeList[]>) => {
+      //
+    }
+  }
+  closeDialogInput(value: boolean) {
+    this.visibleDialogInput = false;
+    if (value) {
+      // accion de eliminar
+    }
+  }
+  setParameter(inputValue: string) {
+    console.log(inputValue);
+    this.request_details['assigned_user'] = inputValue;
+    if (inputValue) {
+      this.userService.assignUserToRequest(this.request_details).subscribe({
+        next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
             this.ngOnInit();
           } else {
@@ -163,28 +106,5 @@ export class SearchRequestComponent implements OnInit {
         },
       });
     }
-  }
-  closeDialogInput(value: boolean) {
-    this.visibleDialogInput = false;
-    if (value) {
-      // accion de eliminar
-    }
-  }
-  setParameter(inputValue: string) {
-    console.log(inputValue);
-    /*this.userService.createRequestType(inputValue).subscribe({
-      next: (response: BodyResponse<string>) => {
-        if (response.code === 200) {
-          this.ngOnInit();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });*/
   }
 }
