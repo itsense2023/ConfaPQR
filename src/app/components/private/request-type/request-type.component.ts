@@ -73,7 +73,7 @@ export class RequestTypeComponent implements OnInit {
     this.message = 'Modificar tipo de solicitud';
     this.enableCreate = false;
     this.parameter = [
-      'tipo de solicitud',
+      'Tipo de solicitud',
       'Escriba nombre',
       'Descripción de solicitud',
       'Escriba descripción',
@@ -84,7 +84,7 @@ export class RequestTypeComponent implements OnInit {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
     this.parameter = [
-      'tipo de solicitud',
+      'Tipo de solicitud',
       'Escriba nombre',
       'Descripción de solicitud',
       'Escriba descripción',

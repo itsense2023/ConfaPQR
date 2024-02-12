@@ -78,7 +78,7 @@ export class ApplicantTypeComponent implements OnInit {
     this.message = 'Crear tipo de solicitante';
     this.buttonmsg = 'Modificar';
     this.parameter = [
-      'tipo de solicitante',
+      'Tipo de solicitante',
       'Escriba nombre',
       'Descripción del solicitante',
       'Escriba descripción',
