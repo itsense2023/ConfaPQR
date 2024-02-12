@@ -1,0 +1,150 @@
+<div class="row mb-2">
+  <div class="col-10">
+    <div class="title-page">Consultar solicitudes</div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-12">
+    <p-table
+      #dt
+      [value]="requestList"
+      [scrollable]="true"
+      scrollHeight="800px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="80"
+      [columns]="cols"
+      selectionMode="multiple"
+      [(selection)]="selectedProducts"
+      [exportHeader]="'customExportHeader'"
+      [paginator]="true"
+      [rows]="5"
+      [showCurrentPageReport]="true"
+      [tableStyle]="{ 'min-width': '50rem' }"
+      currentPageReportTemplate="{first} de {totalRecords}"
+      [rowsPerPageOptions]="[5, 10, 20]">
+      <ng-template pTemplate="caption">
+        <div class="flex">
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-file"
+            (click)="dt.exportCSV()"
+            class="mr-2"
+            pTooltip="CSV"
+            tooltipPosition="bottom"></button>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-file-excel"
+            (click)="exportExcel()"
+            class="p-button-success mr-2"
+            pTooltip="XLS"
+            tooltipPosition="bottom"></button>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-file-pdf"
+            (click)="exportPdf()"
+            class="p-button-warning mr-2"
+            pTooltip="PDF"
+            tooltipPosition="bottom"></button>
+          <button
+            type="button"
+            pButton
+            pRipple
+            icon="pi pi-filter"
+            (click)="dt.exportCSV({ selectionOnly: true })"
+            class="p-button-info ml-auto"
+            pTooltip="Selection Only"
+            tooltipPosition="bottom"></button>
+        </div>
+      </ng-template>
+      <ng-template pTemplate="header" let-columns>
+        <tr>
+          <th *ngFor="let col of columns">
+            {{ col.header }}
+          </th>
+        </tr>
+        <!--<tr>
+            <th pSortableColumn="filing_number" style="width: 3%">
+              Número de radicado<p-sortIcon field="filing_number"></p-sortIcon>
+            </th>
+            <th pSortableColumn="filing_date" style="width: 12%">
+              Fecha de radicación<p-sortIcon field="filing_date"></p-sortIcon>
+            </th>
+            <th pSortableColumn="applicant_type_name" style="width: 10%">
+              Tipo de solicitante<p-sortIcon field="applicant_type_name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="doc_id" style="width: 10%">
+              Número de documento<p-sortIcon field="doc_id"></p-sortIcon>
+            </th>
+            <th pSortableColumn="applicant_name" style="width: 10%">
+              Nombre empresa/Solicitante<p-sortIcon field="applicant_name"></p-sortIcon>
+            </th>
+  
+            <th pSortableColumn="request_type_name" style="width: 10%">
+              Tipo de solicitud<p-sortIcon field="request_type_name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="status_name" style="width: 10%">
+              Estado solicitud<p-sortIcon field="status_name"></p-sortIcon>
+            </th>
+            <th pSortableColumn="request_days" style="width: 10%">
+              Dias solicitud<p-sortIcon field="request_days"></p-sortIcon>
+            </th>
+            <th pSortableColumn="assigned_user" style="width: 10%">
+              Responsable solicitud<p-sortIcon field="assigned_user"></p-sortIcon>
+            </th>
+            <th style="width: 5%"></th>
+            <th style="width: 10%"></th>
+          </tr>-->
+      </ng-template>
+      <ng-template pTemplate="body" let-requestList let-columns="columns">
+        <tr [pSelectableRow]="requestList">
+          <td *ngFor="let col of columns">
+            {{ requestList[col.field] }}
+          </td>
+        </tr>
+      </ng-template>
+      <!--<ng-template pTemplate="body" let-requestList>
+          <tr>
+            <td>{{ requestList.filing_number }}</td>
+            <td>{{ requestList.filing_date }}</td>
+            <td>{{ requestList.applicant_type_name }}</td>
+            <td>{{ requestList.doc_id }}</td>
+            <td>{{ requestList.applicant_name }}</td>
+            <td>{{ requestList.request_type_name }}</td>
+            <td>{{ requestList.status_name }}</td>
+            <td>{{ requestList.request_days }}</td>
+            <td>{{ requestList.assigned_user }}</td>
+            <td>
+              <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
+            </td>
+            <td>
+              <p-button
+                [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
+                (click)="assignRequest(requestList)"></p-button>
+            </td>
+          </tr>
+        </ng-template>-->
+    </p-table>
+  </div>
+</div>
+
+<app-modal-dinamic
+  *ngIf="visibleDialog"
+  [select]="true"
+  [visible]="visibleDialog"
+  [message]="message"
+  (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<!--<app-modal-assign-selector
+  *ngIf="visibleDialogInput"
+  [visible]="visibleDialogInput"
+  [message]="message"
+  [buttonmsg]="buttonmsg"
+  [parameter]="parameter"
+  (setRta)="closeDialogInput($event)"
+  (setRtaParameter)="setParameter($event)"></app-modal-assign-selector>-->

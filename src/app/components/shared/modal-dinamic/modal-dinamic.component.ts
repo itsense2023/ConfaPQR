@@ -10,6 +10,7 @@ export class ModalDinamicComponent {
   @Input() select = false;
   @Input() message = '';
   @Input() visible: boolean = false;
+  @Input() informative: boolean = false;
   @Output() setRta = new EventEmitter<boolean>();
 
   showDialog() {

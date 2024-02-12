@@ -1,12 +1,13 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
-import { BodyResponse } from '../models/shared/body-response.inteface';
+import { BodyResponse, ZionResponse } from '../models/shared/body-response.inteface';
 import { ILogin } from '../models/login/login.interface';
 import { RoutesApp } from '../enums/routes.enum';
 import { SessionStorageItems } from '../enums/session-storage-items.enum';
 import {
   ApplicantTypeList,
+  AssignUserRequest,
   AssociateApplicantRequest,
   AssociationApplicantRequestList,
   CreateApplicantType,
@@ -47,13 +48,26 @@ export class Users {
       { headers }
     );
   }
-  createUser(payload: UserCreate) {
+  assignUserToRequest(payload: AssignUserRequest) {
+    console.log(payload);
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.ASSIGN_USER_TO_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  createUser(payload: UserCreate) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<ZionResponse>>(
       `${environment.API_PUBLIC}${RoutesApp.CREATE_USER}`,
       payload,
       { headers }
@@ -97,8 +111,6 @@ export class Users {
       { headers }
     );
   }
-
-  //INACTIVATE_APPLICANT
   inactivateApplicant(payload: ApplicantTypeList) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
@@ -119,6 +131,18 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${RoutesApp.CREATE_APPLICANT_TYPE}`,
+      payload,
+      { headers }
+    );
+  }
+  modifyApplicantType(payload: CreateApplicantType) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.MODIFY_APPLICANT_TYPE}`,
       payload,
       { headers }
     );
@@ -155,6 +179,18 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${RoutesApp.CREATE_REQUEST_TYPE}`,
+      payload,
+      { headers }
+    );
+  }
+  modifyRequestType(payload: CreateRequestType) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.MODIFY_REQUEST_TYPE}`,
       payload,
       { headers }
     );

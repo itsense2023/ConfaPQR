@@ -18,6 +18,9 @@ export class RequestTypeComponent implements OnInit {
   buttonmsg = '';
   parameter = [''];
   request_details!: RequestTypeList;
+  inputForm: any[] = [];
+  enableCreate: boolean = false;
+  enableAction: boolean = false;
   constructor(
     private userService: Users,
     private router: Router
@@ -49,48 +52,45 @@ export class RequestTypeComponent implements OnInit {
 
   inActiveRequest(request_details: RequestTypeList) {
     if (!request_details.is_active) {
-      this.message = '¿Seguro que desea Inactivar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Inactivar tipo de solicitud?';
       this.visibleDialog = true;
       request_details.is_active = 0;
     } else {
-      this.message = '¿Seguro que desea Activar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Activar tipo de solicitud?';
       this.visibleDialog = true;
       request_details.is_active = 1;
     }
     this.request_details = request_details;
   }
-  editRequest(request_details: ApplicantTypeList) {
-    /*this.message = '¿Seguro que desea Invisibilizar este responsable de solicitud?';
-    this.visibleDialog = true;
-    user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
-        if (response.code === 200) {
-          this.userList = response.data;
-        } else {
-          console.log(this.userList);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });*/
+  editRequestType(request_details: RequestTypeList) {
+    this.inputForm = [
+      request_details['request_type_name'],
+      request_details['request_type_description'],
+      request_details['request_type_id'],
+    ];
+    this.visibleDialogInput = true;
+    this.buttonmsg = 'Modificar';
+    this.message = 'Modificar tipo de solicitud';
+    this.enableCreate = false;
+    this.parameter = [
+      'Tipo de solicitud',
+      'Escriba nombre',
+      'Descripción de solicitud',
+      'Escriba descripción',
+    ];
   }
-  createUser() {}
 
   createRequestType() {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
     this.parameter = [
-      'tipo de solicitud',
+      'Tipo de solicitud',
       'Escriba nombre',
       'Descripción de solicitud',
       'Escriba descripción',
     ];
     this.message = 'Crear tipo de solicitud';
+    this.enableCreate = true;
   }
 
   closeDialog(value: boolean) {
@@ -111,33 +111,56 @@ export class RequestTypeComponent implements OnInit {
         },
       });
     }
+    this.ngOnInit();
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
-    if (value) {
-      // accion de eliminar
-    }
+    this.enableAction = value;
   }
   setParameter(inputValue: string[]) {
-    console.log(inputValue);
-    const payload = {
-      request_type_name: inputValue[0],
-      request_type_description: inputValue[1],
-    };
-    console.log(payload);
-    this.userService.createRequestType(payload).subscribe({
-      next: (response: BodyResponse<string>) => {
-        if (response.code === 200) {
-          this.ngOnInit();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
+    if (!this.enableAction) {
+      return;
+    } else if (this.enableCreate) {
+      const payload = {
+        request_type_name: inputValue[0],
+        request_type_description: inputValue[1],
+      };
+      console.log(inputValue);
+      this.userService.createRequestType(payload).subscribe({
+        next: (response: BodyResponse<string>) => {
+          if (response.code === 200) {
+            this.ngOnInit();
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    } else {
+      const payload = {
+        request_type_name: inputValue[0],
+        request_type_description: inputValue[1],
+        request_type_id: Number(inputValue[2]),
+      };
+      console.log(inputValue);
+      this.userService.modifyRequestType(payload).subscribe({
+        next: (response: BodyResponse<string>) => {
+          if (response.code === 200) {
+            this.ngOnInit();
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
   }
 }

@@ -25,6 +25,7 @@ export class ApplicantRequestComponent implements OnInit {
   message = '';
   buttonmsg = '';
   parameter = [''];
+  enableAction: boolean = false;
   constructor(
     private userService: Users,
     private router: Router
@@ -92,13 +93,12 @@ export class ApplicantRequestComponent implements OnInit {
           },
         });
     }
+    this.ngOnInit();
   }
 
   closeDialogSelector(value: boolean) {
     this.visibleDialogSelector = false;
-    if (value) {
-      // accion de eliminar
-    }
+    this.enableAction = value;
   }
 
   associateRequestsType() {
@@ -109,19 +109,23 @@ export class ApplicantRequestComponent implements OnInit {
   }
 
   setParameter(inputValue: AssociateApplicantRequest) {
-    this.userService.createAssociationApplicantRequest(inputValue).subscribe({
-      next: (response: BodyResponse<string>) => {
-        if (response.code === 200) {
-          this.ngOnInit();
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
+    if (!this.enableAction) {
+      return;
+    } else {
+      this.userService.createAssociationApplicantRequest(inputValue).subscribe({
+        next: (response: BodyResponse<string>) => {
+          if (response.code === 200) {
+            this.ngOnInit();
+          } else {
+          }
+        },
+        error: (err: any) => {
+          console.log(err);
+        },
+        complete: () => {
+          console.log('La suscripción ha sido completada.');
+        },
+      });
+    }
   }
 }

@@ -12,9 +12,11 @@
       scrollHeight="800px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="80"
-      [columns]="cols"
-      selectionMode="multiple"
-      [(selection)]="selectedProducts"
+      selectionMode="single"
+      [(selection)]="selectedRequests"
+      dataKey="id"
+      stateStorage="session"
+      stateKey="statedemo-session"
       [exportHeader]="'customExportHeader'"
       [paginator]="true"
       [rows]="5"
@@ -39,7 +41,6 @@
           <th pSortableColumn="applicant_name" style="width: 10%">
             Nombre empresa/Solicitante<p-sortIcon field="applicant_name"></p-sortIcon>
           </th>
-
           <th pSortableColumn="request_type_name" style="width: 10%">
             Tipo de solicitud<p-sortIcon field="request_type_name"></p-sortIcon>
           </th>
@@ -55,7 +56,98 @@
           <th style="width: 5%"></th>
           <th style="width: 10%"></th>
         </tr>
+        <!--<tr>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_number', 'contains')"
+              placeholder="Search by Name"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_date', 'contains')"
+              placeholder="Search by Country"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_type_name', 'contains')"
+              placeholder="Search by Representative"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'doc_id', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_name', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_type_name', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'status_name', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_days', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+          <th>
+            <input
+              pInputText
+              type="text"
+              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'assigned_user', 'contains')"
+              placeholder="Search by Status"
+              class="w-full" />
+          </th>
+        </tr>-->
       </ng-template>
+      <!--<ng-template pTemplate="body" let-requestList let-columns="columns">
+        <tr [pSelectableRow]="requestList">
+          <td *ngFor="let col of columns">
+            {{ requestList[col.field] }}
+          </td>
+      <ng-template pTemplate="body" let-requestList let-columns="columns">
+        <tr [pSelectableRow]="requestList">
+          <td>
+            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
+          </td>
+          <td>
+            <p-button
+              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
+              (click)="assignRequest(requestList)"></p-button>
+          </td>
+        </tr>
+      </ng-template>-->
       <ng-template pTemplate="body" let-requestList>
         <tr>
           <td>{{ requestList.filing_number }}</td>

@@ -3,3 +3,7 @@ export interface BodyResponse<T> {
   message: string;
   data: T;
 }
+export interface ZionResponse {
+  estado: string;
+  mensaje: string;
+}

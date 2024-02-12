@@ -40,7 +40,7 @@
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
-              (click)="editRequest(requestTypeList)"></p-button>
+              (click)="editRequestType(requestTypeList)"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -62,6 +62,7 @@
   [message]="message"
   [buttonmsg]="buttonmsg"
   [parameter]="parameter"
+  [inputForm]="inputForm"
   [twoFields]="true"
   (setRta)="closeDialogInput($event)"
   (setRtaParameter)="setParameter($event)"></app-modal-input>
