@@ -129,13 +129,8 @@ export class RequestManagerComponent implements OnInit {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
     this.twoFields = false;
-    this.parameter = [
-      'tipo de solicitante',
-      'Escriba nombre',
-      'Descripción del solicitante',
-      'Escriba descripción',
-    ];
-    this.message = 'Crear tipo de solicitante';
+    this.parameter = ['Crear Responsable', 'Escriba nombre'];
+    this.message = 'Crear Responsable';
     this.informative = true;
   }
   closeDialogInput(value: boolean) {
