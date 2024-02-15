@@ -109,6 +109,8 @@ export class ApplicantRequestComponent implements OnInit {
   }
 
   setParameter(inputValue: AssociateApplicantRequest) {
+    console.log(inputValue);
+    console.log(this.enableAction);
     if (!this.enableAction) {
       return;
     } else {
@@ -127,5 +129,6 @@ export class ApplicantRequestComponent implements OnInit {
         },
       });
     }
+    this.ngOnInit();
   }
 }

@@ -82,8 +82,8 @@ export class ModalSelectorComponent implements OnInit {
     console.log(this.applicantTypeList);
   }
 
-  closeDialog() {
-    this.setRta.emit(false);
+  closeDialog(value: boolean) {
+    this.setRta.emit(value);
     this.inputValue = [this.inputValue1, this.inputValue2];
     const payload: AssociateApplicantRequest = {
       applicant_type_id: this.formGroup.controls['selectedApplicant'].value['applicant_type_id'],
