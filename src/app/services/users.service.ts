@@ -10,6 +10,7 @@ import {
   AssignUserRequest,
   AssociateApplicantRequest,
   AssociationApplicantRequestList,
+  CategoryList,
   CreateApplicantType,
   CreateRequestType,
   ModalityList,
@@ -274,6 +275,41 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_MODALITY}`,
+      payload,
+      { headers }
+    );
+  }
+  getCategoryList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<CategoryList[]>>(
+      `${environment.API_PUBLIC}${RoutesApp.CATEGORY_LIST}`,
+      { headers }
+    );
+  }
+  inactivateCategory(payload: CategoryList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_CATEGORY}`,
+      payload,
+      { headers }
+    );
+  }
+  modifyCategory(payload: CategoryList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${RoutesApp.UPDATE_CATEGORY}`,
       payload,
       { headers }
     );

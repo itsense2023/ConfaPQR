@@ -117,7 +117,17 @@ export interface ModalityList {
   updated_by?: string;
   updated_date?: string;
 }
-
+export interface CategoryList {
+  category_id: number;
+  category_name: string;
+  tipology_name: string;
+  cause_name: string;
+  is_active?: number | boolean;
+  created_by?: string;
+  created_date?: string;
+  updated_by?: string;
+  updated_date?: string;
+}
 export interface Column {
   field: string;
   header: string;

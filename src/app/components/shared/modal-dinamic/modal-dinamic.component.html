@@ -16,7 +16,7 @@
       </div>
       <div *ngIf="login">
         <div class="row my-4 px-5">
-          <div class="col-12 text-center modal-content error-label">INGRESO INVALIDO</div>
+          <div class="col-12 text-center modal-content error-label">INGRESO INVÁLIDO</div>
         </div>
         <div class="row my-4 px-5">
           <div class="col-12 text-center">{{ message }}</div>
@@ -34,7 +34,7 @@
         <div class="row my-4 px-5" *ngIf="!informative">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button label="No" severity="secondary" (click)="closeDialog(false)"></p-button>
-            <p-button label="Si" severity="danger" (click)="closeDialog(true)"></p-button>
+            <p-button label="Sí" severity="danger" (click)="closeDialog(true)"></p-button>
           </div>
         </div>
         <div class="row my-4 px-5" *ngIf="informative">

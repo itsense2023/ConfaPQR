@@ -56,12 +56,12 @@ export class ApplicantTypeComponent implements OnInit {
   inActiveApplicant(applicant_type_details: ApplicantTypeList) {
     if (!applicant_type_details.is_active) {
       console.log('Inactivar');
-      this.message = '¿Seguro que desea Inactivar tipo de aplicante?';
+      this.message = '¿Seguro que desea Inactivar tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 0;
     } else {
       console.log('Activar');
-      this.message = '¿Seguro que desea Activar tipo de aplicante?';
+      this.message = '¿Seguro que desea Activar tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 1;
     }

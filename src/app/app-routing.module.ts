@@ -51,6 +51,13 @@ const routes: Routes = [
       import('./components/private/modality/modality.module').then(m => m.ModalityModule),
   },
   {
+    path: RoutesApp.CATEGORY,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/category/category.module').then(m => m.CategoryModule),
+  },
+  {
     path: RoutesApp.SEARCH_REQUEST,
     canActivate: [sessionGuard],
     component: LayoutComponent,
