@@ -9,6 +9,8 @@ export enum RoutesApp {
   SEARCH_REQUEST = 'search-request',
   REQUEST_REPORT = 'request-report',
   LOGOUT = 'logout',
+}
+export enum EndPointRoute {
   USERS_LIST = 'db/users',
   ALL_REQUESTS = 'request/getall',
   CREATE_USER = 'user/create',
@@ -33,4 +35,5 @@ export enum RoutesApp {
   CATEGORY_LIST = 'db/categories',
   INACTIVATE_CATEGORY = 'category/in-activate',
   UPDATE_CATEGORY = 'category/modify',
+  REQUEST_BY_APPLICANT = '/requeststypes/by',
 }
