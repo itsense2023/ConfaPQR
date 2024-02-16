@@ -3,7 +3,7 @@ import { Injectable } from '@angular/core';
 import { environment } from '../../environments/environment';
 import { BodyResponse, ZionResponse } from '../models/shared/body-response.inteface';
 import { ILogin } from '../models/login/login.interface';
-import { RoutesApp } from '../enums/routes.enum';
+import { EndPointRoute, RoutesApp } from '../enums/routes.enum';
 import { SessionStorageItems } from '../enums/session-storage-items.enum';
 import {
   ApplicantTypeList,
@@ -34,7 +34,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<UserList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.USERS_LIST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.USERS_LIST}`,
       { headers }
     );
   }
@@ -45,7 +45,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<RequestsList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.ALL_REQUESTS}`,
+      `${environment.API_PUBLIC}${EndPointRoute.ALL_REQUESTS}`,
       { headers }
     );
   }
@@ -57,7 +57,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.ASSIGN_USER_TO_REQUEST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.ASSIGN_USER_TO_REQUEST}`,
       payload,
       { headers }
     );
@@ -69,7 +69,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<ZionResponse>>(
-      `${environment.API_PUBLIC}${RoutesApp.CREATE_USER}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_USER}`,
       payload,
       { headers }
     );
@@ -82,7 +82,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<UserList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_USER}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_USER}`,
       payload,
       { headers }
     );
@@ -95,7 +95,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<UserList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.INVISIBLE_USER}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INVISIBLE_USER}`,
       payload,
       { headers }
     );
@@ -108,7 +108,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<ApplicantTypeList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.APPLICANT_TYPE_LIST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.APPLICANT_TYPE_LIST}`,
       { headers }
     );
   }
@@ -119,7 +119,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<ApplicantTypeList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_APPLICANT}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_APPLICANT}`,
       payload,
       { headers }
     );
@@ -131,7 +131,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.CREATE_APPLICANT_TYPE}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_APPLICANT_TYPE}`,
       payload,
       { headers }
     );
@@ -143,7 +143,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.MODIFY_APPLICANT_TYPE}`,
+      `${environment.API_PUBLIC}${EndPointRoute.MODIFY_APPLICANT_TYPE}`,
       payload,
       { headers }
     );
@@ -156,7 +156,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<RequestTypeList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.REQUEST_TYPE_LIST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_TYPE_LIST}`,
       { headers }
     );
   }
@@ -167,7 +167,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<RequestTypeList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_REQUEST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_REQUEST}`,
       payload,
       { headers }
     );
@@ -179,7 +179,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.CREATE_REQUEST_TYPE}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_REQUEST_TYPE}`,
       payload,
       { headers }
     );
@@ -191,7 +191,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.MODIFY_REQUEST_TYPE}`,
+      `${environment.API_PUBLIC}${EndPointRoute.MODIFY_REQUEST_TYPE}`,
       payload,
       { headers }
     );
@@ -203,7 +203,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<AssociationApplicantRequestList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.APPLICANTYPE_REQUESTYPE}`,
+      `${environment.API_PUBLIC}${EndPointRoute.APPLICANTYPE_REQUESTYPE}`,
       { headers }
     );
   }
@@ -215,7 +215,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVE_ASSOCIATE_REQUEST_APPLICANT}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVE_ASSOCIATE_REQUEST_APPLICANT}`,
       payload,
       { headers }
     );
@@ -227,7 +227,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.ASSOCIATE_REQUEST_APPLICANT}`,
+      `${environment.API_PUBLIC}${EndPointRoute.ASSOCIATE_REQUEST_APPLICANT}`,
       payload,
       { headers }
     );
@@ -239,7 +239,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<ModalityList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.MODALITY_LIST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.MODALITY_LIST}`,
       { headers }
     );
   }
@@ -250,7 +250,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.CREATE_MODALITY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_MODALITY}`,
       payload,
       { headers }
     );
@@ -262,7 +262,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.UPDATE_MODALITY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.UPDATE_MODALITY}`,
       payload,
       { headers }
     );
@@ -274,7 +274,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_MODALITY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_MODALITY}`,
       payload,
       { headers }
     );
@@ -286,7 +286,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<CategoryList[]>>(
-      `${environment.API_PUBLIC}${RoutesApp.CATEGORY_LIST}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CATEGORY_LIST}`,
       { headers }
     );
   }
@@ -297,7 +297,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.INACTIVATE_CATEGORY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_CATEGORY}`,
       payload,
       { headers }
     );
@@ -309,8 +309,19 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${RoutesApp.UPDATE_CATEGORY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.UPDATE_CATEGORY}`,
       payload,
+      { headers }
+    );
+  }
+  getRequestsTypeByApplicantType(payload: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_BY_APPLICANT}/${payload}`,
       { headers }
     );
   }
