@@ -76,7 +76,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: RoutesApp.REQUEST_REPORT,
+    path: RoutesApp.CREATE_REQUEST,
     canActivate: [sessionGuard],
     component: LayoutComponent,
     loadChildren: () =>
