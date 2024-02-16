@@ -9,6 +9,7 @@ export enum RoutesApp {
   SEARCH_REQUEST = 'search-request',
   REQUEST_REPORT = 'request-report',
   LOGOUT = 'logout',
+  CREATE_REQUEST = 'create-request',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',

@@ -80,8 +80,8 @@ const routes: Routes = [
     canActivate: [sessionGuard],
     component: LayoutComponent,
     loadChildren: () =>
-      import('./components/private/requests-report/requests-report.module').then(
-        m => m.RequestsReportModule
+      import('./components/private/create-request/create-request.module').then(
+        m => m.CreateRequestModule
       ),
   },
   { path: '', redirectTo: '/' + RoutesApp.LOGIN, pathMatch: 'full' },
