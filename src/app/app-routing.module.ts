@@ -75,6 +75,15 @@ const routes: Routes = [
         m => m.RequestsReportModule
       ),
   },
+  {
+    path: RoutesApp.CREATE_REQUEST,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/create-request/create-request.module').then(
+        m => m.CreateRequestModule
+      ),
+  },
   { path: '', redirectTo: '/' + RoutesApp.LOGIN, pathMatch: 'full' },
   // Puedes agregar una ruta comodín para manejar rutas no encontradas (opcional)
   { path: '**', redirectTo: '/login' + RoutesApp.LOGIN, pathMatch: 'full' },
