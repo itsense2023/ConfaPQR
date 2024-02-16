@@ -1,19 +1,19 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { ModalityRoutingModule } from './modality-routing.module';
+import { CategoryRoutingModule } from './category-routing.module';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
-import { ModalityComponent } from './modality.component';
+import { CategoryComponent } from './category.component';
 
 @NgModule({
-  declarations: [ModalityComponent],
+  declarations: [CategoryComponent],
   imports: [
     CommonModule,
-    ModalityRoutingModule,
+    CategoryRoutingModule,
     ButtonModule,
     TableModule,
     PaginatorModule,
@@ -21,6 +21,6 @@ import { ModalityComponent } from './modality.component';
     InputSwitchModule,
     SharedModule,
   ],
-  exports: [ModalityComponent],
+  exports: [CategoryComponent],
 })
-export class ModalityModule {}
+export class CategoryModule {}

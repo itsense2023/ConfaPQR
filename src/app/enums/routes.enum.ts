@@ -5,6 +5,7 @@ export enum RoutesApp {
   REQUEST_TYPE = 'request-type',
   APPLICANT_REQUEST = 'applicant-request',
   MODALITY = 'modality',
+  CATEGORY = 'category',
   SEARCH_REQUEST = 'search-request',
   REQUEST_REPORT = 'request-report',
   LOGOUT = 'logout',
@@ -29,4 +30,7 @@ export enum RoutesApp {
   CREATE_MODALITY = 'modality/create',
   UPDATE_MODALITY = 'modality/update',
   INACTIVATE_MODALITY = 'modality/in-activate',
+  CATEGORY_LIST = 'db/categories',
+  INACTIVATE_CATEGORY = 'category/in-activate',
+  UPDATE_CATEGORY = 'category/modify',
 }
