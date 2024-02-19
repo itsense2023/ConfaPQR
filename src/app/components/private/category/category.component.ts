@@ -15,7 +15,7 @@ export class CategoryComponent implements OnInit {
   categoryList!: CategoryList[];
   ingredient!: string;
   visibleDialog = false;
-  visibleDialogModality = false;
+  visibleDialogCategory = false;
   message = '';
   parameter = [''];
   buttonmsg = '';
@@ -66,21 +66,23 @@ export class CategoryComponent implements OnInit {
     this.category_details = category_details;
   }
   displayModality(category_details: CategoryList) {
-    this.visibleDialogModality = true;
+    this.visibleDialogCategory = true;
     this.buttonmsg = '';
     this.message = 'Detalles de modalidad';
     this.read_only = true;
+    this.enableCreate = false;
     this.category_details = category_details;
   }
   editModality(category_details: CategoryList) {
-    this.visibleDialogModality = true;
+    this.visibleDialogCategory = true;
     this.buttonmsg = 'Modificar';
     this.message = 'Modificar modalidad';
     this.read_only = false;
+    this.enableCreate = false;
     this.category_details = category_details;
   }
   createModality() {
-    this.visibleDialogModality = true;
+    this.visibleDialogCategory = true;
     this.buttonmsg = 'Crear';
     this.message = 'Crear modalidad';
     this.read_only = false;
@@ -88,17 +90,18 @@ export class CategoryComponent implements OnInit {
   }
 
   closeDialogModality(value: boolean) {
-    this.visibleDialogModality = false;
+    this.visibleDialogCategory = false;
     this.enableAction = value;
     if (value) {
       //
     }
   }
   setParameter(category_details: CategoryList) {
+    console.log(category_details);
     /*if (!this.enableAction || this.read_only) {
       return;
     } else if (this.enableCreate) {
-      this.userService.createModality(category_details).subscribe({
+      this.userService.createCategory(category_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
             this.ngOnInit();
@@ -113,7 +116,7 @@ export class CategoryComponent implements OnInit {
         },
       });
     } else {
-      this.userService.modifyModality(category_details).subscribe({
+      this.userService.modifyCategory(category_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
             this.ngOnInit();

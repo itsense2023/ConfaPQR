@@ -5,6 +5,8 @@ import { ModalInputModule } from './modal-input/modal-input.module';
 import { ModalSelectorModule } from './modal-selector/modal-selector.module';
 import { ModalModalityModule } from './modal-modality/modal-modality.module';
 import { ModalAssignSelectorModule } from './modal-assign-selector/modal-assign-selector.module';
+import { ModalCategoryComponent } from './modal-category/modal-category.component';
+import { ModalCategoryModule } from './modal-category/modal-category.module';
 
 @NgModule({
   declarations: [],
@@ -14,6 +16,7 @@ import { ModalAssignSelectorModule } from './modal-assign-selector/modal-assign-
     ModalInputModule,
     ModalSelectorModule,
     ModalModalityModule,
+    ModalCategoryModule,
   ],
   exports: [
     ModalDinamicModule,
@@ -21,6 +24,7 @@ import { ModalAssignSelectorModule } from './modal-assign-selector/modal-assign-
     ModalSelectorModule,
     ModalModalityModule,
     ModalAssignSelectorModule,
+    ModalCategoryModule,
   ],
 })
 export class SharedModule {}

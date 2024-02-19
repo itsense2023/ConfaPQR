@@ -10,28 +10,37 @@
   <div class="col-12">
     <p-table
       [value]="categoryList"
+      [scrollable]="true"
+      scrollHeight="400px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="80"
+      selectionMode="single"
       [paginator]="true"
-      [rows]="5"
+      [rows]="20"
       [showCurrentPageReport]="true"
       [tableStyle]="{ 'min-width': '50rem' }"
       currentPageReportTemplate="{first} de {totalRecords}"
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 5%">Código</th>
+          <th pSortableColumn="category_id" style="width: 5%">
+            Código<p-sortIcon field="category_id"></p-sortIcon>
+          </th>
           <th style="width: 10%">Categoría</th>
           <th style="width: 25%">Tipología</th>
           <th style="width: 35%">Causa y/o Subtipología</th>
+          <th style="width: 2%">Modalidad</th>
           <th style="width: 10%">Estado</th>
-          <th style="width: 15%"></th>
+          <th style="width: 23%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoryList>
         <tr>
-          <td>{{ categoryList.category_id }}</td>
-          <td>{{ categoryList.category_name }}</td>
-          <td>{{ categoryList.tipology_name }}</td>
-          <td>{{ categoryList.cause_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_id }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.tipology_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.cause_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.modality_name }}</td>
           <td class="d-flex">
             <p-inputSwitch
               [(ngModel)]="categoryList.is_active"
@@ -65,13 +74,13 @@
   [message]="message"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
 
-<!--<app-modal-modality
-  *ngIf="visibleDialogModality"
+<app-modal-category
+  *ngIf="visibleDialogCategory"
   [select]="true"
-  [visible]="visibleDialogModality"
+  [visible]="visibleDialogCategory"
   [message]="message"
   [buttonmsg]="buttonmsg"
   [read_only]="read_only"
   [categoryForm]="category_details"
   (setRta)="closeDialogModality($event)"
-  (setRtaParameter)="setParameter($event)"></app-modal-modality>-->
+  (setRtaParameter)="setParameter($event)"></app-modal-category>
