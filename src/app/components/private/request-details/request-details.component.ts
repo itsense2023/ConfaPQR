@@ -5,11 +5,11 @@ import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
 
 @Component({
-  selector: 'app-search-request',
-  templateUrl: './search-request.component.html',
-  styleUrl: './search-request.component.scss',
+  selector: 'app-request-details',
+  templateUrl: './request-details.component.html',
+  styleUrl: './request-details.component.scss',
 })
-export class SearchRequestComponent implements OnInit {
+export class RequestDetailsComponent implements OnInit {
   requestList: RequestsList[] = [];
   ingredient!: string;
   visibleDialog = false;

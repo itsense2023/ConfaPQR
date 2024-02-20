@@ -98,7 +98,7 @@ export class CategoryComponent implements OnInit {
   }
   setParameter(category_details: CategoryList) {
     console.log(category_details);
-    /*if (!this.enableAction || this.read_only) {
+    if (!this.enableAction || this.read_only) {
       return;
     } else if (this.enableCreate) {
       this.userService.createCategory(category_details).subscribe({
@@ -130,7 +130,7 @@ export class CategoryComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
-    }*/
+    }
   }
 
   closeDialog(value: boolean) {

@@ -43,12 +43,12 @@
           </div>
           <div class="col-12">
             <label> Nombre de causa </label>
-            <input
-              [readonly]="read_only"
-              formControlName="cause_name"
-              pInputText
-              pKeyFilter="string"
-              placeholder="Escriba nombre" />
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              placeholder="Escriba nombre"
+              formControlName="cause_name"></textarea>
           </div>
           <div class="col-12">
             <label> Modalidad </label>
@@ -56,6 +56,7 @@
               formControlName="modality_id"
               [options]="modalityList"
               optionLabel="modality_name"
+              optionValue="modality_id"
               placeholder="Seleccione una opción"></p-dropdown>
           </div>
         </div>
