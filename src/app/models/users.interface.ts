@@ -108,9 +108,6 @@ export interface AssociateApplicantRequest {
 export interface ModalityList {
   modality_id: number;
   modality_name: string;
-  category_name: string;
-  tipology_name: string;
-  cause: string;
   is_active?: number | boolean;
   created_by?: string;
   created_date?: string;
@@ -122,6 +119,8 @@ export interface CategoryList {
   category_name: string;
   tipology_name: string;
   cause_name: string;
+  modality_id?: number;
+  modality_name?: string;
   is_active?: number | boolean;
   created_by?: string;
   created_date?: string;

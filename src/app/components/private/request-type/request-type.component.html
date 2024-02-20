@@ -10,8 +10,13 @@
   <div class="col-12">
     <p-table
       [value]="requestTypeList"
+      [scrollable]="true"
+      scrollHeight="400px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="80"
+      selectionMode="single"
       [paginator]="true"
-      [rows]="5"
+      [rows]="10"
       [showCurrentPageReport]="true"
       [tableStyle]="{ 'min-width': '50rem' }"
       currentPageReportTemplate="{first} de {totalRecords}"

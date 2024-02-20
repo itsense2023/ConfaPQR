@@ -1,6 +1,6 @@
 <div class="row mb-2">
   <div class="col-10">
-    <div class="title-page">Parametrizar modalidad, categoría, tipología y causa</div>
+    <div class="title-page">Parametrizar modalidad</div>
   </div>
   <div class="col-2">
     <p-button label="Crear modalidad" (click)="createModality()"></p-button>
@@ -10,6 +10,11 @@
   <div class="col-12">
     <p-table
       [value]="modalityList"
+      [scrollable]="true"
+      scrollHeight="400px"
+      [virtualScroll]="true"
+      [virtualScrollItemSize]="80"
+      selectionMode="single"
       [paginator]="true"
       [rows]="5"
       [showCurrentPageReport]="true"
@@ -18,11 +23,10 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 10%">Código</th>
+          <th pSortableColumn="modality_id" style="width: 10%">
+            Código<p-sortIcon field="modality_id"></p-sortIcon>
+          </th>
           <th style="width: 15%">Modalidad</th>
-          <th style="width: 15%">Categoría</th>
-          <th style="width: 15%">Tipología</th>
-          <th style="width: 15%">Causa</th>
           <th style="width: 15%">Estado</th>
           <th style="width: 15%"></th>
         </tr>
@@ -31,9 +35,6 @@
         <tr>
           <td>{{ modalityList.modality_id }}</td>
           <td>{{ modalityList.modality_name }}</td>
-          <td>{{ modalityList.category_name }}</td>
-          <td>{{ modalityList.tipology_name }}</td>
-          <td>{{ modalityList.cause }}</td>
           <td class="d-flex">
             <p-inputSwitch
               [(ngModel)]="modalityList.is_active"

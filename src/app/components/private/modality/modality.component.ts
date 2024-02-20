@@ -3,7 +3,7 @@ import { IRequestManager } from '../../../models/request-manager/request-manager
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { ModalityList, UserList } from '../../../models/users.interface';
+import { ModalityList } from '../../../models/users.interface';
 
 @Component({
   selector: 'app-modality',
@@ -55,11 +55,11 @@ export class ModalityComponent implements OnInit {
 
   inActiveModality(modality_details: ModalityList) {
     if (!modality_details.is_active) {
-      this.message = '¿Seguro que desea inactivar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Inactivar modalidad?';
       this.visibleDialog = true;
       modality_details.is_active = 0;
     } else {
-      this.message = '¿Seguro que desea activar este responsable de solicitud?';
+      this.message = '¿Seguro que desea Activar modalidad?';
       this.visibleDialog = true;
       modality_details.is_active = 1;
     }
@@ -70,6 +70,7 @@ export class ModalityComponent implements OnInit {
     this.buttonmsg = '';
     this.message = 'Detalles de modalidad';
     this.read_only = true;
+    this.enableCreate = false;
     this.modality_details = modality_details;
   }
   editModality(modality_details: ModalityList) {
@@ -77,6 +78,7 @@ export class ModalityComponent implements OnInit {
     this.buttonmsg = 'Modificar';
     this.message = 'Modificar modalidad';
     this.read_only = false;
+    this.enableCreate = false;
     this.modality_details = modality_details;
   }
   createModality() {
@@ -128,6 +130,7 @@ export class ModalityComponent implements OnInit {
         },
       });
     }
+    this.ngOnInit();
   }
 
   closeDialog(value: boolean) {

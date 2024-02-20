@@ -10,6 +10,7 @@ export enum RoutesApp {
   REQUEST_REPORT = 'request-report',
   LOGOUT = 'logout',
   CREATE_REQUEST = 'create-request',
+  REQUEST_DETAILS = 'request-details',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',
@@ -31,9 +32,10 @@ export enum EndPointRoute {
   MODIFY_REQUEST_TYPE = 'requestype/modify',
   MODALITY_LIST = 'db/modalities',
   CREATE_MODALITY = 'modality/create',
-  UPDATE_MODALITY = 'modality/update',
+  UPDATE_MODALITY = 'modality/modify',
   INACTIVATE_MODALITY = 'modality/in-activate',
   CATEGORY_LIST = 'db/categories',
+  CREATE_CATEGORY = 'category/create',
   INACTIVATE_CATEGORY = 'category/in-activate',
   UPDATE_CATEGORY = 'category/modify',
   REQUEST_BY_APPLICANT = '/requeststypes/by',
