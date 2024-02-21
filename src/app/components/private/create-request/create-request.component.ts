@@ -15,6 +15,9 @@ import { Router } from '@angular/router';
   templateUrl: './create-request.component.html',
   styleUrl: './create-request.component.scss',
 })
+<<<<<<< HEAD
+export class CreateRequestComponent {}
+=======
 export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
@@ -77,3 +80,4 @@ export class CreateRequestComponent {
     this.router.navigate(['request-form']);
   }
 }
+>>>>>>> 3802a5e38d9289994d90e15a96698621ca3b63d7

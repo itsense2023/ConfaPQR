@@ -18,19 +18,46 @@
             <label> Código </label>
             <input
               [readonly]="read_only"
-              formControlName="modality_id"
+              formControlName="category_id"
               pInputText
               pKeyFilter="integer"
               placeholder="000" />
           </div>
           <div class="col-12">
-            <label> Nombre de modalidad </label>
+            <label> Nombre de categoria </label>
             <input
               [readonly]="read_only"
-              formControlName="modality_name"
+              formControlName="category_name"
               pInputText
               pKeyFilter="string"
               placeholder="Escriba nombre" />
+          </div>
+          <div class="col-12">
+            <label> Nombre de tipología </label>
+            <input
+              [readonly]="read_only"
+              formControlName="tipology_name"
+              pInputText
+              pKeyFilter="string"
+              placeholder="Escriba nombre" />
+          </div>
+          <div class="col-12">
+            <label> Nombre de causa </label>
+            <textarea
+              rows="5"
+              cols="30"
+              pInputTextarea
+              placeholder="Escriba nombre"
+              formControlName="cause_name"></textarea>
+          </div>
+          <div class="col-12">
+            <label> Modalidad </label>
+            <p-dropdown
+              formControlName="modality_id"
+              [options]="modalityList"
+              optionLabel="modality_name"
+              optionValue="modality_id"
+              placeholder="Seleccione una opción"></p-dropdown>
           </div>
         </div>
       </form>

@@ -61,7 +61,7 @@
             <input
               pInputText
               type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_number', 'contains')"
+              (input)="dt && dt.filter(($event.target as HTMLInputElement).value, 'filing_number', 'contains')"
               placeholder="Search by Name"
               class="w-full" />
           </th>
@@ -160,7 +160,10 @@
           <td>{{ requestList.request_days }}</td>
           <td>{{ requestList.assigned_user }}</td>
           <td>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
+            <p-button
+              icon="pi pi-eye"
+              [styleClass]="'btn-icon-info'"
+              (click)="redirectDetails(requestList.request_id)"></p-button>
           </td>
           <td>
             <p-button

@@ -86,6 +86,15 @@ const routes: Routes = [
       ),
   },
   {
+    path: RoutesApp.REQUEST_DETAILS + '/:id',
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/request-details/request-details.module').then(
+        m => m.RequestDetailsModule
+      ),
+  },
+  {
     path: RoutesApp.REQUEST_FORM,
     canActivate: [sessionGuard],
     component: LayoutRequestComponent,

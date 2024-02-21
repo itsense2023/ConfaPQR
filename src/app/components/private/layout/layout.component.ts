@@ -15,7 +15,8 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     const arrayAlmacenado = sessionStorage.getItem(SessionStorageItems.MENU);
-    this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado) : [];
+    console.log(arrayAlmacenado?.replaceAll('_', '-'));
+    this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado.replaceAll('_', '-')) : [];
   }
 
   onNodeSelect(event: any): void {

@@ -1,16 +1,15 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
-import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
-  selector: 'app-search-request',
-  templateUrl: './search-request.component.html',
-  styleUrl: './search-request.component.scss',
+  selector: 'app-request-details',
+  templateUrl: './request-details.component.html',
+  styleUrl: './request-details.component.scss',
 })
-export class SearchRequestComponent implements OnInit {
+export class RequestDetailsComponent implements OnInit {
   requestList: RequestsList[] = [];
   ingredient!: string;
   visibleDialog = false;
@@ -20,12 +19,19 @@ export class SearchRequestComponent implements OnInit {
   parameter = [''];
   request_details!: RequestsList;
   selectedRequests!: RequestsList[];
+  request_id: number = 0;
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.request_id = +params['id']; // Convert parameter to number
+      // Fetch additional data based on id if needed
+    });
+    console.log(this.request_id);
     this.getRequestList();
   }
 
@@ -34,7 +40,6 @@ export class SearchRequestComponent implements OnInit {
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
-          console.log(this.requestList);
         } else {
         }
       },
@@ -108,8 +113,5 @@ export class SearchRequestComponent implements OnInit {
         },
       });
     }
-  }
-  redirectDetails(request_id: number) {
-    this.router.navigate([RoutesApp.REQUEST_DETAILS, request_id]);
   }
 }

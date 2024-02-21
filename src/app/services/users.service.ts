@@ -290,14 +290,14 @@ export class Users {
       { headers }
     );
   }
-  inactivateCategory(payload: CategoryList) {
+  createCategory(payload: CategoryList) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: token || '',
     });
     return this.http.post<BodyResponse<string>>(
-      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_CATEGORY}`,
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_CATEGORY}`,
       payload,
       { headers }
     );
@@ -310,6 +310,18 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${EndPointRoute.UPDATE_CATEGORY}`,
+      payload,
+      { headers }
+    );
+  }
+  inactivateCategory(payload: CategoryList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_CATEGORY}`,
       payload,
       { headers }
     );
