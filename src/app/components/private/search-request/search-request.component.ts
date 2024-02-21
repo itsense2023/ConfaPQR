@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
+import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
   selector: 'app-search-request',
@@ -33,6 +34,7 @@ export class SearchRequestComponent implements OnInit {
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
+          console.log(this.requestList);
         } else {
         }
       },
@@ -106,5 +108,8 @@ export class SearchRequestComponent implements OnInit {
         },
       });
     }
+  }
+  redirectDetails(request_id: number) {
+    this.router.navigate([RoutesApp.REQUEST_DETAILS, request_id]);
   }
 }

@@ -85,7 +85,7 @@ const routes: Routes = [
       ),
   },
   {
-    path: RoutesApp.REQUEST_DETAILS,
+    path: RoutesApp.REQUEST_DETAILS + '/:id',
     canActivate: [sessionGuard],
     component: LayoutComponent,
     loadChildren: () =>

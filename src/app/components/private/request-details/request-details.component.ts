@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
@@ -19,12 +19,19 @@ export class RequestDetailsComponent implements OnInit {
   parameter = [''];
   request_details!: RequestsList;
   selectedRequests!: RequestsList[];
+  request_id: number = 0;
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {}
 
   ngOnInit() {
+    this.route.params.subscribe(params => {
+      this.request_id = +params['id']; // Convert parameter to number
+      // Fetch additional data based on id if needed
+    });
+    console.log(this.request_id);
     this.getRequestList();
   }
 
