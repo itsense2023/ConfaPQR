@@ -11,6 +11,7 @@ import { SharedModule } from '../../shared/shared.module';
 import { RequestDetailsComponent } from './request-details.component';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
+import { DatePipe } from '@angular/common';
 
 @NgModule({
   declarations: [RequestDetailsComponent],
@@ -25,6 +26,7 @@ import { TabViewModule } from 'primeng/tabview';
     SharedModule,
     CardModule,
     TabViewModule,
+    DatePipe,
   ],
   exports: [RequestDetailsComponent],
 })

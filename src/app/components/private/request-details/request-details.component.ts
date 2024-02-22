@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { RequestsList } from '../../../models/users.interface';
+import { RequestHistoric, RequestsDetails, RequestsList } from '../../../models/users.interface';
 
 @Component({
   selector: 'app-request-details',
@@ -11,13 +11,16 @@ import { RequestsList } from '../../../models/users.interface';
 })
 export class RequestDetailsComponent implements OnInit {
   requestList: RequestsList[] = [];
+  requestDetails!: RequestsDetails;
+  requestHistoric: RequestHistoric[] = [];
+  requestHistoricAttach: RequestHistoric[] = [];
   ingredient!: string;
   visibleDialog = false;
   visibleDialogInput = false;
   message = '';
   buttonmsg = '';
   parameter = [''];
-  request_details!: RequestsList;
+  request_details!: RequestsDetails;
   selectedRequests!: RequestsList[];
   request_id: number = 0;
   constructor(
@@ -28,13 +31,49 @@ export class RequestDetailsComponent implements OnInit {
 
   ngOnInit() {
     this.route.params.subscribe(params => {
-      this.request_id = +params['id']; // Convert parameter to number
-      // Fetch additional data based on id if needed
+      this.request_id = +params['id'];
     });
-    console.log(this.request_id);
-    this.getRequestList();
+    this.getRequestDetails(this.request_id);
+    this.getRequestHistoric(this.request_id);
   }
-
+  getRequestDetails(request_id: number) {
+    this.userService.getRequestDetails(request_id).subscribe({
+      next: (response: BodyResponse<RequestsDetails>) => {
+        if (response.code === 200) {
+          this.requestDetails = response.data;
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getRequestHistoric(request_id: number) {
+    this.userService.getRequestHistoric(request_id).subscribe({
+      next: (response: BodyResponse<RequestHistoric[]>) => {
+        if (response.code === 200) {
+          //this.requestHistoric = response.data;
+          this.requestHistoricAttach = response.data.filter(
+            item => item.action === 'Archivos adjuntos'
+          );
+          this.requestHistoric = response.data.filter(item => item.action !== 'Archivos adjuntos');
+          console.log(this.requestHistoric);
+          console.log(this.requestHistoricAttach);
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
   getRequestList() {
     this.userService.getRequestList().subscribe({
       next: (response: BodyResponse<RequestsList[]>) => {
@@ -52,7 +91,7 @@ export class RequestDetailsComponent implements OnInit {
     });
   }
 
-  assignRequest(request_details: RequestsList) {
+  assignRequest(request_details: RequestsDetails) {
     if (request_details.assigned_user == null) {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
@@ -64,22 +103,6 @@ export class RequestDetailsComponent implements OnInit {
     this.parameter = ['Usuario'];
     this.request_details = request_details;
     console.log(request_details);
-    /*user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
-        if (response.code === 200) {
-          this.userList = response.data;
-        } else {
-          console.log(this.userList);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });*/
   }
 
   closeDialog(value: boolean) {
@@ -97,6 +120,7 @@ export class RequestDetailsComponent implements OnInit {
   setParameter(inputValue: string) {
     console.log(inputValue);
     this.request_details['assigned_user'] = inputValue;
+    console.log(this.request_details);
     if (inputValue) {
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {
@@ -113,5 +137,6 @@ export class RequestDetailsComponent implements OnInit {
         },
       });
     }
+    this.ngOnInit();
   }
 }

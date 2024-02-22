@@ -5,41 +5,199 @@
 </div>
 
 <div class="card">
-  <p-card header="Title">
-    <p class="m-0">
-      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Inventore sed consequuntur error
-      repudiandae numquam deserunt quisquam repellat libero asperiores earum nam nobis, culpa
-      ratione quam perferendis esse, cupiditate neque quas!
-    </p>
+  <p-card>
+    <ul class="list-unstyled">
+      <div class="container">
+        <div class="row">
+          <div class="col">
+            <label> # Radicado </label>
+            <li>{{ requestDetails.filing_number }}</li>
+          </div>
+          <div class="col">
+            <label> Fecha de radicación </label>
+            <li>{{ requestDetails.filing_date }}</li>
+          </div>
+          <div class="col">
+            <label> Tipo de solicitante </label>
+            <li>{{ requestDetails.applicant_type_name }}</li>
+          </div>
+          <div class="col">
+            <label> Número de documento </label>
+            <li>{{ requestDetails.doc_id }}</li>
+          </div>
+          <div class="col">
+            <label> Nombre de empresa/solicitante </label>
+            <li>{{ requestDetails.applicant_name }}</li>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col">
+            <label> Estado </label>
+            <li>{{ requestDetails.status_name }}</li>
+          </div>
+          <div class="col">
+            <label> Días de solicitud </label>
+            <li>{{ requestDetails.request_days }}</li>
+          </div>
+          <div class="col">
+            <label> Responsable de solicitud </label>
+            <li>{{ requestDetails.assigned_user }}</li>
+          </div>
+          <div class="col">
+            <label> Tipo de solicitud </label>
+            <li>{{ requestDetails.request_type_name }}</li>
+          </div>
+        </div>
+      </div>
+    </ul>
   </p-card>
 </div>
 <div class="card">
+  <div class="container-button">
+    <p-button
+      [label]="requestDetails.assigned_user === null ? 'Asignar' : 'Reasignar'"
+      (click)="assignRequest(requestDetails)"></p-button>
+  </div>
   <p-tabView>
     <p-tabPanel>
       <ng-template pTemplate="header">
         <i class="pi pi-calendar"></i>
         <span>Radicación</span>
       </ng-template>
-      <p>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut
-        labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
-        laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
-        voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat
-        cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-      </p>
+      <ul class="list-unstyled">
+        <div class="container">
+          <div class="row">
+            <div class="col">
+              <label> ID </label>
+              <li>{{ requestDetails.request_id }}</li>
+            </div>
+            <div class="col">
+              <label> Número de radicado </label>
+              <li>{{ requestDetails.filing_number }}</li>
+            </div>
+            <div class="col">
+              <label> Fecha de radicación </label>
+              <li>{{ requestDetails.filing_date }}</li>
+            </div>
+            <div class="col">
+              <label> Hora de radicación </label>
+              <li>{{ requestDetails.filing_time }}</li>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label> Estado solicitud </label>
+              <li>{{ requestDetails.status_name }}</li>
+            </div>
+            <div class="col">
+              <label> Tipo de solicitante </label>
+              <li>{{ requestDetails.applicant_type_name }}</li>
+            </div>
+            <div class="col">
+              <label> Tipo de solicitud </label>
+              <li>{{ requestDetails.request_type_name }}</li>
+            </div>
+            <div class="col">
+              <label> Tratamiento de datos </label>
+              <li>{{ requestDetails.data_treatment ? 'Aceptado' : 'Negado' }}</li>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label> Tipo de documento </label>
+              <li>{{ requestDetails.catalog_item_name }}</li>
+            </div>
+            <div class="col">
+              <label> Número de documento </label>
+              <li>{{ requestDetails.doc_id }}</li>
+            </div>
+            <div class="col">
+              <label> Nombre de empresa o solicitante </label>
+              <li>{{ requestDetails.applicant_name }}</li>
+            </div>
+            <div class="col">
+              <label> Correo electrónico </label>
+              <li>{{ requestDetails.applicant_email }}</li>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label> Teléfono móvil </label>
+              <li>{{ requestDetails.applicant_cellphone }}</li>
+            </div>
+            <div class="col">
+              <label> Días de solicitud </label>
+              <li>{{ requestDetails.request_days }}</li>
+            </div>
+            <div class="col">
+              <label> Responsable de solicitud </label>
+              <li>{{ requestDetails.assigned_user }}</li>
+            </div>
+          </div>
+          <div class="row">
+            <div class="col">
+              <label> Descripción solicitud </label>
+              <li>{{ requestDetails.request_description }}</li>
+            </div>
+          </div>
+        </div>
+      </ul>
     </p-tabPanel>
-    <p-tabPanel header="Header II">
+    <p-tabPanel>
       <ng-template pTemplate="header">
         <i class="pi pi-user"></i>
         <span>Adjuntos</span>
       </ng-template>
-      <p>
-        Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque
-        laudantium, totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi
-        architecto beatae vitae dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit
-        aspernatur aut odit aut fugit, sed quia consequuntur magni dolores eos qui ratione
-        voluptatem sequi nesciunt. Consectetur, adipisci velit, sed quia non numquam eius modi.
-      </p>
+      <div class="col-12">
+        <p-table
+          [value]="requestHistoricAttach"
+          [scrollable]="true"
+          scrollHeight="400px"
+          [virtualScroll]="true"
+          [virtualScrollItemSize]="80"
+          selectionMode="single"
+          [paginator]="true"
+          [rows]="5"
+          [showCurrentPageReport]="true"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          currentPageReportTemplate="{first} de {totalRecords}"
+          [rowsPerPageOptions]="[5, 10, 20]">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="updated_date" style="width: 10%">
+                Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
+              </th>
+              <th style="width: 30%">Hora</th>
+              <th style="width: 20%">Archivo</th>
+              <th style="width: 20%">Formato</th>
+              <th style="width: 15%">Peso</th>
+              <th style="width: 15%"></th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-requestHistoricAttach>
+            <tr>
+              <td [ngStyle]="{ 'text-align': 'center' }">
+                {{ requestHistoricAttach.updated_date }}
+              </td>
+              <td [ngStyle]="{ 'text-align': 'center' }">
+                {{ requestHistoricAttach.updated_time }}
+              </td>
+              <td [ngStyle]="{ 'text-align': 'center' }">
+                {{ requestHistoricAttach.difference }}
+              </td>
+              <td [ngStyle]="{ 'text-align': 'center' }">
+                {{ requestHistoricAttach.difference }}
+              </td>
+              <td [ngStyle]="{ 'text-align': 'center' }">
+                {{ requestHistoricAttach.status_name }}
+              </td>
+              <td>
+                <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'"></p-button>
+              </td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </p-tabPanel>
     <p-tabPanel header="Header III">
       <ng-template pTemplate="header">
@@ -47,13 +205,42 @@
         <span>Histórico gestión</span>
         <i class="pi pi-cog"></i>
       </ng-template>
-      <p>
-        At vero eos et accusamus et iusto odio dignissimos ducimus qui blanditiis praesentium
-        voluptatum deleniti atque corrupti quos dolores et quas molestias excepturi sint occaecati
-        cupiditate non provident, similique sunt in culpa qui officia deserunt mollitia animi, id
-        est laborum et dolorum fuga. Et harum quidem rerum facilis est et expedita distinctio. Nam
-        libero tempore, cum soluta nobis est eligendi optio cumque nihil impedit quo minus.
-      </p>
+      <div class="col-12">
+        <p-table
+          [value]="requestHistoric"
+          [scrollable]="true"
+          scrollHeight="400px"
+          [virtualScroll]="true"
+          [virtualScrollItemSize]="80"
+          selectionMode="single"
+          [paginator]="true"
+          [rows]="5"
+          [showCurrentPageReport]="true"
+          [tableStyle]="{ 'min-width': '50rem' }"
+          currentPageReportTemplate="{first} de {totalRecords}"
+          [rowsPerPageOptions]="[5, 10, 20]">
+          <ng-template pTemplate="header">
+            <tr>
+              <th pSortableColumn="updated_date" style="width: 10%">
+                Fecha<p-sortIcon field="updated_date"></p-sortIcon>
+              </th>
+              <th style="width: 15%">Hora</th>
+              <th style="width: 20%">Usuario</th>
+              <th style="width: 20%">Responsable de solicitud</th>
+              <th style="width: 15%">Estado de solicitud</th>
+            </tr>
+          </ng-template>
+          <ng-template pTemplate="body" let-requestHistoric>
+            <tr>
+              <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_date }}</td>
+              <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_time }}</td>
+              <td [ngStyle]="{ 'text-align': 'center' }">{{ requestDetails.applicant_name }}</td>
+              <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.assigned_user }}</td>
+              <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.status_name }}</td>
+            </tr>
+          </ng-template>
+        </p-table>
+      </div>
     </p-tabPanel>
   </p-tabView>
 </div>

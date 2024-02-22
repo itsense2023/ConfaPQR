@@ -52,11 +52,11 @@ export class RequestTypeComponent implements OnInit {
 
   inActiveRequest(request_details: RequestTypeList) {
     if (!request_details.is_active) {
-      this.message = '¿Seguro que desea Inactivar tipo de solicitud?';
+      this.message = '¿Seguro que desea Inactivar este tipo de solicitud?';
       this.visibleDialog = true;
       request_details.is_active = 0;
     } else {
-      this.message = '¿Seguro que desea Activar tipo de solicitud?';
+      this.message = '¿Seguro que desea Activar este tipo de solicitud?';
       this.visibleDialog = true;
       request_details.is_active = 1;
     }
@@ -101,12 +101,18 @@ export class RequestTypeComponent implements OnInit {
           if (response.code === 200) {
             this.ngOnInit();
           } else {
+            if ((this.request_details.is_active = 1)) {
+              this.request_details.is_active = 0;
+            } else {
+              this.request_details.is_active = 1;
+            }
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
@@ -129,7 +135,6 @@ export class RequestTypeComponent implements OnInit {
       this.userService.createRequestType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
           } else {
           }
         },
@@ -137,6 +142,7 @@ export class RequestTypeComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
@@ -158,6 +164,7 @@ export class RequestTypeComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });

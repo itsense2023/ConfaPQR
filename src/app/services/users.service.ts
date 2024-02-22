@@ -14,12 +14,13 @@ import {
   CreateApplicantType,
   CreateRequestType,
   ModalityList,
+  RequestHistoric,
   RequestTypeList,
+  RequestsDetails,
   RequestsList,
   UserCreate,
   UserList,
 } from '../models/users.interface';
-import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +47,28 @@ export class Users {
     });
     return this.http.get<BodyResponse<RequestsList[]>>(
       `${environment.API_PUBLIC}${EndPointRoute.ALL_REQUESTS}`,
+      { headers }
+    );
+  }
+  getRequestDetails(payload: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestsDetails>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_DETAILS}/${payload}`,
+      { headers }
+    );
+  }
+  getRequestHistoric(payload: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestHistoric[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_HISTORIC}/${payload}`,
       { headers }
     );
   }

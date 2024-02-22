@@ -79,16 +79,19 @@ export class ApplicantRequestComponent implements OnInit {
         .subscribe({
           next: (response: BodyResponse<string>) => {
             if (response.code === 200) {
-              this.ngOnInit();
-              console.log(response.data);
             } else {
-              console.log(response.data);
+              if ((this.applicant_request_association.is_active = 1)) {
+                this.applicant_request_association.is_active = 0;
+              } else {
+                this.applicant_request_association.is_active = 1;
+              }
             }
           },
           error: (err: any) => {
             console.log(err);
           },
           complete: () => {
+            this.ngOnInit();
             console.log('La suscripción ha sido completada.');
           },
         });
@@ -117,7 +120,6 @@ export class ApplicantRequestComponent implements OnInit {
       this.userService.createAssociationApplicantRequest(inputValue).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
           } else {
           }
         },
@@ -125,6 +127,7 @@ export class ApplicantRequestComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });

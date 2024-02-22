@@ -9,7 +9,7 @@
       #dt
       [value]="requestList"
       [scrollable]="true"
-      scrollHeight="800px"
+      scrollHeight="400px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="80"
       selectionMode="single"
@@ -48,7 +48,7 @@
             Estado solicitud<p-sortIcon field="status_name"></p-sortIcon>
           </th>
           <th pSortableColumn="request_days" style="width: 10%">
-            Dias solicitud<p-sortIcon field="request_days"></p-sortIcon>
+            Días solicitud<p-sortIcon field="request_days"></p-sortIcon>
           </th>
           <th pSortableColumn="assigned_user" style="width: 10%">
             Responsable solicitud<p-sortIcon field="assigned_user"></p-sortIcon>
@@ -157,7 +157,7 @@
           <td>{{ requestList.applicant_name }}</td>
           <td>{{ requestList.request_type_name }}</td>
           <td>{{ requestList.status_name }}</td>
-          <td>{{ requestList.request_days }}</td>
+          <td>{{ requestList.request_days }} días hábiles</td>
           <td>{{ requestList.assigned_user }}</td>
           <td>
             <p-button
@@ -167,7 +167,7 @@
           </td>
           <td>
             <p-button
-              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
+              [label]="requestList.assigned_user === null ? ' Asignar ' : 'Reasignar'"
               (click)="assignRequest(requestList)"></p-button>
           </td>
         </tr>
