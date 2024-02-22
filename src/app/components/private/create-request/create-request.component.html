@@ -1,42 +1,59 @@
-    <p-card [style]="{margin:'0 4% 0'}">
-        <form [formGroup]="optionsRequest">
-        <p-card class="container-card">
-            <p class="m-0"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit. Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab mollitia in, facilis voluptatibus doloribus.</p>
-            <div class="container">
-                <div class="container-select">
-                    <label class="container-select-placeholder">Tipo del solicitante*</label>
-                    <p-dropdown
-                    formControlName="applicant_id"
-                    [style]="{'border-radius': '20px','height':'auto'}"  
-                    class="container-select-options"
-                    [options]="applicantList"
-                    optionLabel="applicant_type_name"
-                    placeholder="*Tipo del solicitante"></p-dropdown>
-                </div>
-                <div class="container-select">
-                    <label class="container-select-placeholder">Tipo del solicitud*</label>
-                    <p-dropdown
-                    formControlName="request_id"
-                    [style]="{'border-radius': '20px','height':'auto'}"  
-                    class="container-select-options"
-                    [options]="requestList"
-                    optionLabel="request_type_name"
-                    placeholder="*Tipo del solicitante"></p-dropdown>
-                </div>
-            </div>
-        </p-card>
-        <p-card *ngIf="!optionsRequest.invalid" class="container-card" >
-           <ng-template pTemplate="header">
-            <h3 class="container-card_header">Conoce algunas de las recomendaciones antes de continuar</h3>
-        </ng-template>
-            <p class="m-0"> Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit. Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab mollitia in, facilis voluptatibus doloribus.</p>
-        </p-card>
-    
-        <div class="container-checkbox">
-           <p-checkbox formControlName="authorize" value="true" [binary]="true"></p-checkbox>
-           <p class="container-checkbox_a">Autorizo <a href="" class="container-checkbox_link">politica tratamiento de datos</a> </p>
+<p-card [style]="{ margin: '0 4% 0' }">
+  <form [formGroup]="optionsRequest">
+    <p-card class="container-card">
+      <p class="m-0">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit.
+        Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab
+        mollitia in, facilis voluptatibus doloribus.
+      </p>
+      <div class="container">
+        <div class="container-select">
+          <label class="container-select-placeholder">Tipo del solicitante*</label>
+          <p-dropdown
+            formControlName="applicant_id"
+            [style]="{ 'border-radius': '20px', height: 'auto' }"
+            class="container-select-options"
+            [options]="applicantList"
+            optionLabel="applicant_type_name"
+            placeholder="*Tipo del solicitante"></p-dropdown>
         </div>
-        <p-button type="button" [style]="{'border-radius':'20px','background-color':'#00aeef'}" label="Continuar" [disabled]="optionsRequest.invalid"  (onClick)="sendOptions()" class="container-button"></p-button>
-    </form>
+        <div class="container-select">
+          <label class="container-select-placeholder">Tipo del solicitud*</label>
+          <p-dropdown
+            formControlName="request_id"
+            [style]="{ 'border-radius': '20px', height: 'auto' }"
+            class="container-select-options"
+            [options]="requestList"
+            optionLabel="request_type_name"
+            placeholder="*Tipo del solicitante"></p-dropdown>
+        </div>
+      </div>
+    </p-card>
+    <p-card *ngIf="!optionsRequest.invalid" class="container-card">
+      <ng-template pTemplate="header">
+        <h3 class="container-card_header">
+          Conoce algunas de las recomendaciones antes de continuar
+        </h3>
+      </ng-template>
+      <p class="m-0">
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit.
+        Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab
+        mollitia in, facilis voluptatibus doloribus.
+      </p>
     </p-card>
 
+    <div class="container-checkbox">
+      <p-checkbox formControlName="authorize" value="true" [binary]="true"></p-checkbox>
+      <p class="container-checkbox_a">
+        Autorizo <a href="" class="container-checkbox_link">politica tratamiento de datos</a>
+      </p>
+    </div>
+    <p-button
+      type="button"
+      [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"
+      label="Continuar"
+      [disabled]="optionsRequest.invalid"
+      (onClick)="sendOptions()"
+      class="container-button"></p-button>
+  </form>
+</p-card>

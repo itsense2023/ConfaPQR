@@ -7,17 +7,14 @@ import {
   RequestTypeList,
 } from '../../../models/users.interface';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
-
 import { Router } from '@angular/router';
+import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
   selector: 'app-create-request',
   templateUrl: './create-request.component.html',
   styleUrl: './create-request.component.scss',
 })
-<<<<<<< HEAD
-export class CreateRequestComponent {}
-=======
 export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
@@ -26,8 +23,7 @@ export class CreateRequestComponent {
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private userService: Users,
-  
+    private userService: Users
   ) {
     this.optionsRequest = this.formBuilder.group({
       applicant_id: ['', Validators.required],
@@ -44,7 +40,6 @@ export class CreateRequestComponent {
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
         if (response.code === 200) {
           this.applicantList = response.data;
-        } else {
         }
       },
       error: (err: any) => {
@@ -61,7 +56,6 @@ export class CreateRequestComponent {
       next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
-        } else {
         }
       },
       error: (err: any) => {
@@ -72,12 +66,12 @@ export class CreateRequestComponent {
       },
     });
   }
+ 
   sendOptions() {
-    const infoRequest: AssociateApplicantRequest = {
-      applicant_type_id: this.optionsRequest.controls['applicant_id'].value['applicant_type_id'],
-      request_type_id: this.optionsRequest.controls['request_id'].value['request_type_id'],
-    };
-    this.router.navigate(['request-form']);
+   //console.log(this.optionsRequest.controls['applicant_id'].value,this.optionsRequest.controls['request_id'].value)
+   localStorage.setItem('applicant-type',JSON.stringify(this.optionsRequest.controls['applicant_id'].value))
+   localStorage.setItem('request-type',JSON.stringify(this.optionsRequest.controls['request_id'].value))
+   this.router.navigate([RoutesApp.REQUEST_FORM]);
   }
-}
->>>>>>> 3802a5e38d9289994d90e15a96698621ca3b63d7
+  }
+

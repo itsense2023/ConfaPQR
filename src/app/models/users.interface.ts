@@ -30,6 +30,32 @@ export interface RequestsList {
   assigned_attachments: string[];
   form_id: number;
 }
+
+export interface ApplicantAttachments{
+  base64file:string;
+  source_name:string;
+  fileweight:string
+}
+
+export interface RequestFormList{
+  request_status : number,
+	applicant_type: number, 
+	request_type: number,
+	doc_type: number,
+	doc_id: string,
+	applicant_name: string,
+	applicant_email: string,
+	applicant_cellphone: string,
+	request_description: string,
+	request_days: number,
+	assigned_user: string,
+	request_answer: string,
+	data_treatment: boolean,
+	applicant_attachments: string[],
+	assigned_attachments: string[],
+  form_id?: number,
+  source_name: string[]
+}
 export interface AssignUserRequest {
   request_id: number;
   filing_number?: number;
@@ -56,6 +82,7 @@ export interface AssignUserRequest {
 export interface UserCreate {
   user_name: string;
 }
+
 
 export interface ApplicantTypeList {
   applicant_type_id: number;
@@ -137,3 +164,4 @@ export interface ExportColumn {
   title: string;
   dataKey: string;
 }
+

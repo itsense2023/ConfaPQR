@@ -14,6 +14,7 @@ import {
   CreateApplicantType,
   CreateRequestType,
   ModalityList,
+  RequestFormList,
   RequestTypeList,
   RequestsList,
   UserCreate,
@@ -302,6 +303,7 @@ export class Users {
       { headers }
     );
   }
+
   modifyCategory(payload: CategoryList) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
@@ -334,6 +336,31 @@ export class Users {
     });
     return this.http.get<BodyResponse<string>>(
       `${environment.API_PUBLIC}${EndPointRoute.REQUEST_BY_APPLICANT}/${payload}`,
+      { headers }
+    );
+  }
+
+  getFormById(applicant_id: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_LIST}${applicant_id}`,
+      { headers }
+    );
+  }
+
+  createRequest(payload: RequestFormList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_REQUEST}`,
+      payload,
       { headers }
     );
   }
