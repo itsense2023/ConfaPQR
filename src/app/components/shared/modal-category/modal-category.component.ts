@@ -35,10 +35,6 @@ export class ModalCategoryComponent implements OnInit {
     this.getModalityTable();
     console.log(this.categoryForm);
     if (this.buttonmsg !== 'Crear' && this.categoryForm) {
-      //this.categoryForm.modality_id = 2;
-      console.log('categoryForm:', this.categoryForm);
-      //this.formGroup.get('modality_id')!.setValue(2);
-      //console.log('modality_id:', this.formGroup.get('modality_id')!.value);
       this.formGroup.patchValue(this.categoryForm);
     } else {
       this.formGroup.reset();

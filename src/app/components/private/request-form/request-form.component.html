@@ -1,0 +1,123 @@
+<p-card [style]="{ margin: '10px 4% 50px ' }">
+  <div class="card-header-container">
+    <h3 class="card-header-container_title">Empresa</h3>
+  </div>
+  <p-card class="card-form">
+    <div class="card-form-banner">
+      <h4 class="card-form-banner-title">Ingrese aqui tu solicitud</h4>
+    </div>
+    <div class="card-form-container">
+      <form [formGroup]="requestForm">
+        <div class="card-form-row">
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Tipo de documento*</label>
+            <p-dropdown
+              formControlName="document_type"
+              [style]="{ 'border-radius': '20px', height: '30px' }"
+              class="card-form-input-options"
+              placeholder="*Tipo de documento"></p-dropdown>
+          </div>
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Numero de documento*</label>
+            <input
+              type="text"
+              formControlName="number_id"
+              class="card-form-input-options"
+              placeholder="*Ingresa el numero de documento" />
+          </div>
+        </div>
+        <div class="card-form-row">
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Nombre de empresa o de solicitante*</label>
+            <input
+              formControlName="name"
+              class="card-form-input-options"
+              placeholder="*Ingrese el nombre" />
+          </div>
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Celular*</label>
+            <input
+              type="text"
+              formControlName="number_cellphone"
+              class="card-form-input-options"
+              placeholder="*Ingresa el numero de celular" />
+          </div>
+        </div>
+        <div class="card-form-row">
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Correo Electronico*</label>
+            <input
+              type="text"
+              formControlName="email"
+              class="card-form-input-options"
+              placeholder="*Ingresa el correo electronico" />
+          </div>
+          <div class="card-form-input">
+            <label class="card-form-input-placeholder">Confirma el correo electronico*</label>
+            <input
+              type="text"
+              formControlName="validator_email"
+              class="card-form-input-options"
+              placeholder="*Confirma el correo electronico" />
+          </div>
+        </div>
+        <div class="card-text">
+          <label class="card-text-placeholder">Mensaje*</label>
+          <textarea
+            rows="5"
+            cols="30"
+            id="mensage"
+            formControlName="mensage"
+            [style]="{ 'border-radius': '20px' }"
+            pInputTextarea>
+              *Descripcion detallada de la solicitud
+            </textarea
+          >
+        </div>
+      </form>
+      <div class="card-buttonUp">
+        <label class="card-buttonUp-placeholder">Adjuntar archivo*</label>
+        <div class="card-buttonUp-custom-button">
+          <input
+            type="file"
+            #archive_request
+            class="card-buttonUp-custom-icon"
+            name="archive_request"
+            (change)="onFileSelected($event)" />
+          <label class="card-buttonUp-label" (click)="openFileInput()">
+            <i class="pi pi-file-pdf"></i>Adjuntar archivo
+            <i class="pi pi-upload"></i>
+          </label>
+        </div>
+      </div>
+      <div class="card-table">
+        <div class="card-table-header">Tabla de Adjuntos</div>
+        <div class="card-table-body">
+          <div class="card-table-item">{{ fileName === '' ? 'Nombre de Archivo' : fileName }}</div>
+          <div class="card-table-item">
+            Remover
+            <p-button
+              icon="pi pi-times"
+              [style]="{
+                'border-radius': '50%',
+                height: '20px',
+                width: '20px',
+                'background-color': '#ebebeb',
+                color: 'red'
+              }"
+              [text]="true"
+              severity="danger "
+              (click)="clearFileInput()"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </p-card>
+  <p-button
+    type="button"
+    [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"
+    label="Enviar formulario"
+    [disabled]="requestForm.invalid"
+    (click)="sendRequest()"
+    class="card-form-button"></p-button>
+</p-card>

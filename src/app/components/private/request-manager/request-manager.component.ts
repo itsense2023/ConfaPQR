@@ -72,12 +72,18 @@ export class RequestManagerComponent implements OnInit {
         if (response.code === 200) {
           this.ngOnInit();
         } else {
+          if ((this.user_details.is_active = 1)) {
+            this.user_details.is_active = 0;
+          } else {
+            this.user_details.is_active = 1;
+          }
         }
       },
       error: (err: any) => {
         console.log(err);
       },
       complete: () => {
+        this.ngOnInit();
         console.log('La suscripción ha sido completada.');
       },
     });
@@ -112,24 +118,23 @@ export class RequestManagerComponent implements OnInit {
           if (response.code === 200) {
             this.userList = response.data;
           } else {
-            console.log(this.userList);
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
   createUser() {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
     this.twoFields = false;
-    this.parameter = ['Crear Responsable', 'Escriba nombre'];
+    this.parameter = ['Crear Responsable', 'Escriba usuario de red'];
     this.message = 'Crear Responsable';
     this.informative = true;
   }
@@ -156,10 +161,10 @@ export class RequestManagerComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
 }

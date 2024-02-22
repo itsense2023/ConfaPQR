@@ -15,16 +15,16 @@
       <form [formGroup]="formGroup">
         <div class="row my-4 px-5">
           <div class="col-12">
-            <label> Código </label>
+            <label> *Código </label>
             <input
-              [readonly]="read_only"
+              [readonly]="this.buttonmsg !== 'Crear' ? true : false"
               formControlName="category_id"
               pInputText
               pKeyFilter="integer"
               placeholder="000" />
           </div>
           <div class="col-12">
-            <label> Nombre de categoria </label>
+            <label> *Nombre de categoría </label>
             <input
               [readonly]="read_only"
               formControlName="category_name"
@@ -33,7 +33,7 @@
               placeholder="Escriba nombre" />
           </div>
           <div class="col-12">
-            <label> Nombre de tipología </label>
+            <label> *Nombre de tipología </label>
             <input
               [readonly]="read_only"
               formControlName="tipology_name"
@@ -42,8 +42,9 @@
               placeholder="Escriba nombre" />
           </div>
           <div class="col-12">
-            <label> Nombre de causa </label>
+            <label> *Nombre de causa </label>
             <textarea
+              [readonly]="read_only"
               rows="5"
               cols="30"
               pInputTextarea
@@ -51,7 +52,7 @@
               formControlName="cause_name"></textarea>
           </div>
           <div class="col-12">
-            <label> Modalidad </label>
+            <label> *Modalidad </label>
             <p-dropdown
               formControlName="modality_id"
               [options]="modalityList"

@@ -11,10 +11,13 @@ export enum RoutesApp {
   LOGOUT = 'logout',
   CREATE_REQUEST = 'create-request',
   REQUEST_DETAILS = 'request-details',
+  REQUEST_FORM = 'request-form',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',
   ALL_REQUESTS = 'request/getall',
+  REQUEST_DETAILS = 'request/details',
+  REQUEST_HISTORIC = 'historic/by/request',
   CREATE_USER = 'user/create',
   ASSIGN_USER_TO_REQUEST = 'request/assignuser',
   INACTIVATE_USER = 'user/in-activate',

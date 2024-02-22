@@ -56,12 +56,12 @@ export class ApplicantTypeComponent implements OnInit {
   inActiveApplicant(applicant_type_details: ApplicantTypeList) {
     if (!applicant_type_details.is_active) {
       console.log('Inactivar');
-      this.message = '¿Seguro que desea Inactivar tipo de solicitante?';
+      this.message = '¿Seguro que desea Inactivar este tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 0;
     } else {
       console.log('Activar');
-      this.message = '¿Seguro que desea Activar tipo de solicitante?';
+      this.message = '¿Seguro que desea Activar este tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 1;
     }
@@ -104,17 +104,22 @@ export class ApplicantTypeComponent implements OnInit {
         next: (response: BodyResponse<ApplicantTypeList[]>) => {
           if (response.code === 200) {
           } else {
+            if ((this.applicant_type_details.is_active = 1)) {
+              this.applicant_type_details.is_active = 0;
+            } else {
+              this.applicant_type_details.is_active = 1;
+            }
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
@@ -133,7 +138,6 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.createApplicantType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
           } else {
           }
         },
@@ -141,6 +145,7 @@ export class ApplicantTypeComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
@@ -160,6 +165,7 @@ export class ApplicantTypeComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });

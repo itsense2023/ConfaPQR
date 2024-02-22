@@ -3,6 +3,7 @@ import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
+import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
   selector: 'app-search-request',
@@ -47,32 +48,16 @@ export class SearchRequestComponent implements OnInit {
 
   assignRequest(request_details: RequestsList) {
     if (request_details.assigned_user == null) {
-      this.message = 'Asignar responsable al requerimiento';
+      this.message = 'Asignar responsable de solicitud';
       this.buttonmsg = 'Asignar';
     } else {
-      this.message = 'Reasignar responsable al requerimiento';
+      this.message = 'Reasignar responsable de solicitud';
       this.buttonmsg = 'Reasignar';
     }
     this.visibleDialogInput = true;
-    this.parameter = ['Usuario'];
+    this.parameter = ['Colaborador'];
     this.request_details = request_details;
     console.log(request_details);
-    /*user_details.is_visible = 0;
-    this.userService.invisibleUser(user_details).subscribe({
-      next: (response: BodyResponse<UserList[]>) => {
-        if (response.code === 200) {
-          this.userList = response.data;
-        } else {
-          console.log(this.userList);
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });*/
   }
 
   closeDialog(value: boolean) {
@@ -94,7 +79,6 @@ export class SearchRequestComponent implements OnInit {
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
           } else {
           }
         },
@@ -102,9 +86,13 @@ export class SearchRequestComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
+  }
+  redirectDetails(request_id: number) {
+    this.router.navigate([RoutesApp.REQUEST_DETAILS, request_id]);
   }
 }
