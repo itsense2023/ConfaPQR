@@ -30,42 +30,6 @@ export interface RequestsList {
   assigned_attachments: string[];
   form_id: number;
 }
-export interface RequestsDetails {
-  request_id: number;
-  filing_number: number;
-  filing_date: string;
-  filing_time: string;
-  status_name: string;
-  applicant_type_name: string;
-  request_type_name: string;
-  catalog_item_name: string;
-  doc_id: string;
-  applicant_name: string;
-  applicant_email: string;
-  applicant_cellphone: string;
-  request_description: string;
-  request_days: number;
-  assigned_user: string;
-  request_answer: string;
-  data_treatment: boolean;
-  applicant_attachments: string[];
-  assigned_attachments: string[];
-  form_id: number;
-}
-export interface RequestHistoric {
-  request_id: number;
-  table_name: string;
-  action: string;
-  rowid: string;
-  updated_by: string;
-  updated_date: string;
-  updated_time: string;
-  old_data: string;
-  new_data: string;
-  status_name: string;
-  assigned_user: string;
-  difference: string[];
-}
 export interface AssignUserRequest {
   request_id: number;
   filing_number?: number;
@@ -92,6 +56,7 @@ export interface AssignUserRequest {
 export interface UserCreate {
   user_name: string;
 }
+
 
 export interface ApplicantTypeList {
   applicant_type_id: number;
@@ -173,3 +138,4 @@ export interface ExportColumn {
   title: string;
   dataKey: string;
 }
+
