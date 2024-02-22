@@ -5,10 +5,10 @@ import { ActivatedRoute } from '@angular/router';
 import { Users } from '../../../services/users.service';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import {
+  ApplicantAttachments,
   ApplicantTypeList,
   RequestFormList,
   RequestTypeList,
-  RequestsList,
 } from '../../../models/users.interface';
 
 @Component({
@@ -71,34 +71,34 @@ export class RequestFormComponent implements OnInit {
     this.fileInput.nativeElement.click();
   }
 
-  convertToBase64(file:File){
-    const reader=new FileReader()
-    reader.onload=(e:any)=>{
-      const base64:string=e.target.result
-      console.log(base64)
-    }
-    reader.readAsDataURL(file)
+  convertToBase64(file: File) {
+    const reader = new FileReader();
+    reader.onload = (e: any) => {
+      const base64: string = e.target.result;
+      console.log(base64);
+    };
+    reader.readAsDataURL(file);
   }
 
   onFileSelected(event: any) {
     const files: FileList = event.target.files;
     for (let i = 0; i < files.length; i++) {
-      let fileSizeFormat:string
-      const fileSizeKilobytes=files[i].size/1024
-      
-      if(fileSizeKilobytes<1024){
-        fileSizeFormat=fileSizeKilobytes.toFixed(2)+'KB'
-      }else{
-        const fileSizeMegabytes=fileSizeKilobytes/1024
-        fileSizeFormat=fileSizeMegabytes.toFixed(2)+'MB'
+      let fileSizeFormat: string;
+      const fileSizeKilobytes = files[i].size / 1024;
+
+      if (fileSizeKilobytes < 1024) {
+        fileSizeFormat = fileSizeKilobytes.toFixed(2) + 'KB';
+      } else {
+        const fileSizeMegabytes = fileSizeKilobytes / 1024;
+        fileSizeFormat = fileSizeMegabytes.toFixed(2) + 'MB';
       }
       this.fileSizeList.push(fileSizeFormat);
-      this.convertToBase64(files[i])
+      this.convertToBase64(files[i]);
       this.fileNameList.push(files[i].name);
     }
-    console.log(this.fileSizeList)
-    console.log(this.fileNameList)
-    console.log(this.fileBase64)
+    console.log(this.fileSizeList);
+    console.log(this.fileNameList);
+    console.log(this.fileBase64);
   }
 
   clearFileInput(index: number) {
@@ -143,6 +143,11 @@ export class RequestFormComponent implements OnInit {
   }
 
   sendRequest() {
+    const applicant_attachments: ApplicantAttachments = {
+      base64file: 'string',
+      source_name: 'string',
+      fileweight: 'string',
+    };
     const payload: RequestFormList = {
       request_status: 1,
       applicant_type: this.applicantType.applicant_type_id,
@@ -157,9 +162,8 @@ export class RequestFormComponent implements OnInit {
       assigned_user: '',
       request_answer: '',
       data_treatment: true,
-      applicant_attachments: [''],
-      assigned_attachments: [''],
-      source_name: this.fileNameList,
+      applicant_attachments: [applicant_attachments],
+      assigned_attachments: null,
     };
     this.setParameter(payload);
   }

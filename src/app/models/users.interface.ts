@@ -30,6 +30,44 @@ export interface RequestsList {
   assigned_attachments: string[];
   form_id: number;
 }
+
+export interface RequestsDetails {
+  request_id: number;
+  filing_number: number;
+  filing_date: string;
+  filing_time: string;
+  status_name: string;
+  applicant_type_name: string;
+  request_type_name: string;
+  catalog_item_name: string;
+  doc_id: string;
+  applicant_name: string;
+  applicant_email: string;
+  applicant_cellphone: string;
+  request_description: string;
+  request_days: number;
+  assigned_user: string;
+  request_answer: string;
+  data_treatment: boolean;
+  applicant_attachments: string[];
+  assigned_attachments: string[];
+  form_id: number;
+}
+
+export interface RequestHistoric {
+  request_id: number;
+  table_name: string;
+  action: string;
+  rowid: string;
+  updated_by: string;
+  updated_date: string;
+  updated_time: string;
+  old_data: string;
+  new_data: string;
+  status_name: string;
+  assigned_user: string;
+  difference: string[];
+}
 export interface AssignUserRequest {
   request_id: number;
   filing_number?: number;
@@ -57,7 +95,6 @@ export interface UserCreate {
   user_name: string;
 }
 
-
 export interface ApplicantTypeList {
   applicant_type_id: number;
   applicant_type_name: string;
@@ -79,7 +116,29 @@ export interface RequestTypeList {
   updated_by: string;
   updated_date: string;
 }
-
+export interface RequestFormList {
+  request_status: number;
+  applicant_type: number;
+  request_type: number;
+  doc_type: number;
+  doc_id: string;
+  applicant_name: string;
+  applicant_email: string;
+  applicant_cellphone: string;
+  request_description: string;
+  request_days: number;
+  assigned_user: string;
+  request_answer: string;
+  data_treatment: boolean;
+  applicant_attachments?: ApplicantAttachments[] | null;
+  assigned_attachments?: ApplicantAttachments[] | null;
+  form_id?: number;
+}
+export interface ApplicantAttachments {
+  base64file: string;
+  source_name: string;
+  fileweight: string;
+}
 /*export interface ApplicantRequestList2 {
   applicant_type_id: number;
   applicant_type_name: string;
@@ -138,4 +197,3 @@ export interface ExportColumn {
   title: string;
   dataKey: string;
 }
-
