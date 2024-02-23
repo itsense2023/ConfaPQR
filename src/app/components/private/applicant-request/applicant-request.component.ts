@@ -22,10 +22,14 @@ export class ApplicantRequestComponent implements OnInit {
   ingredient!: string;
   visibleDialog = false;
   visibleDialogSelector = false;
+  visibleDialogAlert = false;
   message = '';
   buttonmsg = '';
   parameter = [''];
   enableAction: boolean = false;
+  informative: boolean = false;
+  severity = '';
+
   constructor(
     private userService: Users,
     private router: Router
@@ -104,6 +108,11 @@ export class ApplicantRequestComponent implements OnInit {
     this.enableAction = value;
   }
 
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+    this.enableAction = value;
+  }
+
   associateRequestsType() {
     this.visibleDialogSelector = true;
     this.buttonmsg = 'Asociar';
@@ -112,25 +121,36 @@ export class ApplicantRequestComponent implements OnInit {
   }
 
   setParameter(inputValue: AssociateApplicantRequest) {
-    console.log(inputValue);
-    console.log(this.enableAction);
     if (!this.enableAction) {
       return;
     } else {
-      this.userService.createAssociationApplicantRequest(inputValue).subscribe({
-        next: (response: BodyResponse<string>) => {
-          if (response.code === 200) {
-          } else {
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          this.ngOnInit();
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      if (
+        this.applicantTypeRequestsList.some(
+          obj =>
+            obj.request_type === inputValue.request_type_id &&
+            obj.applicant_type === inputValue.applicant_type_id
+        )
+      ) {
+        this.visibleDialogAlert = true;
+        this.informative = true;
+        this.message = 'Ya existe esa asociación';
+        this.severity = 'danger';
+      } else {
+        this.userService.createAssociationApplicantRequest(inputValue).subscribe({
+          next: (response: BodyResponse<string>) => {
+            if (response.code === 200) {
+            } else {
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            this.ngOnInit();
+            console.log('La suscripción ha sido completada.');
+          },
+        });
+      }
     }
     this.ngOnInit();
   }

@@ -115,6 +115,7 @@ export interface RequestTypeList {
   created_date: string;
   updated_by: string;
   updated_date: string;
+  form_id?: number;
 }
 export interface RequestFormList {
   request_status: number;
@@ -147,7 +148,9 @@ export interface ApplicantAttachments {
 export interface AssociationApplicantRequestList {
   applicant_requests_type_id: number;
   applicant_type_name: string;
+  applicant_type: number;
   request_type_name: string;
+  request_type: number;
   is_active: number | boolean;
 }
 export interface CreateApplicantType {

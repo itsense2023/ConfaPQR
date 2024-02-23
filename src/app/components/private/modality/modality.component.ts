@@ -16,6 +16,7 @@ export class ModalityComponent implements OnInit {
   ingredient!: string;
   visibleDialog = false;
   visibleDialogModality = false;
+  visibleDialogAlert = false;
   message = '';
   parameter = [''];
   buttonmsg = '';
@@ -23,6 +24,8 @@ export class ModalityComponent implements OnInit {
   enableAction: boolean = false;
   read_only: boolean = false;
   enableCreate: boolean = false;
+  informative: boolean = false;
+  severity = '';
 
   constructor(
     private userService: Users,
@@ -96,24 +99,36 @@ export class ModalityComponent implements OnInit {
       //
     }
   }
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+    this.enableAction = value;
+  }
+
   setParameter(modality_details: ModalityList) {
     if (!this.enableAction || this.read_only) {
       return;
     } else if (this.enableCreate) {
-      this.userService.createModality(modality_details).subscribe({
-        next: (response: BodyResponse<string>) => {
-          if (response.code === 200) {
-            this.ngOnInit();
-          } else {
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      if (this.modalityList.some(obj => obj.modality_id === +modality_details.modality_id)) {
+        this.visibleDialogAlert = true;
+        this.informative = true;
+        this.message = 'Ya existe una modalidad con codigo ' + modality_details.modality_id;
+        this.severity = 'danger';
+      } else {
+        this.userService.createModality(modality_details).subscribe({
+          next: (response: BodyResponse<string>) => {
+            if (response.code === 200) {
+              this.ngOnInit();
+            } else {
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            console.log('La suscripción ha sido completada.');
+          },
+        });
+      }
     } else {
       this.userService.modifyModality(modality_details).subscribe({
         next: (response: BodyResponse<string>) => {
@@ -153,4 +168,13 @@ export class ModalityComponent implements OnInit {
     }
     this.ngOnInit();
   }
+
+  /*toggleModal(show: boolean) {
+    if (show) {
+      this.myModal.open(); // Open the modal
+      setTimeout(() => {
+        this.myModal.close(); // Close the modal after 3 seconds (adjust duration as needed)
+      }, 3000);
+    }
+  }*/
 }

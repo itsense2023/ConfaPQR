@@ -10,6 +10,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { HttpRequestInterceptor } from './services/interceptors/http-request.interceptor';
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LayoutRequestModule } from './components/private/layout-request/layout-request.module';
+import { MessageService } from 'primeng/api';
 
 @NgModule({
   declarations: [AppComponent],
