@@ -41,7 +41,7 @@ export enum EndPointRoute {
   CREATE_CATEGORY = 'category/create',
   INACTIVATE_CATEGORY = 'category/in-activate',
   UPDATE_CATEGORY = 'category/modify',
-  REQUEST_BY_APPLICANT = '/requeststypes/by',
+  REQUEST_BY_APPLICANT = 'requeststypes/by',
   REQUEST_LIST='get_form/',
   CREATE_REQUEST='request/create',
 }
