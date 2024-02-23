@@ -4,6 +4,7 @@ import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestsList } from '../../../models/users.interface';
 import { RoutesApp } from '../../../enums/routes.enum';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-search-request',
@@ -22,19 +23,23 @@ export class SearchRequestComponent implements OnInit {
   selectedRequests!: RequestsList[];
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getRequestList();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getRequestList() {
     this.userService.getRequestList().subscribe({
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -79,7 +84,9 @@ export class SearchRequestComponent implements OnInit {
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {

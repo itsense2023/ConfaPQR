@@ -3,6 +3,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { RequestHistoric, RequestsDetails, RequestsList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-request-details',
@@ -26,7 +27,8 @@ export class RequestDetailsComponent implements OnInit {
   constructor(
     private userService: Users,
     private router: Router,
-    private route: ActivatedRoute
+    private route: ActivatedRoute,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
@@ -36,12 +38,16 @@ export class RequestDetailsComponent implements OnInit {
     this.getRequestDetails(this.request_id);
     this.getRequestHistoric(this.request_id);
   }
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getRequestDetails(request_id: number) {
     this.userService.getRequestDetails(request_id).subscribe({
       next: (response: BodyResponse<RequestsDetails>) => {
         if (response.code === 200) {
           this.requestDetails = response.data;
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -64,6 +70,7 @@ export class RequestDetailsComponent implements OnInit {
           console.log(this.requestHistoric);
           console.log(this.requestHistoricAttach);
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -80,6 +87,7 @@ export class RequestDetailsComponent implements OnInit {
         if (response.code === 200) {
           this.requestList = response.data;
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -125,18 +133,19 @@ export class RequestDetailsComponent implements OnInit {
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
 }

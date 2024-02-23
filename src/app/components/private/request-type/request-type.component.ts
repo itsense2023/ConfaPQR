@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { ApplicantTypeList, RequestTypeList } from '../../../models/users.interface';
+import { RequestTypeList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-request-type',
@@ -23,13 +23,15 @@ export class RequestTypeComponent implements OnInit {
   enableAction: boolean = false;
   constructor(
     private userService: Users,
-    private router: Router
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getRequestTypesList();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getRequestTypesList() {
     this.userService.getRequestTypesList().subscribe({
       next: (response: BodyResponse<RequestTypeList[]>) => {
@@ -39,6 +41,7 @@ export class RequestTypeComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -99,8 +102,9 @@ export class RequestTypeComponent implements OnInit {
       this.userService.inactivateRequest(this.request_details).subscribe({
         next: (response: BodyResponse<RequestTypeList[]>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             if ((this.request_details.is_active = 1)) {
               this.request_details.is_active = 0;
             } else {
@@ -135,7 +139,9 @@ export class RequestTypeComponent implements OnInit {
       this.userService.createRequestType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
@@ -156,8 +162,9 @@ export class RequestTypeComponent implements OnInit {
       this.userService.modifyRequestType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {

@@ -11,6 +11,7 @@ import { HttpRequestInterceptor } from './services/interceptors/http-request.int
 import { NgxSpinnerModule } from 'ngx-spinner';
 import { LayoutRequestModule } from './components/private/layout-request/layout-request.module';
 import { MessageService } from 'primeng/api';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [AppComponent],
@@ -23,8 +24,10 @@ import { MessageService } from 'primeng/api';
     LoginModule,
     LayoutModule,
     LayoutRequestModule,
+    ToastModule,
   ],
   providers: [
+    MessageService,
     {
       provide: HTTP_INTERCEPTORS,
       useClass: HttpRequestInterceptor,
