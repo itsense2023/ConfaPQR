@@ -8,6 +8,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { CategoryComponent } from './category.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [CategoryComponent],
@@ -20,6 +21,7 @@ import { CategoryComponent } from './category.component';
     DropdownModule,
     InputSwitchModule,
     SharedModule,
+    ToastModule,
   ],
   exports: [CategoryComponent],
 })

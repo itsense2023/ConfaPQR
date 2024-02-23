@@ -12,6 +12,7 @@ import { RequestDetailsComponent } from './request-details.component';
 import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
 import { DatePipe } from '@angular/common';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [RequestDetailsComponent],
@@ -27,6 +28,7 @@ import { DatePipe } from '@angular/common';
     CardModule,
     TabViewModule,
     DatePipe,
+    ToastModule,
   ],
   exports: [RequestDetailsComponent],
 })

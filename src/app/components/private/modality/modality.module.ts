@@ -8,6 +8,7 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { ModalityComponent } from './modality.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [ModalityComponent],
@@ -20,6 +21,7 @@ import { ModalityComponent } from './modality.component';
     DropdownModule,
     InputSwitchModule,
     SharedModule,
+    ToastModule,
   ],
   exports: [ModalityComponent],
 })

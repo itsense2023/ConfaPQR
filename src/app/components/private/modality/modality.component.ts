@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { ModalityList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-modality',
@@ -16,6 +17,7 @@ export class ModalityComponent implements OnInit {
   ingredient!: string;
   visibleDialog = false;
   visibleDialogModality = false;
+  visibleDialogAlert = false;
   message = '';
   parameter = [''];
   buttonmsg = '';
@@ -23,14 +25,20 @@ export class ModalityComponent implements OnInit {
   enableAction: boolean = false;
   read_only: boolean = false;
   enableCreate: boolean = false;
+  informative: boolean = false;
+  severity = '';
 
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getModalityTable();
+  }
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
   }
 
   getModalityTable() {
@@ -42,6 +50,7 @@ export class ModalityComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -96,36 +105,52 @@ export class ModalityComponent implements OnInit {
       //
     }
   }
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+    this.enableAction = value;
+  }
+
   setParameter(modality_details: ModalityList) {
     if (!this.enableAction || this.read_only) {
       return;
     } else if (this.enableCreate) {
-      this.userService.createModality(modality_details).subscribe({
-        next: (response: BodyResponse<string>) => {
-          if (response.code === 200) {
+      if (this.modalityList.some(obj => obj.modality_id === +modality_details.modality_id)) {
+        this.visibleDialogAlert = true;
+        this.informative = true;
+        this.message = 'Ya existe una modalidad con codigo ' + modality_details.modality_id;
+        this.severity = 'danger';
+      } else {
+        this.userService.createModality(modality_details).subscribe({
+          next: (response: BodyResponse<string>) => {
+            if (response.code === 200) {
+              this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+            } else {
+              this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
             this.ngOnInit();
-          } else {
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+            console.log('La suscripción ha sido completada.');
+          },
+        });
+      }
     } else {
       this.userService.modifyModality(modality_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
@@ -139,14 +164,16 @@ export class ModalityComponent implements OnInit {
       this.userService.inactivateModality(this.modality_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });

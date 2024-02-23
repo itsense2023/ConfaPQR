@@ -1,9 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { IRequestManager } from '../../../models/request-manager/request-manager.interface';
-import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { CategoryList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-category',
@@ -16,6 +16,7 @@ export class CategoryComponent implements OnInit {
   ingredient!: string;
   visibleDialog = false;
   visibleDialogCategory = false;
+  visibleDialogAlert = false;
   message = '';
   parameter = [''];
   buttonmsg = '';
@@ -23,16 +24,20 @@ export class CategoryComponent implements OnInit {
   enableAction: boolean = false;
   read_only: boolean = false;
   enableCreate: boolean = false;
+  informative: boolean = false;
+  severity = '';
 
   constructor(
     private userService: Users,
-    private router: Router
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getCategoryTable();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getCategoryTable() {
     this.userService.getCategoryList().subscribe({
       next: (response: BodyResponse<CategoryList[]>) => {
@@ -42,6 +47,7 @@ export class CategoryComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -96,30 +102,45 @@ export class CategoryComponent implements OnInit {
       //
     }
   }
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+    this.enableAction = value;
+  }
   setParameter(category_details: CategoryList) {
     console.log(category_details);
     if (!this.enableAction || this.read_only) {
       return;
     } else if (this.enableCreate) {
-      this.userService.createCategory(category_details).subscribe({
-        next: (response: BodyResponse<string>) => {
-          if (response.code === 200) {
-          } else {
-          }
-        },
-        error: (err: any) => {
-          console.log(err);
-        },
-        complete: () => {
-          this.ngOnInit();
-          console.log('La suscripción ha sido completada.');
-        },
-      });
+      if (this.categoryList.some(obj => obj.category_id === +category_details.category_id)) {
+        this.visibleDialogAlert = true;
+        this.informative = true;
+        this.message = 'Ya existe una categoría con código ' + category_details.category_id;
+        this.severity = 'danger';
+      } else {
+        this.userService.createCategory(category_details).subscribe({
+          next: (response: BodyResponse<string>) => {
+            if (response.code === 200) {
+              this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+            } else {
+              this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+            }
+          },
+          error: (err: any) => {
+            console.log(err);
+          },
+          complete: () => {
+            this.ngOnInit();
+            console.log('La suscripción ha sido completada.');
+          },
+        });
+      }
     } else {
       this.userService.modifyCategory(category_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
@@ -139,7 +160,9 @@ export class CategoryComponent implements OnInit {
       this.userService.inactivateCategory(this.category_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             if ((this.category_details.is_active = 1)) {
               this.category_details.is_active = 0;
             } else {

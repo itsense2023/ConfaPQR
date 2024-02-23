@@ -27,6 +27,7 @@ export class ModalSelectorComponent implements OnInit {
   inputValue1: string = '';
   inputValue2: string = '';
   inputValue: string[] = [''];
+  isButtonDisabled = true;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -45,9 +46,8 @@ export class ModalSelectorComponent implements OnInit {
     this.userService.getRequestTypesList().subscribe({
       next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
-          this.requestTypeList = response.data;
+          this.requestTypeList = response.data.filter(obj => obj.is_active !== 0);
         } else {
-          console.log(this.requestTypeList);
         }
       },
       error: (err: any) => {
@@ -62,9 +62,8 @@ export class ModalSelectorComponent implements OnInit {
     this.userService.getApplicantTypesList().subscribe({
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
         if (response.code === 200) {
-          this.applicantTypeList = response.data;
+          this.applicantTypeList = response.data.filter(obj => obj.is_active !== 0);
         } else {
-          console.log(this.applicantTypeList);
         }
       },
       error: (err: any) => {
@@ -79,7 +78,6 @@ export class ModalSelectorComponent implements OnInit {
   formGroup: FormGroup<any> = new FormGroup<any>({});
   showDialog() {
     this.visible = true;
-    console.log(this.applicantTypeList);
   }
 
   closeDialog(value: boolean) {
@@ -89,8 +87,12 @@ export class ModalSelectorComponent implements OnInit {
       applicant_type_id: this.formGroup.controls['selectedApplicant'].value['applicant_type_id'],
       request_type_id: this.formGroup.controls['selectedRequest'].value['request_type_id'],
     };
-    console.log(payload);
     this.setRtaParameter.emit(payload);
     this.visible = false;
+  }
+  updateButtonState() {
+    this.isButtonDisabled =
+      !this.formGroup.get('selectedApplicant')?.value ||
+      !this.formGroup.get('selectedRequest')?.value;
   }
 }

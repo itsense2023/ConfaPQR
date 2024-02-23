@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { ApplicantTypeList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-applicant-type',
@@ -25,13 +26,16 @@ export class ApplicantTypeComponent implements OnInit {
   enableAction: boolean = false;
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getApplicantTypesList();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getApplicantTypesList() {
     this.userService.getApplicantTypesList().subscribe({
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
@@ -41,7 +45,7 @@ export class ApplicantTypeComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
-          console.log(this.applicantTypeList);
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -103,7 +107,9 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.inactivateApplicant(this.applicant_type_details).subscribe({
         next: (response: BodyResponse<ApplicantTypeList[]>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             if ((this.applicant_type_details.is_active = 1)) {
               this.applicant_type_details.is_active = 0;
             } else {
@@ -138,7 +144,9 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.createApplicantType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
@@ -158,7 +166,9 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.modifyApplicantType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {

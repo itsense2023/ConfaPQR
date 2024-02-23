@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BodyResponse, ZionResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { UserList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-request-manager',
@@ -26,14 +27,17 @@ export class RequestManagerComponent implements OnInit {
   informative: boolean = false;
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     //this.data = this.generateTestData(10);
     this.getUsersTable();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getUsersTable() {
     this.userService.getUsersList().subscribe({
       next: (response: BodyResponse<UserList[]>) => {
@@ -43,7 +47,7 @@ export class RequestManagerComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
-          console.log(this.userList);
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -70,8 +74,9 @@ export class RequestManagerComponent implements OnInit {
     this.userService.inactivateUser(user_details).subscribe({
       next: (response: BodyResponse<UserList[]>) => {
         if (response.code === 200) {
-          this.ngOnInit();
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           if ((this.user_details.is_active = 1)) {
             this.user_details.is_active = 0;
           } else {
@@ -116,8 +121,10 @@ export class RequestManagerComponent implements OnInit {
       this.userService.invisibleUser(this.user_details).subscribe({
         next: (response: BodyResponse<UserList[]>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
             this.userList = response.data;
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
@@ -152,7 +159,9 @@ export class RequestManagerComponent implements OnInit {
       this.userService.createUser(payload).subscribe({
         next: (response: BodyResponse<ZionResponse>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             this.message = response.data.estado;
             this.visibleDialog = true;
           }
