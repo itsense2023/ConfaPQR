@@ -22,6 +22,12 @@
               [options]="applicantTypeList"
               optionLabel="applicant_type_name"
               [placeholder]="parameter[0]"></p-dropdown>
+            <label
+              class="invalid"
+              for="document_type"
+              *ngIf="formGroup.get('selectedApplicant')?.touched">
+              Campo Requerido</label
+            >
           </div>
           <div class="col-6">
             <label>{{ parameter[1] }}</label>
@@ -31,6 +37,12 @@
               [options]="requestTypeList"
               optionLabel="request_type_name"
               [placeholder]="parameter[1]"></p-dropdown>
+            <label
+              class="invalid"
+              for="document_type"
+              *ngIf="formGroup.get('selectedRequest')?.touched">
+              Campo Requerido</label
+            >
           </div>
         </div>
       </form>

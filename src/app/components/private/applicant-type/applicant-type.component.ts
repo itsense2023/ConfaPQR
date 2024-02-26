@@ -12,6 +12,7 @@ import { MessageService } from 'primeng/api';
   styleUrl: './applicant-type.component.scss',
 })
 export class ApplicantTypeComponent implements OnInit {
+  
   data!: IRequestManager[];
   applicantTypeList!: ApplicantTypeList[];
   applicant_type_details!: ApplicantTypeList;
@@ -24,6 +25,7 @@ export class ApplicantTypeComponent implements OnInit {
   inputForm: any[] = [];
   enableCreate: boolean = false;
   enableAction: boolean = false;
+
   constructor(
     private userService: Users,
     private router: Router,

@@ -19,15 +19,19 @@ export class ModalCategoryComponent implements OnInit {
   @Input() categoryForm?: CategoryList;
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CategoryList>();
+  
   inputValue: string[] = [''];
   modalityList!: ModalityList[];
-  constructor(private userService: Users) {
-    this.formGroup = new FormGroup({
-      category_id: new FormControl(null, [Validators.required]),
-      category_name: new FormControl(null, [Validators.required]),
-      tipology_name: new FormControl(null, [Validators.required]),
-      cause_name: new FormControl(null, [Validators.required]),
-      modality_id: new FormControl(null, [Validators.required]),
+
+  formGroup:FormGroup
+
+  constructor(private userService: Users, private formBuild:FormBuilder) {
+    this.formGroup = this.formBuild.group({
+      category_id: [null, [Validators.required,Validators.pattern('/^[0-9]+$/')]],
+      category_name: [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
+      tipology_name:  [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
+      cause_name:  [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
+      modality_id:  [null, [Validators.required]],
     });
   }
   ngOnInit(): void {
@@ -41,7 +45,7 @@ export class ModalCategoryComponent implements OnInit {
     }
   }
 
-  formGroup: FormGroup<any> = new FormGroup<any>({});
+  //formGroup: FormGroup<any> = new FormGroup<any>({});
   showDialog() {
     this.visible = true;
   }

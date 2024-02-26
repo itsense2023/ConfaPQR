@@ -1,4 +1,4 @@
-<p-card [style]="{ margin: '0 4% 0' }">
+<p-card [style]="{ margin: '0 50px 100px' }">
   <form [formGroup]="optionsRequest">
     <p-card class="container-card">
       <p class="m-0">
@@ -17,6 +17,12 @@
             [options]="applicantList"
             optionLabel="applicant_type_name"
             placeholder="*Tipo del solicitante"></p-dropdown>
+            <label
+            class="container-select-invalid"
+            for="document_type"
+            *ngIf="optionsRequest.get('applicant_id')?.touched">
+            Seleccione un tipo de solicitante</label
+          >
         </div>
         <div class="container-select">
           <label class="container-select-placeholder">Tipo del solicitud*</label>
@@ -27,6 +33,12 @@
             [options]="requestList"
             optionLabel="request_type_name"
             placeholder="*Tipo del solicitante"></p-dropdown>
+            <label
+            class="container-select-invalid"
+            for="document_type"
+            *ngIf="optionsRequest.get('document_type')?.touched">
+            Seleccione un tipo de solictud</label
+          >
         </div>
       </div>
     </p-card>
