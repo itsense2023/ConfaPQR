@@ -22,14 +22,19 @@
               pInputText
               pKeyFilter="integer"
               placeholder="000" />
-              <label class="invalid" >
-                {{
-                  formGroup.get('modality_id')?.hasError('required') &&
-                  formGroup.get('modality_id')?.touched
-                    ? 'Campo requerido'
-                    : ''
-                }}</label
-              >
+            <label class="invalid">
+              {{
+                formGroup.get('modality_id')?.hasError('required') &&
+                formGroup.get('modality_id')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('modality_id')?.hasError('pattern') &&
+                formGroup.get('modality_id')?.touched
+                  ? 'Solo ingrese numeros'
+                  : ''
+              }}</label
+            >
           </div>
           <div class="col-12">
             <label> Nombre de modalidad </label>
@@ -39,14 +44,19 @@
               pInputText
               pKeyFilter="string"
               placeholder="Escriba nombre" />
-              <label class="invalid" >
-                {{
-                  formGroup.get('modality_name')?.hasError('required') &&
-                  formGroup.get('modality_name')?.touched
-                    ? 'Campo requerido'
-                    : ''
-                }}</label
-              >
+            <label class="invalid">
+              {{
+                formGroup.get('modality_name')?.hasError('required') &&
+                formGroup.get('modality_name')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('modality_name')?.hasError('pattern') &&
+                formGroup.get('modality_name')?.touched
+                  ? 'Solo ingrese letras'
+                  : ''
+              }}</label
+            >
           </div>
         </div>
       </form>
@@ -61,14 +71,10 @@
         <div class="row my-4 px-5">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
-<<<<<<< HEAD
             <p-button
               [label]="buttonmsg"
               [disabled]="!formGroup.valid"
               (click)="closeDialog(true)"></p-button>
-=======
-            <p-button [label]="buttonmsg" [disabled]="formGroup.invalid" (click)="closeDialog(true)"></p-button>
->>>>>>> 537a297579f2df996680d6e3f198daedd7ebd7a2
           </div>
         </div>
       </div>

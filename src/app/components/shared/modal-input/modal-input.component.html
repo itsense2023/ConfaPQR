@@ -21,6 +21,19 @@
               pKeyFilter="string"
               [placeholder]="parameter[1]"
               formControlName="inputValue1" />
+            <label class="invalid">
+              {{
+                formGroup.get('inputValue1')?.hasError('required') &&
+                formGroup.get('inputValue1')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('inputValue1')?.hasError('pattern') &&
+                formGroup.get('inputValue1')?.touched
+                  ? 'No es valido'
+                  : ''
+              }}
+            </label>
           </div>
         </div>
         <div class="row my-4 px-5" *ngIf="twoFields">
@@ -32,6 +45,19 @@
               pInputTextarea
               [placeholder]="parameter[3]"
               formControlName="inputValue2"></textarea>
+            <label class="invalid">
+              {{
+                formGroup.get('inputValue2')?.hasError('required') &&
+                formGroup.get('inputValue2')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('inputValue2')?.hasError('pattern') &&
+                formGroup.get('inputValue2')?.touched
+                  ? 'No es valido'
+                  : ''
+              }}
+            </label>
           </div>
         </div>
       </form>

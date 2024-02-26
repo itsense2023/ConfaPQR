@@ -157,7 +157,12 @@
           <td>{{ requestList.applicant_name }}</td>
           <td>{{ requestList.request_type_name }}</td>
           <td>{{ requestList.status_name }}</td>
-          <td>{{ requestList.request_days }} días hábiles</td>
+          <td>
+            <span
+              class="circle"
+              style="--circle-color: var(--color-{{ requestList.request_days }});"></span>
+            {{ requestList.request_days }} día(s) hábiles
+          </td>
           <td>{{ requestList.assigned_user }}</td>
           <td>
             <p-button
@@ -167,7 +172,8 @@
           </td>
           <td>
             <p-button
-              [label]="requestList.assigned_user === null ? ' Asignar ' : 'Reasignar'"
+              class="custom-button"
+              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
               (click)="assignRequest(requestList)"></p-button>
           </td>
         </tr>
