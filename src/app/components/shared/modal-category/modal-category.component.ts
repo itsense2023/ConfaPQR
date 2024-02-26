@@ -19,9 +19,16 @@ export class ModalCategoryComponent implements OnInit {
   @Input() categoryForm?: CategoryList;
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CategoryList>();
+
   inputValue: string[] = [''];
   modalityList!: ModalityList[];
-  constructor(private userService: Users) {
+
+  //formGroup: FormGroup;
+
+  constructor(
+    private userService: Users,
+    private formBuilder: FormBuilder
+  ) {
     this.formGroup = new FormGroup({
       category_id: new FormControl(null, [Validators.required]),
       category_name: new FormControl(null, [Validators.required]),
@@ -39,6 +46,10 @@ export class ModalCategoryComponent implements OnInit {
     } else {
       this.formGroup.reset();
     }
+    this.formGroup.get('category_id')?.addValidators(Validators.pattern('^[0-9]+$'));
+    this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
+    this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
+    this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
   }
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
@@ -64,6 +75,7 @@ export class ModalCategoryComponent implements OnInit {
       },
     });
   }
+
   closeDialog(value: boolean) {
     this.setRta.emit(value);
     const payload: CategoryList = {
