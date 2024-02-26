@@ -1,153 +1,145 @@
 <div class="row mb-2">
-  <div class="col-10">
-    <div class="title-page">Consultar solicitudes</div>
-  </div>
+  <div class="title">Consultar solicitudes</div>
 </div>
 
-<div class="card">
-  <p-card>
-    <ul class="list-unstyled">
-      <div class="container">
-        <div class="row">
-          <div class="col">
-            <label> # Radicado </label>
-            <li>{{ requestDetails.filing_number }}</li>
-          </div>
-          <div class="col">
-            <label> Fecha de radicación </label>
-            <li>{{ requestDetails.filing_date }}</li>
-          </div>
-          <div class="col">
-            <label> Tipo de solicitante </label>
-            <li>{{ requestDetails.applicant_type_name }}</li>
-          </div>
-          <div class="col">
-            <label> Número de documento </label>
-            <li>{{ requestDetails.doc_id }}</li>
-          </div>
-          <div class="col">
-            <label> Nombre de empresa/solicitante </label>
-            <li>{{ requestDetails.applicant_name }}</li>
-          </div>
+<p-card>
+  <ul class="list-unstyled">
+    <div class="container">
+      <div class="container-row">
+        <div class="container-column">
+          <label class="container-label"> Numero de Radicado </label>
+          <li class="container-text">{{ requestDetails.filing_number }}</li>
         </div>
-        <div class="row">
-          <div class="col">
-            <label> Estado </label>
-            <li>{{ requestDetails.status_name }}</li>
-          </div>
-          <div class="col">
-            <label> Días de solicitud </label>
-            <li>{{ requestDetails.request_days }}</li>
-          </div>
-          <div class="col">
-            <label> Responsable de solicitud </label>
-            <li>{{ requestDetails.assigned_user }}</li>
-          </div>
-          <div class="col">
-            <label> Tipo de solicitud </label>
-            <li>{{ requestDetails.request_type_name }}</li>
-          </div>
+        <div class="container-column">
+          <label class="container-label"> Fecha radicación </label>
+          <li class="container-text">{{ requestDetails.filing_date }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Tipo de solicitante </label>
+          <li class="container-text">{{ requestDetails.applicant_type_name }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Número de documento </label>
+          <li class="container-text">{{ requestDetails.doc_id }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Nombre de empresa/Solicitante </label>
+          <li class="container-text">{{ requestDetails.applicant_name }}</li>
         </div>
       </div>
-    </ul>
-  </p-card>
-</div>
+      <div class="container-row">
+        <div class="container-column">
+          <label class="container-label"> Estado </label>
+          <li class="container-text">{{ requestDetails.status_name }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Días de solicitud </label>
+          <li class="container-text">{{ requestDetails.request_days }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Responsable de solicitud </label>
+          <li class="container-text">{{ requestDetails.assigned_user }}</li>
+        </div>
+        <div class="container-column">
+          <label class="container-label"> Tipo de solicitud </label>
+          <li class="container-text">{{ requestDetails.request_type_name }}</li>
+        </div>
+      </div>
+    </div>
+  </ul>
+</p-card>
+
 <div class="card">
   <div class="container-button">
     <p-button
       [label]="requestDetails.assigned_user === null ? 'Asignar' : 'Reasignar'"
-      (click)="assignRequest(requestDetails)"></p-button>
+      (click)="assignRequest(requestDetails)"
+      [style]="{ 'border-radius': '10px' }"></p-button>
   </div>
   <p-tabView>
-    <p-tabPanel>
-      <ng-template pTemplate="header">
-        <i class="pi pi-calendar"></i>
-        <span>Radicación</span>
-      </ng-template>
+    <p-tabPanel header="Radicación">
       <ul class="list-unstyled">
-        <div class="container">
-          <div class="row">
-            <div class="col">
-              <label> ID </label>
-              <li>{{ requestDetails.request_id }}</li>
+        <div class="process-container">
+          <div class="process-container-row">
+            <div class="process-container-col">
+              <label class="process-container-label"> ID </label>
+              <li class="process-container-text">{{ requestDetails.request_id }}</li>
             </div>
-            <div class="col">
-              <label> Número de radicado </label>
-              <li>{{ requestDetails.filing_number }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Número de radicado </label>
+              <li class="process-container-text">{{ requestDetails.filing_number }}</li>
             </div>
-            <div class="col">
-              <label> Fecha de radicación </label>
-              <li>{{ requestDetails.filing_date }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Fecha de radicación </label>
+              <li class="process-container-text">{{ requestDetails.filing_date }}</li>
             </div>
-            <div class="col">
-              <label> Hora de radicación </label>
-              <li>{{ requestDetails.filing_time }}</li>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label> Estado solicitud </label>
-              <li>{{ requestDetails.status_name }}</li>
-            </div>
-            <div class="col">
-              <label> Tipo de solicitante </label>
-              <li>{{ requestDetails.applicant_type_name }}</li>
-            </div>
-            <div class="col">
-              <label> Tipo de solicitud </label>
-              <li>{{ requestDetails.request_type_name }}</li>
-            </div>
-            <div class="col">
-              <label> Tratamiento de datos </label>
-              <li>{{ requestDetails.data_treatment ? 'Aceptado' : 'Negado' }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Hora de radicación </label>
+              <li class="process-container-text">{{ requestDetails.filing_time }}</li>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <label> Tipo de documento </label>
-              <li>{{ requestDetails.catalog_item_name }}</li>
+          <div class="process-container-row">
+            <div class="process-container-col">
+              <label class="process-container-label"> Estado solicitud </label>
+              <li class="process-container-text">{{ requestDetails.status_name }}</li>
             </div>
-            <div class="col">
-              <label> Número de documento </label>
-              <li>{{ requestDetails.doc_id }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Tipo de solicitante </label>
+              <li class="process-container-text">{{ requestDetails.applicant_type_name }}</li>
             </div>
-            <div class="col">
-              <label> Nombre de empresa o solicitante </label>
-              <li>{{ requestDetails.applicant_name }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Tipo de solicitud </label>
+              <li class="process-container-text">{{ requestDetails.request_type_name }}</li>
             </div>
-            <div class="col">
-              <label> Correo electrónico </label>
-              <li>{{ requestDetails.applicant_email }}</li>
-            </div>
-          </div>
-          <div class="row">
-            <div class="col">
-              <label> Teléfono móvil </label>
-              <li>{{ requestDetails.applicant_cellphone }}</li>
-            </div>
-            <div class="col">
-              <label> Días de solicitud </label>
-              <li>{{ requestDetails.request_days }}</li>
-            </div>
-            <div class="col">
-              <label> Responsable de solicitud </label>
-              <li>{{ requestDetails.assigned_user }}</li>
+            <div class="process-container-col">
+              <label class="process-container-label"> Tratamiento de datos </label>
+              <li class="process-container-text">
+                {{ requestDetails.data_treatment ? 'Aceptado' : 'Negado' }}
+              </li>
             </div>
           </div>
-          <div class="row">
-            <div class="col">
-              <label> Descripción solicitud </label>
-              <li>{{ requestDetails.request_description }}</li>
+          <div class="process-container-row">
+            <div class="process-container-col">
+              <label class="process-container-label"> Tipo de documento </label>
+              <li class="process-container-text">{{ requestDetails.catalog_item_name }}</li>
+            </div>
+            <div class="process-container-col">
+              <label class="process-container-label"> Número de documento </label>
+              <li class="process-container-text">{{ requestDetails.doc_id }}</li>
+            </div>
+            <div class="process-container-col">
+              <label class="process-container-label"> Nombre de empresa o solicitante </label>
+              <li class="process-container-text">{{ requestDetails.applicant_name }}</li>
+            </div>
+            <div class="process-container-col">
+              <label class="process-container-label"> Correo electrónico </label>
+              <li class="process-container-text">{{ requestDetails.applicant_email }}</li>
+            </div>
+          </div>
+          <div class="process-container-row">
+            <div class="process-container-col">
+              <label class="process-container-label"> Teléfono móvil </label>
+              <li class="process-container-text">{{ requestDetails.applicant_cellphone }}</li>
+            </div>
+            <div class="process-container-col">
+              <label class="process-container-label"> Días de solicitud </label>
+              <li class="process-container-text">{{ requestDetails.request_days }}</li>
+            </div>
+            <div class="process-container-col">
+              <label class="process-container-label"> Responsable de solicitud </label>
+              <li class="process-container-text">{{ requestDetails.assigned_user }}</li>
+            </div>
+          </div>
+          <div class="process-container-row">
+            <div class="process-container-col">
+              <label class="process-container-label"> Descripción solicitud </label>
+              <li class="process-container-text">{{ requestDetails.request_description }}</li>
             </div>
           </div>
         </div>
       </ul>
     </p-tabPanel>
-    <p-tabPanel>
-      <ng-template pTemplate="header">
-        <i class="pi pi-user"></i>
-        <span>Adjuntos</span>
-      </ng-template>
+    <p-tabPanel header="Adjuntos">
       <div class="col-12">
         <p-table
           [value]="requestHistoricAttach"
@@ -199,12 +191,7 @@
         </p-table>
       </div>
     </p-tabPanel>
-    <p-tabPanel header="Header III">
-      <ng-template pTemplate="header">
-        <i class="pi pi-search"></i>
-        <span>Histórico gestión</span>
-        <i class="pi pi-cog"></i>
-      </ng-template>
+    <p-tabPanel header="Histórico Gestion">
       <div class="col-12">
         <p-table
           [value]="requestHistoric"
@@ -245,6 +232,7 @@
   </p-tabView>
 </div>
 <p-toast></p-toast>
+
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"

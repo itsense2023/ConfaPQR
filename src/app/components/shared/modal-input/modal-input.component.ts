@@ -27,8 +27,8 @@ export class ModalInputComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
-      inputValue1: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
-      inputValue2: ['', [Validators.required, Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
+      inputValue1: ['', [Validators.required, Validators.pattern('^[^#$%&]+$')]],
+      inputValue2: ['', [Validators.required, Validators.pattern('^[^#$%&]+$')]],
     });
   }
   ngOnInit(): void {

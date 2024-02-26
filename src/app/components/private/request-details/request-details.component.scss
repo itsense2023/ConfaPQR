@@ -1,8 +1,129 @@
-.row {
-    margin-bottom: 20px; /* Space between rows */
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+
+.title {
+  font-weight: 600;
+  font-size: x-large;
+  margin: 25px 30px;
+}
+
+.container-button {
+  display: flex;
+  justify-content: flex-end;
+  /* Align items to the end of the container */
+}
+
+.button {
+  border-radius: 20px;
+}
+
+
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .container {
+
+    &-label {
+      font-size: x-small;
+      color: $color-black;
+    }
+
+    &-text {
+      font-size: small;
+      font-weight: 600;
+      color: $color-black;
+    }
+
+    &-row {
+      display: flex;
+      justify-content: start;
+      margin-bottom: 20px;
+    }
+
+    &-column {
+      width: 100px;
+      margin-right: 10px;
+
+    }
+
   }
-  .container-button {
-    display: flex;
-    justify-content: flex-end; /* Align items to the end of the container */
+
+  .process-container {
+
+    &-label {
+      font-size: small;
+      color: $color-black;
+      border-bottom: 1px solid $color-banner-blue;
+    }
+
+    &-text {
+      font-size: x-small;
+      color: $color-black;
+    }
+
+    &-row {
+      display: flex;
+      justify-content: start;
+      margin: 20px 0;
+    }
+
+    &-col {
+      width: 100px;
+      margin: 0 30px;
+
+    }
   }
-  
+}
+
+/* Estilos para dispositivos grandes (escritorios) */
+@media screen and (min-width: 1025px) {
+  .container {
+
+    &-label {
+      font-size: x-small;
+      color: $color-black;
+    }
+
+    &-text {
+      font-size: small;
+      font-weight: 600;
+      color: $color-black;
+    }
+
+    &-row {
+      display: flex;
+      justify-content: start;
+      margin-bottom: 20px;
+    }
+
+    &-column {
+      width: 200px;
+      margin-right: 10px;
+    }
+
+  }
+
+  .process-container {
+
+    &-label {
+      font-size: small;
+      color: $color-black;
+      border-bottom: 1px solid $color-banner-blue;
+    }
+
+    &-text {
+      font-size: x-small;
+      color: $color-black;
+    }
+
+    &-row {
+      display: flex;
+      justify-content: start;
+      margin: 20px 0;
+    }
+
+    &-col {
+      width: 200px;
+      margin: 0 70px;
+
+    }
+  }
+}

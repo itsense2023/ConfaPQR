@@ -46,10 +46,10 @@ export class ModalCategoryComponent implements OnInit {
     } else {
       this.formGroup.reset();
     }
-    this.formGroup.get('category_id')?.setValidators(Validators.pattern('^[0-9]+$'));
+    this.formGroup.get('category_id')?.addValidators(Validators.pattern('^[0-9]+$'));
     this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
     this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
-    //this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[\w\s\d,.;:()áéíóúÁÉÍÓÚ]+$s'));
+    this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
   }
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
