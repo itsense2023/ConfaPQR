@@ -105,7 +105,7 @@ const routes: Routes = [
   },
   { path: '', redirectTo: '/' + RoutesApp.LOGIN, pathMatch: 'full' },
   // Puedes agregar una ruta comodín para manejar rutas no encontradas (opcional)
-  { path: '**', redirectTo: '/login' + RoutesApp.LOGIN, pathMatch: 'full' },
+  { path: '**', redirectTo: '' + RoutesApp.LOGIN, pathMatch: 'full' },
 ];
 
 @NgModule({

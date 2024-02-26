@@ -56,4 +56,8 @@ export class LayoutComponent implements OnInit {
     // Eliminar token u otra información de autenticación del almacenamiento local
     sessionStorage.clear();
   }
+  redirect(url: string) {
+    console.log(url);
+    this.router.navigate([url]);
+  }
 }
