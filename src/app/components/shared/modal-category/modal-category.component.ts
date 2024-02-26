@@ -19,19 +19,22 @@ export class ModalCategoryComponent implements OnInit {
   @Input() categoryForm?: CategoryList;
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CategoryList>();
-  
+
   inputValue: string[] = [''];
   modalityList!: ModalityList[];
 
-  formGroup:FormGroup
+  //formGroup: FormGroup;
 
-  constructor(private userService: Users, private formBuild:FormBuilder) {
-    this.formGroup = this.formBuild.group({
-      category_id: [null, [Validators.required,Validators.pattern('/^[0-9]+$/')]],
-      category_name: [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
-      tipology_name:  [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
-      cause_name:  [null, [Validators.required,Validators.pattern('^[a-zA-Z0-9.,;]+$')]],
-      modality_id:  [null, [Validators.required]],
+  constructor(
+    private userService: Users,
+    private formBuilder: FormBuilder
+  ) {
+    this.formGroup = new FormGroup({
+      category_id: new FormControl(null, [Validators.required]),
+      category_name: new FormControl(null, [Validators.required]),
+      tipology_name: new FormControl(null, [Validators.required]),
+      cause_name: new FormControl(null, [Validators.required]),
+      modality_id: new FormControl(null, [Validators.required]),
     });
   }
   ngOnInit(): void {
@@ -43,9 +46,14 @@ export class ModalCategoryComponent implements OnInit {
     } else {
       this.formGroup.reset();
     }
+    this.formGroup.get('category_id')?.setValidators(Validators.pattern('^[0-9]+$'));
+    this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
+    this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
+    //this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[\w\s\d,.;:()áéíóúÁÉÍÓÚ]+$s'));
   }
 
-  //formGroup: FormGroup<any> = new FormGroup<any>({});
+  formGroup: FormGroup<any> = new FormGroup<any>({});
+
   showDialog() {
     this.visible = true;
   }
@@ -68,6 +76,7 @@ export class ModalCategoryComponent implements OnInit {
       },
     });
   }
+
   closeDialog(value: boolean) {
     this.setRta.emit(value);
     const payload: CategoryList = {

@@ -17,7 +17,7 @@
             [options]="applicantList"
             optionLabel="applicant_type_name"
             placeholder="*Tipo del solicitante"></p-dropdown>
-            <label
+          <label
             class="container-select-invalid"
             for="document_type"
             *ngIf="optionsRequest.get('applicant_id')?.touched">
@@ -33,7 +33,7 @@
             [options]="requestList"
             optionLabel="request_type_name"
             placeholder="*Tipo del solicitante"></p-dropdown>
-            <label
+          <label
             class="container-select-invalid"
             for="document_type"
             *ngIf="optionsRequest.get('document_type')?.touched">
