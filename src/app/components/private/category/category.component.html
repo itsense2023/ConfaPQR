@@ -28,10 +28,11 @@
           </th>
           <th style="width: 10%">Categoría</th>
           <th style="width: 20%">Tipología</th>
-          <th style="width: 35%">Causa y/o Subtipología</th>
-          <th style="width: 2%">Modalidad</th>
+          <th style="width: 34%">Causa y/o Subtipología</th>
+          <th style="width: 20%">Modalidad</th>
           <th style="width: 10%">Estado</th>
-          <th style="width: 30%"></th>
+          <th style="width: 3%"></th>
+          <th style="width: 3%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoryList>
@@ -41,7 +42,7 @@
           <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.tipology_name }}</td>
           <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.cause_name }}</td>
           <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.modality_name }}</td>
-          <td class="d-flex">
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="categoryList.is_active"
               (onChange)="inActiveCategory(categoryList)"></p-inputSwitch>
@@ -51,11 +52,13 @@
               {{ categoryList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
-          <td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
               (click)="editModality(categoryList)"></p-button>
+          </td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-eye"
               [styleClass]="'btn-icon-info'"
