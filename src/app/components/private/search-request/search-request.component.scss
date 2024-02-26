@@ -1,10 +1,12 @@
-p-button.custom-button {
-    width: 150px; /* Set the desired width */
-    height: 40px; /* Set the desired height */
-    font-size: 16px; /* Set the desired font size */
-    padding: 0 16px; /* Set the desired padding */
-  }
+@import '../../../../assets/styles/abstracts/variables.scss';
 
+.custom-button {
+    /* Reset button size */
+    width: 100px !important;
+    height: 50px !important;
+  
+    /* Add your custom styles here */
+  }
   tr {
     position: relative;
   }
@@ -21,9 +23,9 @@ p-button.custom-button {
   
   /* Define CSS variables for each number of days */
   :root {
-    --color-4: #f00;
-    --color-9: #ff0;
-    --color-11: #0f0;
+    --color-4: $color-deep-red;
+    --color-9: $color-deep-yellow;
+    --color-11: $color-deep-green;
   }
   
   /* Create CSS rules for each number of days */
