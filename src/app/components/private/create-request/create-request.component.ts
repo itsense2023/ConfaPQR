@@ -1,7 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, OnChanges, SimpleChanges } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Users } from '../../../services/users.service';
-import { ApplicantTypeList, RequestTypeList } from '../../../models/users.interface';
+import { ApplicantTypeList, RequestTypeList, RequestsList } from '../../../models/users.interface';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Router } from '@angular/router';
 import { RoutesApp } from '../../../enums/routes.enum';
@@ -14,7 +14,7 @@ import { RoutesApp } from '../../../enums/routes.enum';
 export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
-  requestList!: RequestTypeList[];
+  requestList!: RequestsList[];
 
   constructor(
     private router: Router,
@@ -28,7 +28,10 @@ export class CreateRequestComponent {
     });
 
     this.getApplicantList();
-    this.getRequestList();
+  }
+
+  getRequest() {
+    this.getRequestList(this.optionsRequest.controls['applicant_id'].value['applicant_type_id']);
   }
   getApplicantList() {
     this.userService.getApplicantTypesList().subscribe({
@@ -45,10 +48,9 @@ export class CreateRequestComponent {
       },
     });
   }
-
-  getRequestList() {
-    this.userService.getRequestTypesList().subscribe({
-      next: (response: BodyResponse<RequestTypeList[]>) => {
+  getRequestList(payload: number) {
+    this.userService.getRequestsTypeByApplicantType(payload).subscribe({
+      next: (response: BodyResponse<any>) => {
         if (response.code === 200) {
           this.requestList = response.data;
         }
@@ -63,7 +65,7 @@ export class CreateRequestComponent {
   }
 
   sendOptions() {
-    //console.log(this.optionsRequest.controls['applicant_id'].value,this.optionsRequest.controls['request_id'].value)
+    console.log(this.optionsRequest.controls['applicant_id'].value);
     localStorage.setItem(
       'applicant-type',
       JSON.stringify(this.optionsRequest.controls['applicant_id'].value)

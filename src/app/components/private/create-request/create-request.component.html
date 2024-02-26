@@ -10,6 +10,7 @@
         <div class="container-select">
           <label class="container-select-placeholder">Tipo del solicitante*</label>
           <p-dropdown
+            (onChange)="getRequest()"
             formControlName="applicant_id"
             [style]="{ 'border-radius': '20px', height: 'auto' }"
             class="container-select-options"
