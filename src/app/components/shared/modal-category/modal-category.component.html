@@ -28,6 +28,11 @@
                 formGroup.get('category_id')?.touched
                   ? 'Campo requerido'
                   : ''
+              }}{{
+                formGroup.get('category_id')?.hasError('pattern') &&
+                formGroup.get('category_id')?.touched
+                  ? 'Solo ingrese numeros'
+                  : ''
               }}</label
             >
           </div>
