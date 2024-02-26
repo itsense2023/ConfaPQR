@@ -5,9 +5,10 @@
   background-color: $color-white-smoke;
   overflow: hidden;
 }
+
 .body {
-  overflow-y: scroll;
-  height: 100vh;
+  overflow-y: auto;
+  min-height: 100vh;
 }
 
 .header {
@@ -15,33 +16,42 @@
     height: 500px;
     width: 100%;
   }
+
   &_banner {
     display: flex;
     border: 5px;
+
     &__item {
       width: 17%;
       height: 30px;
+
       &_1 {
         background-color: $color-blue;
       }
+
       &_2 {
         background-color: $color-green;
       }
+
       &_3 {
         background-color: $color-yellow;
       }
+
       &_4 {
         background-color: $color-orange;
       }
+
       &_5 {
         background-color: $color-rosado;
       }
+
       &_6 {
         background-color: $color-red;
       }
     }
   }
 }
+
 .sub-header {
   background-color: $color-banner-blue;
   margin: 5% 4% 2%;
@@ -49,12 +59,14 @@
   justify-content: space-between;
   align-items: center;
   padding: 0.5% 2%;
+
   &_title {
     font-weight: bolder;
     color: $color-white;
     font-size: large;
   }
 }
+
 .footer {
   background-color: $color-white;
   width: 100%;
@@ -64,6 +76,7 @@
   align-items: center;
   position: absolute;
   bottom: 0px;
+
   &-button {
     border-radius: 50px;
     border-style: none;
@@ -76,9 +89,11 @@
     align-items: center;
     padding: 2% 3%;
   }
+
   &-img {
     height: 40px;
   }
+
   &-logo {
     scale: 60%;
   }
