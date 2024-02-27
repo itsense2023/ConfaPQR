@@ -7,6 +7,7 @@ import { CheckboxModule } from 'primeng/checkbox';
 import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [CreateRequestComponent],
@@ -19,8 +20,8 @@ import { DropdownModule } from 'primeng/dropdown';
     ReactiveFormsModule,
     FormsModule,
     DropdownModule,
+    ToastModule,
   ],
-  exports: [CreateRequestComponent
-  ],
+  exports: [CreateRequestComponent],
 })
-export class CreateRequestModule { }
+export class CreateRequestModule {}

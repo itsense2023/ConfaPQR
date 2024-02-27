@@ -116,6 +116,7 @@ export interface RequestTypeList {
   updated_by: string;
   updated_date: string;
   form_id?: number;
+  request_days?: number;
 }
 export interface RequestFormList {
   request_status: number;
