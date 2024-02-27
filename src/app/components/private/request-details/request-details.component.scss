@@ -19,6 +19,8 @@
 
 
 @media screen and (min-width: 768px) and (max-width: 1024px) {
+
+
   .container {
 
     &-label {
@@ -47,6 +49,7 @@
   }
 
   .process-container {
+    width: 650px;
 
     &-label {
       font-size: small;
@@ -56,13 +59,14 @@
 
     &-text {
       font-size: x-small;
+      font-weight: 600;
       color: $color-black;
     }
 
     &-row {
       display: flex;
       justify-content: start;
-      margin: 20px 0;
+      margin: 10px 0;
     }
 
     &-col {
@@ -75,8 +79,8 @@
 
 /* Estilos para dispositivos grandes (escritorios) */
 @media screen and (min-width: 1025px) {
-  .container {
 
+  .container {
     &-label {
       font-size: x-small;
       color: $color-black;
@@ -102,6 +106,7 @@
   }
 
   .process-container {
+    width: 1352px;
 
     &-label {
       font-size: small;
@@ -111,6 +116,7 @@
 
     &-text {
       font-size: x-small;
+      font-weight: 600;
       color: $color-black;
     }
 

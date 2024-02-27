@@ -1,25 +1,70 @@
 @import '../abstracts/variables';
+
 .p-tabview .p-tabview-nav {
-  background-color: $color-platinum;
+  background-color: $color-white;
   margin-top: 20px;
   display: flex;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
+
+
 }
-.p-tabview .p-tabview-nav li .p-tabview-nav-link {
-  background-color: $color-platinum;
-  font-weight: 400;
+
+.p-tabview .p-tabview-nav .p-tabview-nav-link {
+  background-color: $color-white;
+  font-weight: 600;
   font-size: 13px;
+  color: $color-black;
+  border: none;
+
   &:hover {
-    color: $color-white;
-    border-top-right-radius: 10;
+    color: $color-black;
   }
+
+  &-1 {
+    border: 1.5px solid $color-tab-blue;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    &>.p-tabview-nav-link[aria-selected='true'] {
+      background-color: $color-tab-blue;
+      color: $color-white;
+      border: 0;
+    }
+  }
+
+  &-2 {
+
+    border: 1.5px solid $color-tab-yellow;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    &>.p-tabview-nav-link[aria-selected='true'] {
+      background-color: $color-tab-yellow;
+      color: $color-white;
+      border: 0;
+    }
+  }
+
+  &-3 {
+
+    border: 1.5px solid $color-dark-orange;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    &>.p-tabview-nav-link[aria-selected='true'] {
+      background-color: $color-dark-orange;
+      color: $color-white;
+      border: 0;
+    }
+  }
+
 }
-.p-tabview .p-tabview-nav li .p-tabview-nav-link[aria-selected='true'] {
-  background-color: $color-jelly-bean-blue;
-  color: $color-white;
-  border: 0;
-}
+
+// .p-tabview .p-tabview-nav .p-tabview-nav-link[aria-selected='true'] {
+//   background-color: $color-jelly-bean-blue;
+//   color: $color-white;
+//   border: 0;
+// }
+
 .p-tabview .p-tabview-nav li .p-tabview-nav-link {
   padding: 13px;
   margin-bottom: -1px;
@@ -29,18 +74,31 @@
 .p-tabview .p-tabview-nav li {
   flex: 1;
 }
+
 .p-tabview-title {
   //color: #acaeae;
   margin: auto;
 }
 
-.p-tabview .p-tabview-panels {
-  padding: 0;
+@media screen and (min-width: 768px) and (max-width: 1024px) {
+  .p-tabview .p-tabview-panels {
+    padding: 0;
+    width: 650px;
+    margin-right: 50px;
+  }
+}
+
+@media screen and (min-width: 1025px) {
+  .p-tabview .p-tabview-panels {
+    padding: 0;
+    width: 1354px;
+  }
 }
 
 .p-tabview .p-tabview-nav-content {
   margin-bottom: -18px;
   height: 80px;
+  width: 600px;
 }
 
 .p-accordion .p-accordion-header .p-accordion-header-link {
