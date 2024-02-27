@@ -12,7 +12,6 @@ import { MessageService } from 'primeng/api';
   styleUrl: './applicant-type.component.scss',
 })
 export class ApplicantTypeComponent implements OnInit {
-  
   data!: IRequestManager[];
   applicantTypeList!: ApplicantTypeList[];
   applicant_type_details!: ApplicantTypeList;
