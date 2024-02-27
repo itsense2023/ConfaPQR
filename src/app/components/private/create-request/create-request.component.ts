@@ -14,7 +14,7 @@ import { RoutesApp } from '../../../enums/routes.enum';
 export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
-  requestList!: RequestsList[];
+  requestList!: RequestTypeList[];
 
   constructor(
     private router: Router,
