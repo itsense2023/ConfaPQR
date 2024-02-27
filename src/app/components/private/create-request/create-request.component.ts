@@ -41,7 +41,8 @@ export class CreateRequestComponent {
     this.userService.getApplicantTypesList().subscribe({
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
         if (response.code === 200) {
-          this.applicantList = response.data;
+          //this.applicantList = response.data;
+          this.applicantList = response.data.filter(obj => obj.is_active !== 0);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -58,7 +59,8 @@ export class CreateRequestComponent {
     this.userService.getRequestsTypeByApplicantType(payload).subscribe({
       next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
-          this.requestList = response.data;
+          //this.requestList = response.data;
+          this.requestList = response.data.filter(obj => obj.is_active !== 0);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }

@@ -61,9 +61,6 @@ export class ModalCategoryComponent implements OnInit {
       next: (response: BodyResponse<ModalityList[]>) => {
         if (response.code === 200) {
           this.modalityList = response.data.filter(obj => obj.is_active !== 0);
-          /*this.modalityList.forEach(item => {
-            item.is_active = item.is_active === 1 ? true : false;
-          });*/
         } else {
         }
       },
