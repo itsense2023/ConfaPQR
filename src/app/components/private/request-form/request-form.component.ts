@@ -66,9 +66,6 @@ export class RequestFormComponent implements OnInit {
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
-  test() {
-    this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
-  }
   emailMatcher(formControl: AbstractControl) {
     const email = formControl.get('email')?.value;
     const emailConfirmed = formControl.get('validator_email')?.value;
