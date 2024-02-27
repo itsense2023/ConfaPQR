@@ -5,6 +5,7 @@ import { ApplicantTypeList, RequestTypeList, RequestsList } from '../../../model
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Router } from '@angular/router';
 import { RoutesApp } from '../../../enums/routes.enum';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-create-request',
@@ -14,12 +15,13 @@ import { RoutesApp } from '../../../enums/routes.enum';
 export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
-  requestList!: RequestsList[];
+  requestList!: RequestTypeList[];
 
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
-    private userService: Users
+    private userService: Users,
+    private messageService: MessageService
   ) {
     this.optionsRequest = this.formBuilder.group({
       applicant_id: ['', Validators.required],
@@ -29,7 +31,9 @@ export class CreateRequestComponent {
 
     this.getApplicantList();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getRequest() {
     this.getRequestList(this.optionsRequest.controls['applicant_id'].value['applicant_type_id']);
   }
@@ -38,6 +42,8 @@ export class CreateRequestComponent {
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
         if (response.code === 200) {
           this.applicantList = response.data;
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -50,9 +56,11 @@ export class CreateRequestComponent {
   }
   getRequestList(payload: number) {
     this.userService.getRequestsTypeByApplicantType(payload).subscribe({
-      next: (response: BodyResponse<any>) => {
+      next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {

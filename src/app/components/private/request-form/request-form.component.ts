@@ -6,8 +6,12 @@ import {
   ApplicantAttachments,
   ApplicantTypeList,
   RequestFormList,
+  RequestTypeList,
   RequestsList,
 } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
+import { Router } from '@angular/router';
+import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
   selector: 'app-request-form',
@@ -22,7 +26,7 @@ export class RequestFormComponent implements OnInit {
   documentList!: [];
   document!: string;
   applicantType!: ApplicantTypeList;
-  requestType!: RequestsList;
+  requestType!: RequestTypeList;
   arrayApplicantAttachment: ApplicantAttachments[] = [];
   fileNameList: string[] = [];
   selectedFiles: FileList | null = null;
@@ -42,7 +46,9 @@ export class RequestFormComponent implements OnInit {
 
   constructor(
     private formBuilder: FormBuilder,
-    private userService: Users
+    private userService: Users,
+    private messageService: MessageService,
+    private router: Router
   ) {
     this.requestForm = this.formBuilder.group(
       {
@@ -57,7 +63,12 @@ export class RequestFormComponent implements OnInit {
       { validator: this.emailMatcher }
     );
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
+  test() {
+    this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+  }
   emailMatcher(formControl: AbstractControl) {
     const email = formControl.get('email')?.value;
     const emailConfirmed = formControl.get('validator_email')?.value;
@@ -117,6 +128,8 @@ export class RequestFormComponent implements OnInit {
       next: (response: BodyResponse<any[]>): void => {
         if (response.code === 200) {
           this.documentList = response.data[0].catalog_source;
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -129,11 +142,19 @@ export class RequestFormComponent implements OnInit {
   }
 
   setParameter(inputValue: RequestFormList) {
+    console.log(inputValue);
     this.userService.createRequest(inputValue).subscribe({
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           this.requestForm.reset();
+          setTimeout(() => {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+          }, 1000);
+          this.router.navigate([RoutesApp.CREATE_REQUEST]);
         } else {
+          setTimeout(() => {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+          }, 1000);
         }
       },
       error: (err: any) => {
@@ -151,14 +172,14 @@ export class RequestFormComponent implements OnInit {
     const payload: RequestFormList = {
       request_status: 1,
       applicant_type: this.applicantType.applicant_type_id,
-      request_type: this.requestType.request_id,
+      request_type: this.requestType.request_type_id,
       doc_type: this.requestForm.controls['document_type'].value['catalog_item_id'],
       doc_id: this.requestForm.controls['number_id'].value,
       applicant_name: this.requestForm.controls['name'].value,
       applicant_email: this.requestForm.controls['email'].value,
       applicant_cellphone: this.requestForm.controls['cellphone'].value,
       request_description: this.requestForm.controls['mensage'].value,
-      request_days: 15,
+      request_days: this.requestType.request_days || 15,
       assigned_user: '',
       request_answer: '',
       data_treatment: true,

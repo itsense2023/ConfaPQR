@@ -42,16 +42,14 @@
         </div>
       </div>
     </p-card>
-    <p-card *ngIf="!optionsRequest.invalid" class="container-card">
+    <p-card *ngIf="!optionsRequest.get('request_id')?.invalid" class="container-card">
       <ng-template pTemplate="header">
         <h3 class="container-card_header">
           Conoce algunas de las recomendaciones antes de continuar
         </h3>
       </ng-template>
       <p class="m-0">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit.
-        Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab
-        mollitia in, facilis voluptatibus doloribus.
+        {{ optionsRequest.get('request_id')?.value?.request_type_description || '' }}
       </p>
     </p-card>
 
@@ -70,3 +68,4 @@
       class="container-button"></p-button>
   </form>
 </p-card>
+<p-toast></p-toast>

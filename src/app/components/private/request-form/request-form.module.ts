@@ -2,21 +2,18 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RequestFormComponent } from './request-form.component';
 import { RequestFormRoutingModule } from './request-form-routing.module';
-import { CardModule } from 'primeng/card'
-import {  DropdownModule } from 'primeng/dropdown';
-import {  InputTextModule } from 'primeng/inputtext';
+import { CardModule } from 'primeng/card';
+import { DropdownModule } from 'primeng/dropdown';
+import { InputTextModule } from 'primeng/inputtext';
 import { InputNumberModule } from 'primeng/inputnumber';
 import { InputTextareaModule } from 'primeng/inputtextarea';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
-
-
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
-  declarations: [
-    RequestFormComponent
-  ],
+  declarations: [RequestFormComponent],
   imports: [
     CommonModule,
     RequestFormRoutingModule,
@@ -28,11 +25,9 @@ import { TableModule } from 'primeng/table';
     ReactiveFormsModule,
     FormsModule,
     FileUploadModule,
-    TableModule
-    
+    TableModule,
+    ToastModule,
   ],
-  exports: [
-    RequestFormComponent
-  ],
+  exports: [RequestFormComponent],
 })
-export class RequestFormModule { }
+export class RequestFormModule {}

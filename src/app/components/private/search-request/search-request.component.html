@@ -171,10 +171,9 @@
               (click)="redirectDetails(requestList.request_id)"></p-button>
           </td>
           <td>
-            <p-button
-              class="custom-button"
-              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
-              (click)="assignRequest(requestList)"></p-button>
+            <button class="custom-button" (click)="assignRequest(requestList)">
+              {{ requestList.assigned_user === null ? 'Asignar' : 'Reasignar' }}
+            </button>
           </td>
         </tr>
       </ng-template>
