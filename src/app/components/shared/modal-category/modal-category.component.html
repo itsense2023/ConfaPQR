@@ -85,6 +85,12 @@
                 formGroup.get('cause_name')?.touched
                   ? 'Campo requerido'
                   : ''
+              }}
+              {{
+                formGroup.get('cause_name')?.hasError('pattern') &&
+                formGroup.get('cause_name')?.touched
+                  ? 'No es valido'
+                  : ''
               }}</label
             >
           </div>

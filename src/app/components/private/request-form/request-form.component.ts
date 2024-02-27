@@ -47,9 +47,9 @@ export class RequestFormComponent implements OnInit {
     this.requestForm = this.formBuilder.group(
       {
         document_type: ['', Validators.required],
-        number_id: ['', [Validators.required, Validators.pattern('/^[0-9]+$/')]],
+        number_id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
         name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
-        cellphone: ['', [Validators.required, Validators.pattern('/^[0-9]+$/')]],
+        cellphone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
         email: ['', [Validators.required, Validators.email]],
         validator_email: ['', [Validators.required, Validators.email]],
         mensage: ['', Validators.required],

@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { IRequestManager } from '../../../models/request-manager/request-manager.interface';
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
@@ -9,6 +8,7 @@ import {
   AssociationApplicantRequestList,
   RequestTypeList,
 } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 @Component({
   selector: 'app-applicant-request',
   templateUrl: './applicant-request.component.html',
@@ -32,13 +32,16 @@ export class ApplicantRequestComponent implements OnInit {
 
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getApplicantTypeRequestsAssociation();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getApplicantTypeRequestsAssociation() {
     this.userService.getApplicantTypeRequestsAssociation().subscribe({
       next: (response: BodyResponse<AssociationApplicantRequestList[]>) => {
@@ -48,7 +51,7 @@ export class ApplicantRequestComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
-          console.log(this.applicantTypeRequestsList);
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -83,7 +86,10 @@ export class ApplicantRequestComponent implements OnInit {
         .subscribe({
           next: (response: BodyResponse<string>) => {
             if (response.code === 200) {
+              console.log('asdf');
+              this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
             } else {
+              this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
               if ((this.applicant_request_association.is_active = 1)) {
                 this.applicant_request_association.is_active = 0;
               } else {
@@ -139,7 +145,9 @@ export class ApplicantRequestComponent implements OnInit {
         this.userService.createAssociationApplicantRequest(inputValue).subscribe({
           next: (response: BodyResponse<string>) => {
             if (response.code === 200) {
+              this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
             } else {
+              this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             }
           },
           error: (err: any) => {
