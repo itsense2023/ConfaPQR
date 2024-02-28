@@ -117,7 +117,7 @@ export class ModalityComponent implements OnInit {
       if (this.modalityList.some(obj => obj.modality_id === +modality_details.modality_id)) {
         this.visibleDialogAlert = true;
         this.informative = true;
-        this.message = 'Ya existe una modalidad con codigo ' + modality_details.modality_id;
+        this.message = 'Ya existe una modalidad con código ' + modality_details.modality_id;
         this.severity = 'danger';
       } else {
         this.userService.createModality(modality_details).subscribe({

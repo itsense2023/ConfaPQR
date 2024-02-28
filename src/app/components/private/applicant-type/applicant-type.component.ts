@@ -94,7 +94,7 @@ export class ApplicantTypeComponent implements OnInit {
     this.enableCreate = true;
     this.buttonmsg = 'Crear';
     this.parameter = [
-      'tipo de solicitante',
+      'Tipo de solicitante',
       'Escriba nombre',
       'Descripción del solicitante',
       'Escriba descripción',

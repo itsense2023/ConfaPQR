@@ -26,7 +26,7 @@ export class CreateRequestComponent {
     this.optionsRequest = this.formBuilder.group({
       applicant_id: ['', Validators.required],
       request_id: ['', Validators.required],
-      authorize: [null, Validators.requiredTrue],
+      authorize: [null],
     });
 
     this.getApplicantList();
@@ -34,6 +34,18 @@ export class CreateRequestComponent {
   changeRequest() {
     this.optionsRequest.get('request_id')?.setValue('');
     this.optionsRequest.get('authorize')?.setValue(false);
+  }
+
+  applicantId1(): boolean {
+    if (
+      this.optionsRequest.get('applicant_id')?.valid &&
+      this.optionsRequest.controls['applicant_id'].value['applicant_type_id'] !== 1
+    ) {
+      this.optionsRequest.get('authorize')?.addValidators(Validators.requiredTrue);
+      return true;
+    } else {
+      return false;
+    }
   }
 
   showSuccessMessage(state: string, title: string, message: string) {

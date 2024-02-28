@@ -1,12 +1,12 @@
 <p-card [style]="{ margin: '10px 50px 100px 50px' }">
   <div class="card-header-container">
     <h3 class="card_title">
-      {{ applicantType.applicant_type_id === 1 ? 'Empresas' : 'Demas Solicitudes' }}
+      {{ applicantType.applicant_type_id === 1 ? 'Empresa' : 'Demas Solicitudes' }}
     </h3>
   </div>
   <p-card class="card-form">
     <div class="card-form-banner">
-      <h4 class="card-form-banner-title">Ingrese aqui tu solicitud</h4>
+      <h4 class="card-form-banner-title">Ingrese aquí tu solicitud</h4>
     </div>
     <div class="card-form-container">
       <form [formGroup]="requestForm">
@@ -16,7 +16,12 @@
             <p-dropdown
               id="document_type"
               formControlName="document_type"
-              [style]="{ 'border-radius': '20px', height: '30px', 'margin-bottom': '10px' }"
+              [style]="{
+                'border-radius': '20px',
+                height: '30px',
+                'margin-bottom': '10px',
+                'align-items': 'center'
+              }"
               class="card-form-input-select"
               placeholder="*Tipo de documento"
               [options]="documentList"
@@ -32,19 +37,19 @@
             >
           </div>
           <div class="card-form-input">
-            <label class="card-form-input-placeholder">Numero de documento*</label>
+            <label class="card-form-input-placeholder">Número de documento*</label>
             <input
               pInputText
               type="text"
               id="number_id"
               formControlName="number_id"
               class="card-form-input-options"
-              placeholder="*Ingresa el numero de documento" />
+              placeholder="*Ingresa el número de documento" />
             <label class="card-form-input-placeholder-invalid">
               {{
                 requestForm.get('number_id')?.hasError('pattern') &&
                 requestForm.get('number_id')?.touched
-                  ? 'Ingrese solo numeros'
+                  ? 'Ingrese solo números'
                   : ''
               }}{{
                 requestForm.get('number_id')?.hasError('required') &&
@@ -63,7 +68,7 @@
               pInputText
               id="name"
               class="card-form-input-options"
-              placeholder="*Ingrese el nombre" />
+              placeholder="*Ingresa el nombre" />
             <label class="card-form-input-placeholder-invalid">
               {{
                 requestForm.get('name')?.hasError('pattern') && requestForm.get('name')?.touched
@@ -83,12 +88,12 @@
               pInputText
               formControlName="cellphone"
               class="card-form-input-options"
-              placeholder="*Ingresa el numero de celular" />
+              placeholder="*Ingresa el número de celular" />
             <label class="card-form-input-placeholder-invalid">
               {{
                 requestForm.get('cellphone')?.hasError('pattern') &&
                 requestForm.get('cellphone')?.touched
-                  ? 'Ingrese solo numeros'
+                  ? 'Ingrese solo números'
                   : ''
               }}{{
                 requestForm.get('cellphone')?.hasError('required') &&
@@ -101,17 +106,17 @@
         </div>
         <div class="card-form-row">
           <div class="card-form-input">
-            <label class="card-form-input-placeholder">Correo Electronico*</label>
+            <label class="card-form-input-placeholder">Correo electrónico*</label>
             <input
               id="email"
               formControlName="email"
               pInputText
               class="card-form-input-options"
-              placeholder="*Ingresa el correo electronico" />
+              placeholder="*Ingresa el correo electrónico" />
             <label class="card-form-input-placeholder-invalid">
               {{
-                requestForm.get('email')?.hasError('email') && requestForm.get('email')?.touched
-                  ? 'Correo electronico invalido'
+                requestForm.get('email')?.hasError('pattern') && requestForm.get('email')?.touched
+                  ? 'Correo electrónico inválido'
                   : ''
               }}{{
                 requestForm.get('email')?.hasError('required') && requestForm.get('email')?.touched
@@ -121,16 +126,17 @@
             >
           </div>
           <div class="card-form-input">
-            <label class="card-form-input-placeholder">Confirma el correo electronico*</label>
+            <label class="card-form-input-placeholder">Confirma el correo electrónico*</label>
             <input
               type="text"
               formControlName="validator_email"
               pInputText
               class="card-form-input-options"
-              placeholder="*Confirma el correo electronico" />
+              placeholder="*Confirma el correo electrónico" />
             <label class="card-form-input-placeholder-invalid" for="email">
               {{
-                requestForm.get('validator_email')?.hasError('notMatched')
+                requestForm.get('validator_email')?.hasError('notMatched') &&
+                requestForm.get('validator_email')?.touched
                   ? ' No coindice el correo.'
                   : ''
               }}{{
@@ -150,17 +156,19 @@
             id="mensage"
             formControlName="mensage"
             [style]="{ 'border-radius': '20px' }"
-            [maxlength]="maxCaracters"
+            type="text"
+            placeholder="*Descripción detallada de la solicitud"
             pInputTextarea>
-              *Descripcion detallada de la solicitud
-            </textarea
-          >
-          <label class="card-form-input-placeholder-invalid" for="email">
+          </textarea>
+          <label class="card-form-input-placeholder-invalid">
             {{
               requestForm.get('mensage')?.hasError('required') &&
               requestForm.get('mensage')?.touched
                 ? ' Campo Requerido'
                 : ''
+            }}
+            {{
+              requestForm.get('mensage')?.hasError('maxlength') ? ' Maximo 1000 caracteres' : ''
             }}</label
           >
         </div>

@@ -58,7 +58,7 @@
       </p>
     </p-card>
 
-    <div class="container-checkbox">
+    <div class="container-checkbox" onchange="" *ngIf="applicantId1()">
       <p-checkbox formControlName="authorize" [value]="true" [binary]="true"></p-checkbox>
       <p class="container-checkbox_a">
         Autorizo <a href="" class="container-checkbox_link">política tratamiento de datos</a>

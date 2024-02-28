@@ -55,10 +55,22 @@ export class RequestFormComponent implements OnInit {
       {
         document_type: ['', Validators.required],
         number_id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        name: ['', [Validators.required, Validators.pattern('^[a-zA-Z]+$')]],
+        name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
         cellphone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-        email: ['', [Validators.required, Validators.email]],
-        validator_email: ['', [Validators.required, Validators.email]],
+        email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
+          ],
+        ],
+        validator_email: [
+          '',
+          [
+            Validators.required,
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
+          ],
+        ],
         mensage: ['', [Validators.required, Validators.maxLength(1000)]],
       },
       { validator: this.emailMatcher }

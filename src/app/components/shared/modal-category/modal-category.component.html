@@ -50,6 +50,12 @@
                 formGroup.get('category_name')?.touched
                   ? 'Campo requerido'
                   : ''
+              }}
+              {{
+                formGroup.get('category_name')?.hasError('pattern') &&
+                formGroup.get('category_name')?.touched
+                  ? 'Solo ingrese texto'
+                  : ''
               }}</label
             >
           </div>
@@ -66,6 +72,11 @@
                 formGroup.get('tipology_name')?.hasError('required') &&
                 formGroup.get('tipology_name')?.touched
                   ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('tipology_name')?.hasError('pattern') &&
+                formGroup.get('tipology_name')?.touched
+                  ? 'Solo ingrese texto'
                   : ''
               }}</label
             >
@@ -84,12 +95,6 @@
                 formGroup.get('cause_name')?.hasError('required') &&
                 formGroup.get('cause_name')?.touched
                   ? 'Campo requerido'
-                  : ''
-              }}
-              {{
-                formGroup.get('cause_name')?.hasError('pattern') &&
-                formGroup.get('cause_name')?.touched
-                  ? 'No es valido'
                   : ''
               }}</label
             >
