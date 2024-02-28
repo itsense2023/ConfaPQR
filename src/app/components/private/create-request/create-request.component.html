@@ -16,12 +16,16 @@
             class="container-select-options"
             [options]="applicantList"
             optionLabel="applicant_type_name"
+            (onChange)="changeRequest()"
             placeholder="*Tipo del solicitante"></p-dropdown>
-          <label
-            class="container-select-invalid"
-            for="document_type"
-            *ngIf="optionsRequest.get('applicant_id')?.touched">
-            Seleccione un tipo de solicitante</label
+
+          <label class="container-select-invalid">
+            {{
+              optionsRequest.get('applicant_id')?.hasError('pattern') &&
+              optionsRequest.get('applicant_id')?.touched
+                ? 'Seleccione un tipo de solicitante'
+                : ''
+            }}</label
           >
         </div>
         <div class="container-select">
@@ -49,21 +53,21 @@
         </h3>
       </ng-template>
       <p class="m-0">
-        {{ optionsRequest.get('request_id')?.value?.request_type_description || '' }}
+        {{ optionsRequest.get('request_id')?.value?.request_type_description }}
       </p>
     </p-card>
 
     <div class="container-checkbox">
-      <p-checkbox formControlName="authorize" value="true" [binary]="true"></p-checkbox>
+      <p-checkbox formControlName="authorize" [value]="true" [binary]="true"></p-checkbox>
       <p class="container-checkbox_a">
-        Autorizo <a href="" class="container-checkbox_link">politica tratamiento de datos</a>
+        Autorizo <a href="" class="container-checkbox_link">política tratamiento de datos</a>
       </p>
     </div>
     <p-button
       type="button"
-      [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"
+      [style]="{ 'border-radius': '20px', 'background-color': '#00aeef', width: '275px' }"
       label="Continuar"
-      [disabled]="optionsRequest.invalid"
+      [disabled]="!optionsRequest.valid"
       (onClick)="sendOptions()"
       class="container-button"></p-button>
   </form>
