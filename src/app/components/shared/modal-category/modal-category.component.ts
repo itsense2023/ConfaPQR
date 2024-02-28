@@ -33,7 +33,7 @@ export class ModalCategoryComponent implements OnInit {
       category_id: new FormControl(null, [Validators.required]),
       category_name: new FormControl(null, [Validators.required]),
       tipology_name: new FormControl(null, [Validators.required]),
-      cause_name: new FormControl(null, [Validators.required]),
+      cause_name: new FormControl(null),
       modality_id: new FormControl(null, [Validators.required]),
     });
   }
@@ -47,8 +47,8 @@ export class ModalCategoryComponent implements OnInit {
       this.formGroup.reset();
     }
     this.formGroup.get('category_id')?.addValidators(Validators.pattern('^[0-9]+$'));
-    this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
-    this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[a-zA-Z0-9 ,.;:()]+$'));
+    this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
+    this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
     this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
   }
 

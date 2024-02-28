@@ -22,7 +22,7 @@ export class ModalModalityComponent implements OnInit {
   constructor(private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
       modality_id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
-      modality_name: ['', [Validators.required, Validators.pattern('^[^#$%&]+$')]],
+      modality_name: ['', [Validators.required, Validators.pattern('^[^#$%&+-/*]+$')]],
     });
   }
   ngOnInit(): void {
