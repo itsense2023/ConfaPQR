@@ -21,8 +21,7 @@
 
           <label class="container-select-invalid">
             {{
-              optionsRequest.get('applicant_id')?.hasError('pattern') &&
-              optionsRequest.get('applicant_id')?.touched
+              optionsRequest.get('applicant_id')?.hasError('required')
                 ? 'Seleccione un tipo de solicitante'
                 : ''
             }}</label
@@ -37,11 +36,13 @@
             [options]="requestList"
             optionLabel="request_type_name"
             placeholder="*Tipo del solicitante"></p-dropdown>
-          <label
-            class="container-select-invalid"
-            for="document_type"
-            *ngIf="optionsRequest.get('document_type')?.touched">
-            Seleccione un tipo de solictud</label
+
+          <label class="container-select-invalid">
+            {{
+              optionsRequest.get('request_id')?.hasError('required')
+                ? 'Seleccione un tipo de solicitud'
+                : ''
+            }}</label
           >
         </div>
       </div>
