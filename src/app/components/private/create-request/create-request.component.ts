@@ -26,11 +26,16 @@ export class CreateRequestComponent {
     this.optionsRequest = this.formBuilder.group({
       applicant_id: ['', Validators.required],
       request_id: ['', Validators.required],
-      authorize: [null, Validators.required],
+      authorize: [null, Validators.requiredTrue],
     });
 
     this.getApplicantList();
   }
+  changeRequest() {
+    this.optionsRequest.get('request_id')?.setValue('');
+    this.optionsRequest.get('authorize')?.setValue(false);
+  }
+
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }

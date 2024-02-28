@@ -21,11 +21,14 @@
               placeholder="*Tipo de documento"
               [options]="documentList"
               optionLabel="catalog_item_name"></p-dropdown>
-            <label
-              class="card-form-input-placeholder-invalid"
-              for="document_type"
-              *ngIf="requestForm.get('document_type')?.touched">
-              Seleccione tipo de documento</label
+
+            <label class="card-form-input-placeholder-invalid">
+              {{
+                requestForm.get('document_type')?.hasError('required') &&
+                requestForm.get('document_type')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
             >
           </div>
           <div class="card-form-input">
