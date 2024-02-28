@@ -172,7 +172,11 @@
           </td>
           <td>
             <button class="custom-button" (click)="assignRequest(requestList)">
-              {{ requestList.assigned_user === null ? 'Asignar' : 'Reasignar' }}
+              {{
+                requestList.assigned_user === null || requestList.assigned_user === ''
+                  ? 'Asignar'
+                  : 'Reasignar'
+              }}
             </button>
           </td>
         </tr>
