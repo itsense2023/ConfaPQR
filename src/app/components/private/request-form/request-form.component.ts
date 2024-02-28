@@ -31,6 +31,7 @@ export class RequestFormComponent implements OnInit {
   fileNameList: string[] = [];
   selectedFiles: FileList | null = null;
   base64String: string = '';
+  maxCaracters: number = 1000;
 
   ngOnInit(): void {
     let applicant = localStorage.getItem('applicant-type');
@@ -58,7 +59,7 @@ export class RequestFormComponent implements OnInit {
         cellphone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
         email: ['', [Validators.required, Validators.email]],
         validator_email: ['', [Validators.required, Validators.email]],
-        mensage: ['', Validators.required],
+        mensage: ['', [Validators.required, Validators.maxLength(1000)]],
       },
       { validator: this.emailMatcher }
     );
@@ -144,6 +145,7 @@ export class RequestFormComponent implements OnInit {
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           this.requestForm.reset();
+          this.fileNameList = [];
           setTimeout(() => {
             this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           }, 1000);
