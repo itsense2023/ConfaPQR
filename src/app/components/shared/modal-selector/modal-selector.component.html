@@ -25,7 +25,10 @@
             <label
               class="invalid"
               for="document_type"
-              *ngIf="formGroup.get('selectedApplicant')?.touched">
+              *ngIf="
+                formGroup.get('selectedApplicant')?.touched &&
+                formGroup.get('selectedApplicant')?.hasError('required')
+              ">
               Campo Requerido</label
             >
           </div>
@@ -40,7 +43,10 @@
             <label
               class="invalid"
               for="document_type"
-              *ngIf="formGroup.get('selectedRequest')?.touched">
+              *ngIf="
+                formGroup.get('selectedRequest')?.touched &&
+                formGroup.get('selectedRequest')?.hasError('required')
+              ">
               Campo Requerido</label
             >
           </div>
