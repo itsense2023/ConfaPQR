@@ -200,3 +200,13 @@
   [parameter]="parameter"
   (setRta)="closeDialogInput($event)"
   (setRtaParameter)="setParameter($event)"></app-modal-assign-selector>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [message2]="message2"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>

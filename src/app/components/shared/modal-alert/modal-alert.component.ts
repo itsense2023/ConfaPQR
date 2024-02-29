@@ -9,6 +9,7 @@ export class ModalAlertComponent {
   @Input() requestCreation = false;
   @Input() select = false;
   @Input() message = '';
+  @Input() message2 = '';
   @Input() visible: boolean = false;
   @Input() informative: boolean = false;
   @Input() severity = '';
