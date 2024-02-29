@@ -39,6 +39,14 @@ export class RequestFormComponent implements OnInit {
   severity = '';
   message = '';
   enableAction: boolean = false;
+  optionDefault!: string;
+  optionsCompany = [
+    {
+      catalog_item_id: 1,
+      catalog_item_name: 'NIT',
+      regex: '^[0-9]{0,9}$',
+    },
+  ];
 
   ngOnInit(): void {
     let applicant = localStorage.getItem('applicant-type');
@@ -94,6 +102,8 @@ export class RequestFormComponent implements OnInit {
         this.errorMensaje = 'Ingrese solo números y maximo 12 digitos';
       } else if (value.catalog_item_id == 16) {
         this.errorMensaje = 'Formato invalido';
+      } else if (value.catalog_item_id == 1) {
+        this.errorMensaje = 'Ingrese solo números y maximo 9 digitos';
       }
     });
   }
