@@ -14,6 +14,20 @@
           <div class="card-form-input">
             <label class="card-form-input-placeholder">Tipo de documento*</label>
             <p-dropdown
+              *ngIf="applicantType.applicant_type_id === 1"
+              id="document_type"
+              formControlName="document_type"
+              [style]="{
+                'border-radius': '20px',
+                height: '30px',
+                'align-items': 'center'
+              }"
+              class="card-form-input-select"
+              placeholder="*Tipo de documento"
+              [options]="optionsCompany"
+              optionLabel="catalog_item_name"></p-dropdown>
+            <p-dropdown
+              *ngIf="applicantType.applicant_type_id !== 1"
               id="document_type"
               formControlName="document_type"
               [style]="{
@@ -25,7 +39,6 @@
               placeholder="*Tipo de documento"
               [options]="documentList"
               optionLabel="catalog_item_name"></p-dropdown>
-
             <label class="card-form-input-placeholder-invalid">
               {{
                 requestForm.get('document_type')?.hasError('required') &&
