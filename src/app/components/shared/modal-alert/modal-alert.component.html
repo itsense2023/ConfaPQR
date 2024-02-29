@@ -14,12 +14,24 @@
           <img src="../../../assets/images/logo-login.svg" class="login-form-logo__img" />
         </div>
       </div>
-      <div *ngIf="login">
+      <div *ngIf="requestCreation">
         <div class="row my-4 px-5">
-          <div class="col-12 text-center modal-content error-label">INGRESO INVÁLIDO</div>
+          <div class="col-12 text-center" style="font-size: 24px">Su solicitud ha sido</div>
+          <div class="col-12 text-center modal-content success-label" style="font-size: 24px">
+            enviada exitosamente
+          </div>
         </div>
         <div class="row my-4 px-5">
-          <div class="col-12 text-center">{{ message }}</div>
+          <div class="col-12 text-center">
+            <span>Número de radicado: </span>
+            <span class="filing-number">{{ message }}</span>
+          </div>
+        </div>
+        <div class="row my-4 px-5">
+          <div class="col-12 text-center" style="font-size: 12px">
+            Hemos enviado una notificación relacionada con su solicitud al correo electrónico que ha
+            registrado con nosotros.
+          </div>
         </div>
         <div class="row my-4 px-5">
           <div class="col-12 text-center">
@@ -27,7 +39,7 @@
           </div>
         </div>
       </div>
-      <div *ngIf="select">
+      <div *ngIf="select && !requestCreation">
         <div class="row my-4 px-5">
           <div class="col-12 text-center">{{ message }}</div>
         </div>

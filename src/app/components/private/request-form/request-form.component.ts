@@ -7,7 +7,6 @@ import {
   ApplicantTypeList,
   RequestFormList,
   RequestTypeList,
-  RequestsList,
 } from '../../../models/users.interface';
 import { MessageService } from 'primeng/api';
 import { Router } from '@angular/router';
@@ -32,6 +31,11 @@ export class RequestFormComponent implements OnInit {
   selectedFiles: FileList | null = null;
   base64String: string = '';
   maxCaracters: number = 1000;
+  visibleDialogAlert = false;
+  informative: boolean = false;
+  severity = '';
+  message = '';
+  enableAction: boolean = false;
 
   ngOnInit(): void {
     let applicant = localStorage.getItem('applicant-type');
@@ -154,14 +158,14 @@ export class RequestFormComponent implements OnInit {
   setParameter(inputValue: RequestFormList) {
     console.log(inputValue);
     this.userService.createRequest(inputValue).subscribe({
-      next: (response: BodyResponse<string>) => {
+      next: (response: BodyResponse<number>) => {
         if (response.code === 200) {
           this.requestForm.reset();
           this.fileNameList = [];
-          setTimeout(() => {
+          this.showAlertModal(response.data);
+          /*setTimeout(() => {
             this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
-          }, 1000);
-          this.router.navigate([RoutesApp.CREATE_REQUEST]);
+          }, 1000);*/
         } else {
           setTimeout(() => {
             this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
@@ -199,5 +203,16 @@ export class RequestFormComponent implements OnInit {
       form_id: this.requestType.form_id,
     };
     this.setParameter(payload);
+  }
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+    this.enableAction = value;
+    this.router.navigate([RoutesApp.CREATE_REQUEST]);
+  }
+  showAlertModal(filing_number: number) {
+    this.visibleDialogAlert = true;
+    this.informative = true;
+    this.message = filing_number.toString();
+    this.severity = 'danger';
   }
 }

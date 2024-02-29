@@ -46,6 +46,7 @@ export class RequestDetailsComponent implements OnInit {
       next: (response: BodyResponse<RequestsDetails>) => {
         if (response.code === 200) {
           this.requestDetails = response.data;
+          console.log(this.requestDetails);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -63,29 +64,13 @@ export class RequestDetailsComponent implements OnInit {
       next: (response: BodyResponse<RequestHistoric[]>) => {
         if (response.code === 200) {
           //this.requestHistoric = response.data;
+          console.log(response.data);
           this.requestHistoricAttach = response.data.filter(
             item => item.action === 'Archivos adjuntos'
           );
           this.requestHistoric = response.data.filter(item => item.action !== 'Archivos adjuntos');
           console.log(this.requestHistoric);
           console.log(this.requestHistoricAttach);
-        } else {
-          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
-  }
-  getRequestList() {
-    this.userService.getRequestList().subscribe({
-      next: (response: BodyResponse<RequestsList[]>) => {
-        if (response.code === 200) {
-          this.requestList = response.data;
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -110,7 +95,6 @@ export class RequestDetailsComponent implements OnInit {
     this.visibleDialogInput = true;
     this.parameter = ['Usuario'];
     this.request_details = request_details;
-    console.log(request_details);
   }
 
   closeDialog(value: boolean) {
@@ -126,9 +110,7 @@ export class RequestDetailsComponent implements OnInit {
     }
   }
   setParameter(inputValue: string) {
-    console.log(inputValue);
     this.request_details['assigned_user'] = inputValue;
-    console.log(this.request_details);
     if (inputValue) {
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {

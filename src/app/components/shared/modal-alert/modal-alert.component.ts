@@ -6,7 +6,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
   styleUrl: './modal-alert.component.scss',
 })
 export class ModalAlertComponent {
-  @Input() login = false;
+  @Input() requestCreation = false;
   @Input() select = false;
   @Input() message = '';
   @Input() visible: boolean = false;

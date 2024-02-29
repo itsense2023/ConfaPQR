@@ -381,7 +381,7 @@ export class Users {
       'Content-Type': 'application/json',
       Authorization: token || '',
     });
-    return this.http.post<BodyResponse<string>>(
+    return this.http.post<BodyResponse<number>>(
       `${environment.API_PUBLIC}${EndPointRoute.CREATE_REQUEST}`,
       payload,
       { headers }

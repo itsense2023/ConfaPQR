@@ -221,3 +221,12 @@
     class="card-form-button"></p-button>
 </p-card>
 <p-toast></p-toast>
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [requestCreation]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
