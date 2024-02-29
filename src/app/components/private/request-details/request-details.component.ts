@@ -160,4 +160,9 @@ export class RequestDetailsComponent implements OnInit {
       });
     }
   }
+  downloadFile(download_url: string) {
+    const anchor = document.createElement('a');
+    anchor.href = download_url;
+    anchor.click();
+  }
 }
