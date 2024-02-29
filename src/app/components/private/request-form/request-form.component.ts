@@ -31,7 +31,10 @@ export class RequestFormComponent implements OnInit {
   fileNameList: string[] = [];
   selectedFiles: FileList | null = null;
   base64String: string = '';
-  maxCaracters: number = 1000;
+  option: string[] = [];
+  errorSizeFile!: boolean;
+  errorExtensionFile!: boolean;
+  errorMensaje!: string;
 
   ngOnInit(): void {
     let applicant = localStorage.getItem('applicant-type');
@@ -54,7 +57,7 @@ export class RequestFormComponent implements OnInit {
     this.requestForm = this.formBuilder.group(
       {
         document_type: ['', Validators.required],
-        number_id: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
+        number_id: [''],
         name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
         cellphone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
         email: [
@@ -75,6 +78,20 @@ export class RequestFormComponent implements OnInit {
       },
       { validator: this.emailMatcher }
     );
+
+    this.requestForm.get('document_type')?.valueChanges.subscribe(value => {
+      console.log(value);
+      this.requestForm
+        .get('number_id')
+        ?.setValidators([Validators.required, Validators.pattern(value.regex)]);
+      if (value.catalog_item_id == 0) {
+        this.errorMensaje = 'Ingrese solo números ';
+      } else if (value.catalog_item_id == 15) {
+        this.errorMensaje = 'Ingrese solo números y maximo 12 digitos';
+      } else if (value.catalog_item_id == 16) {
+        this.errorMensaje = 'Formato invalido';
+      }
+    });
   }
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
@@ -106,6 +123,15 @@ export class RequestFormComponent implements OnInit {
         const fileSizeMegabytes = fileSizeInKiloBytes / 1024;
         fileSizeFormat = fileSizeMegabytes.toFixed(2) + 'MB';
       }
+      if (this.isValidExtension(file)) {
+        this.errorExtensionFile = true;
+        event.target.files = [];
+      }
+
+      if (file.size > 20971520) {
+        this.errorSizeFile = true;
+        event.target.files = [];
+      }
 
       const reader = new FileReader();
       reader.onload = (e: any) => {
@@ -132,9 +158,15 @@ export class RequestFormComponent implements OnInit {
     this.fileNameList.splice(index, 1);
   }
 
+  isValidExtension(file: File): boolean {
+    const extensionesValidas = ['.jpg', '.png', '.pdf', '.doc', '.xlsx', '.docx', '.xls'];
+    const fileExtension = file?.name?.split('.').pop()?.toLowerCase();
+    console.log(fileExtension);
+    return !extensionesValidas.includes('.' + fileExtension);
+  }
+
   getApplicantList() {
-    //this.userService.getFormById(this.applicantType.applicant_type_id).subscribe({
-    this.userService.getFormById(0).subscribe({
+    this.userService.getFormById(this.requestType.form_id || 0).subscribe({
       next: (response: BodyResponse<any[]>): void => {
         if (response.code === 200) {
           this.documentList = response.data[0].catalog_source;
