@@ -201,3 +201,10 @@ export interface ExportColumn {
   title: string;
   dataKey: string;
 }
+
+export interface ApplicantAttach {
+  url: string;
+  fileName: string;
+  fileExt: string;
+  fileSize: string;
+}

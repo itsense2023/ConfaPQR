@@ -21,7 +21,8 @@
 
           <label class="container-select-invalid">
             {{
-              optionsRequest.get('applicant_id')?.hasError('required')
+              optionsRequest.get('applicant_id')?.hasError('required') &&
+              optionsRequest.get('applicant_id')?.touched
                 ? 'Seleccione un tipo de solicitante'
                 : ''
             }}</label
@@ -35,11 +36,12 @@
             class="container-select-options"
             [options]="requestList"
             optionLabel="request_type_name"
-            placeholder="*Tipo del solicitante"></p-dropdown>
+            placeholder="*Tipo del solicitud"></p-dropdown>
 
           <label class="container-select-invalid">
             {{
-              optionsRequest.get('request_id')?.hasError('required')
+              optionsRequest.get('request_id')?.hasError('required') &&
+              optionsRequest.get('request_id')?.touched
                 ? 'Seleccione un tipo de solicitud'
                 : ''
             }}</label
