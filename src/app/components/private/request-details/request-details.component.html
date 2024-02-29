@@ -185,7 +185,10 @@
                         {{ ApplicantAttach.fileSize }}
                       </td>
                       <td>
-                        <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'"></p-button>
+                        <p-button
+                          icon="pi pi-download"
+                          [styleClass]="'btn-icon-info'"
+                          (click)="downloadFile(ApplicantAttach.url)"></p-button>
                       </td>
                     </tr>
                   </ng-template>

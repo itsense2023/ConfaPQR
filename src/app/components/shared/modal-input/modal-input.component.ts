@@ -13,7 +13,7 @@ export class ModalInputComponent implements OnInit {
   @Input() buttonmsg = '';
   @Input() parameter = [''];
   @Input() visible: boolean = false;
-  @Input() twoFields: boolean = false;
+  @Input() oneField: boolean = false;
   @Input() inputForm: string[] = [];
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<string[]>();

@@ -20,7 +20,7 @@ export class RequestManagerComponent implements OnInit {
   message = '';
   parameter = [''];
   buttonmsg = '';
-  twoFields = false;
+  oneField = false;
   user_details!: UserList;
   enableAction: boolean = false;
   enableDelete: boolean = false;
@@ -99,6 +99,7 @@ export class RequestManagerComponent implements OnInit {
     user_details.is_visible = 0;
     this.user_details = user_details;
     this.enableDelete = true;
+    this.informative = false;
   }
   generateTestData = (count: number): IRequestManager[] => {
     const testData: IRequestManager[] = [];
@@ -117,7 +118,7 @@ export class RequestManagerComponent implements OnInit {
     this.visibleDialog = false;
     if (this.informative) {
       return;
-    } else if (!this.enableDelete) {
+    } else if (this.enableDelete) {
       this.userService.invisibleUser(this.user_details).subscribe({
         next: (response: BodyResponse<UserList[]>) => {
           if (response.code === 200) {
@@ -140,7 +141,7 @@ export class RequestManagerComponent implements OnInit {
   createUser() {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
-    this.twoFields = false;
+    this.oneField = true;
     this.parameter = ['Crear Responsable', 'Escriba usuario de red'];
     this.message = 'Crear Responsable';
     this.informative = true;
