@@ -39,7 +39,7 @@
 
     &>.p-tabview-nav-link[aria-selected='true'] {
       background-color: $color-tab-yellow;
-      color: $color-white;
+      color: $color-black;
       border: 0;
     }
   }
@@ -80,18 +80,18 @@
   margin: auto;
 }
 
-@media screen and (min-width: 768px) and (max-width: 1024px) {
+@media screen and (min-width: 768px) and (max-width: 1374px) {
   .p-tabview .p-tabview-panels {
     padding: 0;
-    width: 650px;
+    width: calc(80% - 50px);
     margin-right: 50px;
   }
 }
 
-@media screen and (min-width: 1025px) {
+@media screen and (min-width: 1375px) {
   .p-tabview .p-tabview-panels {
     padding: 0;
-    width: 1354px;
+    width: calc(80% - 50px);
   }
 }
 

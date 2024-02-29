@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
@@ -24,6 +24,7 @@ export class RequestDetailsComponent implements OnInit {
   request_details!: RequestsDetails;
   selectedRequests!: RequestsList[];
   request_id: number = 0;
+  tabWidth!: number;
   constructor(
     private userService: Users,
     private router: Router,

@@ -19,7 +19,6 @@
               [style]="{
                 'border-radius': '20px',
                 height: '30px',
-                'margin-bottom': '10px',
                 'align-items': 'center'
               }"
               class="card-form-input-select"
@@ -49,7 +48,7 @@
               {{
                 requestForm.get('number_id')?.hasError('pattern') &&
                 requestForm.get('number_id')?.touched
-                  ? 'Ingrese solo números'
+                  ? errorMensaje
                   : ''
               }}{{
                 requestForm.get('number_id')?.hasError('required') &&
@@ -182,11 +181,17 @@
             class="card-buttonUp-custom-icon"
             name="archive_request"
             (change)="onFileSelected($event)"
+            accept=".jpg,.png,.pdf,.xls,.xlsx,.doc,.docx"
+            maxFileSize="20971520"
             multiple />
           <label class="card-buttonUp-label" (click)="openFileInput()">
             <i class="pi pi-file-pdf"></i>Adjuntar archivo
             <i class="pi pi-upload"></i>
           </label>
+          <label class="card-form-input-placeholder-invalid"
+            >{{ errorSizeFile ? 'Tamaño superado' : ''
+            }}{{ errorExtensionFile ? 'Extension no permitida' : '' }}</label
+          >
         </div>
       </div>
       <div class="card-table">
