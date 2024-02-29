@@ -214,8 +214,6 @@ export class RequestFormComponent implements OnInit {
   }
 
   sendRequest() {
-    console.log(this.getAplicant());
-
     const payload: RequestFormList = {
       request_status: 1,
       applicant_type: this.applicantType.applicant_type_id,
