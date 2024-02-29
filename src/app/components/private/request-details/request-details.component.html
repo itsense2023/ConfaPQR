@@ -52,7 +52,11 @@
   <div class="card">
     <div class="container-button">
       <p-button
-        [label]="requestDetails.assigned_user === null ? 'Asignar' : 'Reasignar'"
+        [label]="
+          requestDetails.assigned_user === null || requestDetails.assigned_user === ''
+            ? 'Asignar'
+            : 'Reasignar'
+        "
         (click)="assignRequest(requestDetails)"
         [style]="{ 'border-radius': '10px' }"></p-button>
     </div>
@@ -308,3 +312,13 @@
   [parameter]="parameter"
   (setRta)="closeDialogInput($event)"
   (setRtaParameter)="setParameter($event)"></app-modal-assign-selector>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [message2]="message2"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
