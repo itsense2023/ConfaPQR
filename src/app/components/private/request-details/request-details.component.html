@@ -1,0 +1,324 @@
+<div class="row mb-2">
+  <div class="title">Consultar solicitudes</div>
+</div>
+@if (requestDetails) {
+  <p-card>
+    <ul class="list-unstyled">
+      <div class="container">
+        <div class="container-row">
+          <div class="container-column">
+            <label class="container-label"> Número de Radicado </label>
+            <li class="container-text">{{ requestDetails.filing_number }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Fecha radicación </label>
+            <li class="container-text">{{ requestDetails.filing_date }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Tipo de solicitante </label>
+            <li class="container-text">{{ requestDetails.applicant_type_name }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Número de documento </label>
+            <li class="container-text">{{ requestDetails.doc_id }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Nombre de empresa/Solicitante </label>
+            <li class="container-text">{{ requestDetails.applicant_name }}</li>
+          </div>
+        </div>
+        <div class="container-row">
+          <div class="container-column">
+            <label class="container-label"> Estado </label>
+            <li class="container-text">{{ requestDetails.status_name }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Días de solicitud </label>
+            <li class="container-text">{{ requestDetails.request_days }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Responsable de solicitud </label>
+            <li class="container-text">{{ requestDetails.assigned_user }}</li>
+          </div>
+          <div class="container-column">
+            <label class="container-label"> Tipo de solicitud </label>
+            <li class="container-text">{{ requestDetails.request_type_name }}</li>
+          </div>
+        </div>
+      </div>
+    </ul>
+  </p-card>
+
+  <div class="card">
+    <div class="container-button">
+      <p-button
+        [label]="
+          requestDetails.assigned_user === null || requestDetails.assigned_user === ''
+            ? 'Asignar'
+            : 'Reasignar'
+        "
+        (click)="assignRequest(requestDetails)"
+        [style]="{ 'border-radius': '10px' }"></p-button>
+    </div>
+    <div class="p-tabview">
+      <p-tabView class="p-tabview-nav">
+        <p-tabPanel header="Radicación" headerStyleClass="p-tabview-nav-link-1 ">
+          <ul class="list-unstyled">
+            <div class="process-container">
+              <div class="process-container-row">
+                <div class="process-container-col">
+                  <label class="process-container-label"> ID </label>
+                  <li class="process-container-text">{{ requestDetails.request_id }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Número de radicado </label>
+                  <li class="process-container-text">{{ requestDetails.filing_number }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Fecha de radicación </label>
+                  <li class="process-container-text">{{ requestDetails.filing_date }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Hora de radicación </label>
+                  <li class="process-container-text">{{ requestDetails.filing_time }}</li>
+                </div>
+              </div>
+              <div class="process-container-row">
+                <div class="process-container-col">
+                  <label class="process-container-label"> Estado solicitud </label>
+                  <li class="process-container-text">{{ requestDetails.status_name }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Tipo de solicitante </label>
+                  <li class="process-container-text">{{ requestDetails.applicant_type_name }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Tipo de solicitud </label>
+                  <li class="process-container-text">{{ requestDetails.request_type_name }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Tratamiento de datos </label>
+                  <li class="process-container-text">
+                    {{ requestDetails.data_treatment ? 'Aceptado' : 'Negado' }}
+                  </li>
+                </div>
+              </div>
+              <div class="process-container-row">
+                <div class="process-container-col">
+                  <label class="process-container-label"> Tipo de documento </label>
+                  <li class="process-container-text">{{ requestDetails.catalog_item_name }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Número de documento </label>
+                  <li class="process-container-text">{{ requestDetails.doc_id }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Nombre de empresa o solicitante </label>
+                  <li class="process-container-text">{{ requestDetails.applicant_name }}</li>
+                </div>
+              </div>
+              <div class="process-container-row">
+                <div class="process-container-col">
+                  <label class="process-container-label"> Correo electrónico </label>
+                  <li class="process-container-text">{{ requestDetails.applicant_email }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Teléfono móvil </label>
+                  <li class="process-container-text">{{ requestDetails.applicant_cellphone }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Días de solicitud </label>
+                  <li class="process-container-text">{{ requestDetails.request_days }}</li>
+                </div>
+                <div class="process-container-col">
+                  <label class="process-container-label"> Responsable de solicitud </label>
+                  <li class="process-container-text">{{ requestDetails.assigned_user }}</li>
+                </div>
+              </div>
+              <div class="process-container-row">
+                <div class="process-container-col">
+                  <label class="process-container-label"> Descripción solicitud </label>
+                  <li class="process-container-text">{{ requestDetails.request_description }}</li>
+                </div>
+              </div>
+            </div>
+          </ul>
+        </p-tabPanel>
+        <p-tabPanel header="Adjuntos" headerStyleClass="p-tabview-nav-link-2 ">
+          <p-tabView class="p-tabview">
+            <p-tabPanel
+              header="Adjuntos de solicitante"
+              headerStyleClass=" p-tabview-nav-content p-tabview-nav-link-sub">
+              <ul class="list-unstyled">
+                <p-table
+                  [value]="ApplicantAttach"
+                  [scrollable]="true"
+                  scrollHeight="400px"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="80"
+                  selectionMode="single"
+                  [paginator]="true"
+                  [rows]="5"
+                  [showCurrentPageReport]="true"
+                  [tableStyle]="{ 'min-width': '52rem' }"
+                  currentPageReportTemplate="{first} de {totalRecords}"
+                  [rowsPerPageOptions]="[5, 10, 20]">
+                  <ng-template pTemplate="header">
+                    <tr style="height: 60px">
+                      <th style="width: 30%">Archivo</th>
+                      <th pSortableColumn="updated_date" style="width: 20%">
+                        Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
+                      </th>
+                      <th style="width: 20%">Formato</th>
+                      <th style="width: 20%">Peso</th>
+                      <th style="width: 10%"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-ApplicantAttach>
+                    <tr>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ ApplicantAttach.fileName }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ requestDetails.filing_date }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ ApplicantAttach.fileExt }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ ApplicantAttach.fileSize }}
+                      </td>
+                      <td>
+                        <p-button
+                          icon="pi pi-download"
+                          [styleClass]="'btn-icon-info'"
+                          (click)="downloadFile(ApplicantAttach.url)"></p-button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </ul>
+            </p-tabPanel>
+            <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
+              <div class="process-container">
+                <p-table
+                  [value]="requestHistoricAttach"
+                  [scrollable]="true"
+                  scrollHeight="400px"
+                  [virtualScroll]="true"
+                  [virtualScrollItemSize]="80"
+                  selectionMode="single"
+                  [paginator]="true"
+                  [rows]="5"
+                  [showCurrentPageReport]="true"
+                  [tableStyle]="{ 'min-width': '52rem' }"
+                  currentPageReportTemplate="{first} de {totalRecords}"
+                  [rowsPerPageOptions]="[5, 10, 20]">
+                  <ng-template pTemplate="header">
+                    <tr style="height: 60px">
+                      <th style="width: 30%">Archivo</th>
+                      <th pSortableColumn="updated_date" style="width: 20%">
+                        Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
+                      </th>
+                      <th style="width: 20%">Formato</th>
+                      <th style="width: 20%">Peso</th>
+                      <th style="width: 10%"></th>
+                    </tr>
+                  </ng-template>
+                  <ng-template pTemplate="body" let-requestHistoricAttach>
+                    <tr>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ requestHistoricAttach.difference }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ requestHistoricAttach.updated_date }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ requestHistoricAttach.difference[0].split('.')[1] }}
+                      </td>
+                      <td [ngStyle]="{ 'text-align': 'center' }">
+                        {{ requestHistoricAttach.difference }}
+                      </td>
+                      <td>
+                        <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'"></p-button>
+                      </td>
+                    </tr>
+                  </ng-template>
+                </p-table>
+              </div>
+            </p-tabPanel>
+          </p-tabView>
+        </p-tabPanel>
+        <p-tabPanel header="Histórico Gestión" headerStyleClass="p-tabview-nav-link-3">
+          <div class="process-container">
+            <p-table
+              [value]="requestHistoric"
+              [scrollable]="true"
+              scrollHeight="400px"
+              [virtualScroll]="true"
+              [virtualScrollItemSize]="80"
+              selectionMode="single"
+              [paginator]="true"
+              [rows]="5"
+              [showCurrentPageReport]="true"
+              [tableStyle]="{ 'min-width': '50rem' }"
+              currentPageReportTemplate="{first} de {totalRecords}"
+              [rowsPerPageOptions]="[5, 10, 20]">
+              <ng-template pTemplate="header">
+                <tr>
+                  <th pSortableColumn="updated_date" style="width: 10%">
+                    Fecha<p-sortIcon field="updated_date"></p-sortIcon>
+                  </th>
+                  <th style="width: 15%">Hora</th>
+                  <th style="width: 20%">Usuario</th>
+                  <th style="width: 20%">Responsable de solicitud</th>
+                  <th style="width: 15%">Estado de solicitud</th>
+                </tr>
+              </ng-template>
+              <ng-template pTemplate="body" let-requestHistoric>
+                <tr>
+                  <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_date }}</td>
+                  <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_time }}</td>
+                  <td [ngStyle]="{ 'text-align': 'center' }">
+                    {{ requestDetails.applicant_name }}
+                  </td>
+                  <td [ngStyle]="{ 'text-align': 'center' }">
+                    {{ requestHistoric.assigned_user }}
+                  </td>
+                  <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.status_name }}</td>
+                </tr>
+              </ng-template>
+            </p-table>
+          </div>
+        </p-tabPanel>
+      </p-tabView>
+    </div>
+  </div>
+}
+<p-toast></p-toast>
+
+<app-modal-dinamic
+  *ngIf="visibleDialog"
+  [select]="true"
+  [visible]="visibleDialog"
+  [message]="message"
+  (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-assign-selector
+  *ngIf="visibleDialogInput"
+  [visible]="visibleDialogInput"
+  [message]="message"
+  [buttonmsg]="buttonmsg"
+  [parameter]="parameter"
+  (setRta)="closeDialogInput($event)"
+  (setRtaParameter)="setParameter($event)"></app-modal-assign-selector>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [message2]="message2"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>

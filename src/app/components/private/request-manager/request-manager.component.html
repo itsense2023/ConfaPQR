@@ -3,13 +3,13 @@
     <div class="title-page">Parametrizar responsables de solicitud</div>
   </div>
   <div class="col-2">
-    <p-button label="Crear responsable"></p-button>
+    <p-button label="Crear responsable" (click)="createUser()"></p-button>
   </div>
 </div>
 <div class="row">
   <div class="col-12">
     <p-table
-      [value]="data"
+      [value]="userList"
       [paginator]="true"
       [rows]="5"
       [showCurrentPageReport]="true"
@@ -18,40 +18,59 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 35%">Nombre de colaborador</th>
-          <th style="width: 35%">Correo electrónico</th>
-          <th style="width: 15%">Estado</th>
+          <th pSortableColumn="user_name" style="width: 35%">
+            Nombre de colaborador<p-sortIcon field="user_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="user_email" style="width: 35%">
+            Correo electrónico<p-sortIcon field="user_email"></p-sortIcon>
+          </th>
+          <th pSortableColumn="is_active" style="width: 15%">
+            Estado<p-sortIcon field="is_active"></p-sortIcon>
+          </th>
           <th style="width: 15%"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-data>
+      <ng-template pTemplate="body" let-userList>
         <tr>
-          <td>{{ data.name }}</td>
-          <td>{{ data.email }}</td>
-          <td class="d-flex">
-            <p-inputSwitch [(ngModel)]="data.status"></p-inputSwitch>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ userList.user_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ userList.user_email }}</td>
+          <td class="d-flex" [ngStyle]="{ 'text-align': 'center' }">
+            <p-inputSwitch
+              [(ngModel)]="userList.is_active"
+              (onChange)="inactive(userList)"></p-inputSwitch>
             <div
               class="d-flex align-items-center ms-2"
-              [ngClass]="{ 'input-switch-label': data.status }">
-              {{ data.status ? 'Activo' : 'Inactivo' }}
+              [ngClass]="{ 'input-switch-label': userList.is_active }">
+              {{ userList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
-          <td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-trash"
               [styleClass]="'btn-icon-warning'"
-              (click)="delete()"></p-button>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
+              (click)="delete(userList)"></p-button>
           </td>
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
   [visible]="visibleDialog"
   [message]="message"
+  [informative]="informative"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-input
+  *ngIf="visibleDialogInput"
+  [select]="true"
+  [visible]="visibleDialogInput"
+  [message]="message"
+  [buttonmsg]="buttonmsg"
+  [parameter]="parameter"
+  [oneField]="oneField"
+  (setRta)="closeDialogInput($event)"
+  (setRtaParameter)="setParameter($event)"></app-modal-input>

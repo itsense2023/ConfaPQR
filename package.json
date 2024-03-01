@@ -1,12 +1,12 @@
 {
-  "name": "confa-web",
+  "name": "confa",
   "version": "0.0.1",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
-    "build:develop": " ng build --configuration=develop",
-    "build:qa": " ng build --configuration=qa",
-    "build:production": " ng build --configuration=production",
+    "build:develop": "ng build --configuration=develop",
+    "build:qa": "ng build --configuration=qa",
+    "build:production": "ng build --configuration=production",
     "watch": "ng build --watch --configuration development",
     "test": "ng test",
     "lint": "ng lint"
@@ -23,13 +23,17 @@
     "@angular/router": "^17.0.0",
     "@popperjs/core": "^2.11.8",
     "bootstrap": "^5.3.2",
+    "file-saver": "^2.0.5",
     "jquery": "^3.7.1",
+    "jspdf": "^2.5.1",
+    "jspdf-autotable": "^3.8.1",
     "jwt-decode": "^4.0.0",
     "ngx-spinner": "^16.0.2",
     "primeicons": "^6.0.1",
-    "primeng": "^17.4.0",
+    "primeng": "^17.8.0",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
+    "xlsx": "^0.18.5",
     "zone.js": "~0.14.2"
   },
   "devDependencies": {
@@ -41,6 +45,7 @@
     "@angular-eslint/template-parser": "17.2.1",
     "@angular/cli": "^17.0.7",
     "@angular/compiler-cli": "^17.0.0",
+    "@types/file-saver": "^2.0.7",
     "@types/jasmine": "~5.1.0",
     "@types/node": "^20.11.10",
     "@typescript-eslint/eslint-plugin": "6.19.0",

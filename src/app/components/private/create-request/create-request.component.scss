@@ -1,0 +1,61 @@
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+.container {
+  display: flex;
+  justify-content: space-around;
+
+
+  &-select {
+    display: flex;
+    flex-direction: column;
+
+    &-placeholder {
+      font-size: x-small;
+      margin: 0 0 5px 15px;
+      border-radius: 20px;
+    }
+
+    &-options {
+      width: 250px;
+    }
+
+    &-invalid {
+      color: $color-red;
+      font-size: small;
+    }
+  }
+
+  &-card {
+    margin: 0.5% 2%;
+
+    &_header {
+      text-align: center;
+      font-size: medium;
+      font-weight: bold;
+      padding-top: 2%;
+    }
+  }
+
+  &-checkbox {
+    display: flex;
+    justify-content: center;
+    margin: 15px;
+
+    align-items: center;
+
+    &_a {
+      margin: 5px 0 5px 5px;
+      font-size: medium;
+    }
+
+    &_link {
+      text-decoration: underline;
+      color: $color-black;
+    }
+  }
+
+  &-button {
+    display: flex;
+    justify-content: center;
+  }
+}

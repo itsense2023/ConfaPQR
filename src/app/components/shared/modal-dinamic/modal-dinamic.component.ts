@@ -10,14 +10,15 @@ export class ModalDinamicComponent {
   @Input() select = false;
   @Input() message = '';
   @Input() visible: boolean = false;
+  @Input() informative: boolean = false;
   @Output() setRta = new EventEmitter<boolean>();
 
   showDialog() {
     this.visible = true;
   }
 
-  closeDialog() {
-    this.setRta.emit(false);
+  closeDialog(value: boolean) {
+    this.setRta.emit(value);
     this.visible = false;
   }
 }
