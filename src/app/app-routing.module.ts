@@ -78,7 +78,7 @@ const routes: Routes = [
   },
   {
     path: RoutesApp.CREATE_REQUEST,
-    canActivate: [sessionGuard],
+    //canActivate: [sessionGuard],
     component: LayoutRequestComponent,
     loadChildren: () =>
       import('./components/private/create-request/create-request.module').then(
@@ -96,7 +96,7 @@ const routes: Routes = [
   },
   {
     path: RoutesApp.REQUEST_FORM,
-    canActivate: [sessionGuard],
+    //canActivate: [sessionGuard],
     component: LayoutRequestComponent,
     loadChildren: () =>
       import('./components/private/request-form/request-form.module').then(

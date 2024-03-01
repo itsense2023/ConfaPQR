@@ -23,7 +23,9 @@ export class RequestDetailsComponent implements OnInit {
   ingredient!: string;
   visibleDialog = false;
   visibleDialogInput = false;
+  visibleDialogAlert = false;
   message = '';
+  message2 = '';
   buttonmsg = '';
   parameter = [''];
   request_details?: RequestsDetails;
@@ -31,7 +33,8 @@ export class RequestDetailsComponent implements OnInit {
   request_id: number = 0;
   tabWidth!: number;
   ApplicantAttach: ApplicantAttach[] = [];
-
+  informative: boolean = false;
+  severity = '';
   constructor(
     private userService: Users,
     private router: Router,
@@ -114,7 +117,8 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   assignRequest(request_details: RequestsDetails) {
-    if (request_details.assigned_user == null) {
+    console.log('request_details', request_details);
+    if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
     } else {
@@ -138,8 +142,20 @@ export class RequestDetailsComponent implements OnInit {
       // accion de eliminar
     }
   }
+  closeDialogAlert(value: boolean) {
+    this.visibleDialogAlert = false;
+  }
   setParameter(inputValue: string) {
     if (!this.request_details) return;
+    if (this.request_details['assigned_user'] == inputValue) {
+      this.visibleDialogAlert = true;
+      this.informative = true;
+      this.message = 'Verifique el responsable a asignar';
+      this.message2 =
+        'Recuerde que, para realizar una reasignación, es necesario seleccionar un colaborador diferente';
+      this.severity = 'danger';
+      return;
+    }
     this.request_details['assigned_user'] = inputValue;
     if (inputValue) {
       this.userService.assignUserToRequest(this.request_details).subscribe({
