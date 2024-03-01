@@ -15,39 +15,44 @@
         </div>
       </div>
       <div class="row my-4 px-5">
-        <div class="col-12 text-center">
+        <div class="col-12 container-text">
           <ng-container *ngIf="!expandMessage; else expandedMessage">{{
-            message | slice: 0 : 100
+            message | slice: 0 : 500
           }}</ng-container>
           <ng-template #expandedMessage>{{ message }}</ng-template>
-          <button class="btn btn-link" (click)="toggleExpand()">
-            {{ expandMessage ? 'Leer menos' : 'Leer más' }}
+          <button *ngIf="expandMessage" class="button-more" (click)="toggleExpand()">
+            <span class="pi pi-angle-up"></span> Leer menos
+          </button>
+          <button *ngIf="!expandMessage" class="button-more" (click)="toggleExpand()">
+            <span class="pi pi-angle-down"></span> Leer mas
           </button>
         </div>
       </div>
       <form [formGroup]="formGroup">
-        <div class="row my-4 px-5">
-          <div class="col-12 text-center">
-            <input type="checkbox" formControlName="inputValue" />
-            <label>
-              Acepto el
-              <a href="#" class="container-checkbox_link">tratamiento de datos personales de</a>
-              Confa
-            </label>
-          </div>
+        <div class="container_checkbox">
+          <input type="checkbox" formControlName="inputValue" style="width: auto" />
+          <label class="container_text">
+            Acepto el
+            <a href="#" class="container_link">tratamiento de datos personales </a>
+            de Confa
+          </label>
         </div>
       </form>
       <div class="row my-4 px-5">
-        <div class="col-12 text-center modal-content error-label" style="font-size: 14px">
-          Para continuar con la creación de su solicitud, es importante que acepte el tratamiento de
-          sus datos
-        </div>
+        <p class="error-label">
+          {{
+            formGroup.get('inputValue')?.hasError('required')
+              ? 'Para continuar con la creación de su solicitud, es importante que acepte el tratamiento de sus datos'
+              : ''
+          }}
+        </p>
       </div>
       <div>
         <div class="row my-4 px-5">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button
               label="Continuar"
+              [style]="{ 'border-radius': '10px', 'background-color': '#00aeef', width: '275px' }"
               [disabled]="!formGroup.get('inputValue')?.valid"
               (click)="closeDialog(true)"></p-button>
           </div>

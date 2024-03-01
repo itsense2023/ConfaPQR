@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
-import { RequestsList } from '../../../models/users.interface';
+import {
+  ApplicantTypeList,
+  RequestTypeList,
+  RequestsList,
+  UserList,
+} from '../../../models/users.interface';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { MessageService } from 'primeng/api';
 
@@ -13,6 +18,9 @@ import { MessageService } from 'primeng/api';
 })
 export class SearchRequestComponent implements OnInit {
   requestList: RequestsList[] = [];
+  aplicantList: ApplicantTypeList[] = [];
+  requestTypeList: RequestTypeList[] = [];
+  userList: UserList[] = [];
   ingredient!: string;
   visibleDialog = false;
   visibleDialogInput = false;
@@ -25,6 +33,10 @@ export class SearchRequestComponent implements OnInit {
   informative: boolean = false;
   severity = '';
   visibleDialogAlert = false;
+  statusOptions!: string[];
+  daysOption!: number[];
+  selectedDaysOptions!: number[];
+  selectedStatusOptions!: string[];
   constructor(
     private userService: Users,
     private router: Router,
@@ -33,7 +45,11 @@ export class SearchRequestComponent implements OnInit {
 
   ngOnInit() {
     this.getRequestList();
+    this.getApplicantTypeList();
+    this.getRequestTypeList();
+    this.getUsersList();
   }
+
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
@@ -42,6 +58,60 @@ export class SearchRequestComponent implements OnInit {
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
+          this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
+          this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getApplicantTypeList() {
+    this.userService.getApplicantTypesList().subscribe({
+      next: (response: BodyResponse<ApplicantTypeList[]>) => {
+        if (response.code === 200) {
+          this.aplicantList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getRequestTypeList() {
+    this.userService.getRequestTypesList().subscribe({
+      next: (response: BodyResponse<RequestTypeList[]>) => {
+        if (response.code === 200) {
+          this.requestTypeList = response.data;
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getUsersList() {
+    this.userService.getUsersList().subscribe({
+      next: (response: BodyResponse<UserList[]>) => {
+        if (response.code === 200) {
+          this.userList = response.data;
+          console.log(this.userList);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }

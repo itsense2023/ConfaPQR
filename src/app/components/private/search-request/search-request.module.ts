@@ -9,6 +9,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchRequestComponent } from './search-request.component';
 import { ToastModule } from 'primeng/toast';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [SearchRequestComponent],
@@ -22,6 +23,7 @@ import { ToastModule } from 'primeng/toast';
     InputSwitchModule,
     SharedModule,
     ToastModule,
+    MultiSelectModule,
   ],
   exports: [SearchRequestComponent],
 })

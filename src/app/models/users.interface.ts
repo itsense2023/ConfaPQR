@@ -29,6 +29,7 @@ export interface RequestsList {
   applicant_attachments: string[];
   assigned_attachments: string[];
   form_id: number;
+  status_name: string;
 }
 
 export interface RequestsDetails {

@@ -56,80 +56,104 @@
           <th style="width: 5%"></th>
           <th style="width: 10%"></th>
         </tr>
-        <!--<tr>
+        <tr>
           <th>
-            <input
-              pInputText
+            <p-columnFilter
+              style="width: 100px"
               type="text"
-              (input)="dt && dt.filter(($event.target as HTMLInputElement).value, 'filing_number', 'contains')"
-              placeholder="Search by Name"
-              class="w-full" />
+              field="filing_number"
+              label="Número de Radicado"
+              filterPlaceholder="Numero de Radicado"></p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_date', 'contains')"
-              placeholder="Search by Country"
-              class="w-full" />
+            <p-columnFilter style="width: 100px" type="text" field="filing_date"></p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_type_name', 'contains')"
-              placeholder="Search by Representative"
-              class="w-full" />
+            <p-columnFilter
+              style="width: 100px"
+              field="applicant_type_name"
+              matchMode="in"
+              [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [filter]="false"
+                  [options]="aplicantList"
+                  optionLabel="applicant_type_name">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'doc_id', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+            <p-columnFilter style="width: 100px" type="text" field="doc_id"></p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
+            <p-columnFilter
+              style="width: 100px"
               type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+              field="applicant_name"></p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_type_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+            <p-columnFilter
+              style="width: 100px"
+              field="request_type_name"
+              matchMode="in"
+              [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [filter]="false"
+                  [options]="requestTypeList"
+                  optionLabel="request_type_name">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'status_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+            <p-columnFilter
+              style="width: 100px"
+              field="status_name"
+              matchMode="in"
+              [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [filter]="false"
+                  [options]="statusOptions"
+                  [(ngModel)]="selectedStatusOptions">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_days', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+            <p-columnFilter
+              style="width: 100px"
+              field="request_days"
+              matchMode="in"
+              [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [filter]="false"
+                  [options]="daysOption"
+                  [(ngModel)]="selectedDaysOptions">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
           <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'assigned_user', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
+            <p-columnFilter
+              style="width: 100px"
+              field="assigned_user"
+              matchMode="in"
+              [showMenu]="false">
+              <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+                <p-multiSelect
+                  [filter]="false"
+                  [style]="{ heigth: '30px' }"
+                  [options]="userList"
+                  optionLabel="user_name">
+                </p-multiSelect>
+              </ng-template>
+            </p-columnFilter>
           </th>
-        </tr>-->
+        </tr>
       </ng-template>
       <!--<ng-template pTemplate="body" let-requestList let-columns="columns">
         <tr [pSelectableRow]="requestList">
