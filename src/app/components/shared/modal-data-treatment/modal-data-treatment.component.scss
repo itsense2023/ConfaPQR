@@ -1,5 +1,18 @@
 @import '../../../../assets/styles/abstracts/variables.scss';
 
+.modal-content {
+  background-color: $color-white;
+}
+
+.error-label {
+  color: $color-red;
+}
+
+.invalid {
+  color: $color-red;
+  font-size: small;
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -47,6 +60,7 @@
     &_a {
       margin: 5px 0 5px 5px;
       font-size: medium;
+      text-align: center;
     }
 
     &_link {
@@ -58,5 +72,9 @@
   &-button {
     display: flex;
     justify-content: center;
+    color: $color-blue;
+  }
+  .text-justify {
+    text-align: justify;
   }
 }

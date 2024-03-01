@@ -16,7 +16,7 @@ export class CreateRequestComponent {
   optionsRequest: FormGroup;
   applicantList!: ApplicantTypeList[];
   requestList!: RequestTypeList[];
-
+  visibleDialogDataT = false;
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -102,5 +102,14 @@ export class CreateRequestComponent {
       JSON.stringify(this.optionsRequest.controls['request_id'].value)
     );
     this.router.navigate([RoutesApp.REQUEST_FORM]);
+  }
+  closeDialogDataT(value: boolean) {
+    this.visibleDialogDataT = false;
+  }
+  openDataTreatment() {
+    this.visibleDialogDataT = true;
+  }
+  setParameterDataT(dataTreatment: boolean) {
+    this.optionsRequest.get('authorize')?.setValue(dataTreatment);
   }
 }
