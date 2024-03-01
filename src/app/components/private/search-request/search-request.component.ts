@@ -85,7 +85,7 @@ export class SearchRequestComponent implements OnInit {
     this.visibleDialogAlert = false;
   }
   setParameter(inputValue: string) {
-    if ((this.request_details['assigned_user'] = inputValue)) {
+    if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
       this.informative = true;
       this.message = 'Verifique el responsable a asignar';

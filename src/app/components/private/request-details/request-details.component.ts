@@ -117,6 +117,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   assignRequest(request_details: RequestsDetails) {
+    console.log('request_details', request_details);
     if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
@@ -146,7 +147,7 @@ export class RequestDetailsComponent implements OnInit {
   }
   setParameter(inputValue: string) {
     if (!this.request_details) return;
-    if ((this.request_details['assigned_user'] = inputValue)) {
+    if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
       this.informative = true;
       this.message = 'Verifique el responsable a asignar';
