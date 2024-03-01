@@ -8,6 +8,7 @@ import { ModalAssignSelectorModule } from './modal-assign-selector/modal-assign-
 import { ModalCategoryModule } from './modal-category/modal-category.module';
 import { ModalAlertModule } from './modal-alert/modal-alert.module';
 import { ModalDataTreatmentModule } from './modal-data-treatment/modal-data-treatment.module';
+import { ModalNotificationModule } from './modal-notification/modal-notification.module';
 
 @NgModule({
   declarations: [],
@@ -20,6 +21,7 @@ import { ModalDataTreatmentModule } from './modal-data-treatment/modal-data-trea
     ModalCategoryModule,
     ModalAlertModule,
     ModalDataTreatmentModule,
+    ModalNotificationModule,
   ],
   exports: [
     ModalDinamicModule,
@@ -30,6 +32,7 @@ import { ModalDataTreatmentModule } from './modal-data-treatment/modal-data-trea
     ModalCategoryModule,
     ModalAlertModule,
     ModalDataTreatmentModule,
+    ModalNotificationModule,
   ],
 })
 export class SharedModule {}

@@ -1,15 +1,15 @@
 <div class="row mb-2">
   <div class="col-10">
-    <div class="title-page">Parametrizar categoría, tipología y causa</div>
+    <div class="title-page">Configurar notificaciones</div>
   </div>
   <div class="col-2">
-    <p-button label="Crear nueva" (click)="createModality()"></p-button>
+    <p-button label="Crear nueva" (click)="createNotification()"></p-button>
   </div>
 </div>
 <div class="row mt-auto">
   <div class="col-12">
     <p-table
-      [value]="categoryList"
+      [value]="notificationList"
       [scrollable]="true"
       scrollHeight="600px"
       [virtualScroll]="true"
@@ -26,43 +26,49 @@
           <th pSortableColumn="category_id" style="width: 3%">
             Código<p-sortIcon field="category_id"></p-sortIcon>
           </th>
-          <th style="width: 10%">Categoría</th>
-          <th style="width: 20%">Tipología</th>
-          <th style="width: 34%">Causa y/o Subtipología</th>
-          <th style="width: 20%">Modalidad</th>
-          <th style="width: 10%">Estado</th>
+          <th style="width: 15%">Nombre</th>
+          <th style="width: 20%">Mensaje</th>
+          <th style="width: 20%">Destinatarios</th>
+          <th style="width: 20%">Tipo de destinatario</th>
+          <th style="width: 16%">Estado</th>
           <th style="width: 3%"></th>
           <th style="width: 3%"></th>
         </tr>
       </ng-template>
-      <ng-template pTemplate="body" let-categoryList>
+      <ng-template pTemplate="body" let-notificationList>
         <tr>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_id }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.tipology_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.cause_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.modality_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ notificationList.notification_id }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ notificationList.notification_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
+            {{ notificationList.notification_message }}
+          </td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
+            {{ notificationList.notification_receiver }}
+          </td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
+            {{ notificationList.receiver_type_name }}
+          </td>
           <td class="d-flex">
             <p-inputSwitch
-              [(ngModel)]="categoryList.is_active"
-              (onChange)="inActiveCategory(categoryList)"></p-inputSwitch>
+              [(ngModel)]="notificationList.is_active"
+              (onChange)="inActiveNotification(notificationList)"></p-inputSwitch>
             <div
               class="d-flex align-items-center ms-2"
-              [ngClass]="{ 'input-switch-label': categoryList.is_active }">
-              {{ categoryList.is_active ? 'Activo' : 'Inactivo' }}
+              [ngClass]="{ 'input-switch-label': notificationList.is_active }">
+              {{ notificationList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
           <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
-              (click)="editModality(categoryList)"></p-button>
+              (click)="editNotification(notificationList)"></p-button>
           </td>
           <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-eye"
               [styleClass]="'btn-icon-info'"
-              (click)="displayModality(categoryList)"></p-button>
+              (click)="displayNotification(notificationList)"></p-button>
           </td>
         </tr>
       </ng-template>
@@ -86,13 +92,13 @@
   [severity]="severity"
   (setRta)="closeDialogAlert($event)"></app-modal-alert>
 
-<app-modal-category
-  *ngIf="visibleDialogCategory"
+<app-modal-notification
+  *ngIf="visibleDialogNotification"
   [select]="true"
-  [visible]="visibleDialogCategory"
+  [visible]="visibleDialogNotification"
   [message]="message"
   [buttonmsg]="buttonmsg"
   [read_only]="read_only"
-  [categoryForm]="category_details"
+  [notificationForm]="notification_details"
   (setRta)="closeDialogModality($event)"
-  (setRtaParameter)="setParameter($event)"></app-modal-category>
+  (setRtaParameter)="setParameter($event)"></app-modal-notification>

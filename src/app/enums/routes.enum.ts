@@ -12,6 +12,7 @@ export enum RoutesApp {
   CREATE_REQUEST = 'create-request',
   REQUEST_DETAILS = 'request-details',
   REQUEST_FORM = 'request-form',
+  NOTIFICATIONS = 'notifications',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',
@@ -38,9 +39,15 @@ export enum EndPointRoute {
   UPDATE_MODALITY = 'modality/modify',
   INACTIVATE_MODALITY = 'modality/in-activate',
   CATEGORY_LIST = 'db/categories',
+  NOTIFICATION_LIST = 'db/notifications',
+  NOTIFICATION_ACTION_LIST = 'db/notification_actions',
+  NOTIFICATION_RECEIVER_LIST = 'db/receivers',
   CREATE_CATEGORY = 'category/create',
   INACTIVATE_CATEGORY = 'category/in-activate',
   UPDATE_CATEGORY = 'category/modify',
+  CREATE_NOTIFICATION = 'notification/create',
+  INACTIVATE_NOTIFICATION = 'notification/in-activate',
+  UPDATE_NOTIFICATION = 'notification/modify',
   REQUEST_BY_APPLICANT = '/requeststypes/by',
   REQUEST_LIST = 'get_form/',
   CREATE_REQUEST = 'request/create',
