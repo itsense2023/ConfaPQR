@@ -78,7 +78,7 @@ const routes: Routes = [
   },
   {
     path: RoutesApp.CREATE_REQUEST,
-    canActivate: [sessionGuard],
+    //canActivate: [sessionGuard],
     component: LayoutRequestComponent,
     loadChildren: () =>
       import('./components/private/create-request/create-request.module').then(
