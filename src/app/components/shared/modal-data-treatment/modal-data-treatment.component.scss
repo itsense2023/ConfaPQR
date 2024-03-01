@@ -6,6 +6,9 @@
 
 .error-label {
   color: $color-red;
+  font-weight: 500;
+  text-align: center;
+  font-size: 14px;
 }
 
 .invalid {
@@ -13,60 +16,35 @@
   font-size: small;
 }
 
-.container {
+.button-more {
+  background-color: transparent;
+  border: none;
+  text-decoration: underline;
+}
+
+.container-text {
   display: flex;
-  justify-content: space-around;
+  flex-direction: column;
+  justify-content: center;
+  text-align: justify;
+  font-size: small;
+}
 
-
-  &-select {
+.container {
+  &_checkbox {
+    margin-top: 20px;
     display: flex;
-    flex-direction: column;
-
-    &-placeholder {
-      font-size: x-small;
-      margin: 0 0 5px 15px;
-      border-radius: 20px;
-    }
-
-    &-options {
-      width: 250px;
-    }
-
-    &-invalid {
-      color: $color-red;
-      font-size: small;
-    }
-  }
-
-  &-card {
-    margin: 0.5% 2%;
-
-    &_header {
-      text-align: center;
-      font-size: medium;
-      font-weight: bold;
-      padding-top: 2%;
-    }
-  }
-
-  &-checkbox {
-    display: flex;
+    flex-direction: row;
     justify-content: center;
-    margin: 15px;
-    text-decoration: underline;
-    cursor: pointer;
-    align-items: center;
+  }
 
-    &_a {
-      margin: 5px 0 5px 5px;
-      font-size: medium;
-      text-align: center;
-    }
+  &_text {
+    color: black;
+  }
 
-    &_link {
-      text-decoration: underline;
-      color: $color-black;
-    }
+  &_link {
+    font-weight: 700;
+    color: $color-banner-blue;
   }
 
   &-button {
@@ -74,7 +52,10 @@
     justify-content: center;
     color: $color-blue;
   }
-  .text-justify {
-    text-align: justify;
-  }
+
+}
+
+
+.text-justify {
+  text-align: justify;
 }
