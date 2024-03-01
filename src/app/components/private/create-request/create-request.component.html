@@ -63,7 +63,10 @@
     <div class="container-checkbox" onchange="" *ngIf="applicantId1()">
       <p-checkbox formControlName="authorize" [value]="true" [binary]="true"></p-checkbox>
       <p class="container-checkbox_a">
-        Autorizo <a href="" class="container-checkbox_link">política tratamiento de datos</a>
+        Autorizo
+        <a class="container-checkbox_link" (click)="openDataTreatment()"
+          >política tratamiento de datos</a
+        >
       </p>
     </div>
     <p-button
@@ -76,3 +79,8 @@
   </form>
 </p-card>
 <p-toast></p-toast>
+<app-modal-data-treatment
+  *ngIf="visibleDialogDataT"
+  [visible]="visibleDialogDataT"
+  (setRta)="closeDialogDataT($event)"
+  (setRtaParameter)="setParameterDataT($event)"></app-modal-data-treatment>

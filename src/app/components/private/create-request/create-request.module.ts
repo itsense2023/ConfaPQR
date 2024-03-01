@@ -8,9 +8,11 @@ import { ButtonModule } from 'primeng/button';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ToastModule } from 'primeng/toast';
+import { SharedModule } from '../../shared/shared.module';
 
 @NgModule({
   declarations: [CreateRequestComponent],
+  exports: [CreateRequestComponent],
   imports: [
     CommonModule,
     CreateRequestRoutingModule,
@@ -21,7 +23,7 @@ import { ToastModule } from 'primeng/toast';
     FormsModule,
     DropdownModule,
     ToastModule,
+    SharedModule,
   ],
-  exports: [CreateRequestComponent],
 })
 export class CreateRequestModule {}
