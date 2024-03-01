@@ -34,7 +34,7 @@
       </ng-template>
       <ng-template pTemplate="body" let-requestTypeList>
         <tr>
-          <td style="text-align: center">{{ requestTypeList.request_type_name }}</td>
+          <td>{{ requestTypeList.request_type_name }}</td>
           <td class="d-flex" style="text-align: center; align-items: center">
             <p-inputSwitch
               [(ngModel)]="requestTypeList.is_active"
