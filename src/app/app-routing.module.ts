@@ -96,7 +96,7 @@ const routes: Routes = [
   },
   {
     path: RoutesApp.REQUEST_FORM,
-    canActivate: [sessionGuard],
+    //canActivate: [sessionGuard],
     component: LayoutRequestComponent,
     loadChildren: () =>
       import('./components/private/request-form/request-form.module').then(
