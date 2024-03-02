@@ -20,7 +20,7 @@ export class ModalDataTreatmentComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
-      inputValue: [false, [Validators.required]],
+      inputValue: [false, [Validators.requiredTrue]],
     });
   }
   ngOnInit(): void {

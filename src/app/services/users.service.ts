@@ -21,6 +21,9 @@ import {
   RequestsList,
   UserCreate,
   UserList,
+  NotificationList,
+  NotificationActionList,
+  NotificationReceiversList,
 } from '../models/users.interface';
 
 @Injectable({
@@ -383,6 +386,76 @@ export class Users {
     });
     return this.http.post<BodyResponse<number>>(
       `${environment.API_PUBLIC}${EndPointRoute.CREATE_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  getNotificationActionList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationActionList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_ACTION_LIST}`,
+      { headers }
+    );
+  }
+  getNotificationReceiversList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationReceiversList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_RECEIVER_LIST}`,
+      { headers }
+    );
+  }
+  getNotificationList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_LIST}`,
+      { headers }
+    );
+  }
+  createNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_NOTIFICATION}`,
+      payload,
+      { headers }
+    );
+  }
+
+  modifyNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.UPDATE_NOTIFICATION}`,
+      payload,
+      { headers }
+    );
+  }
+  inactivateNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_NOTIFICATION}`,
       payload,
       { headers }
     );

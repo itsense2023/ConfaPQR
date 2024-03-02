@@ -29,6 +29,7 @@ export interface RequestsList {
   applicant_attachments: string[];
   assigned_attachments: string[];
   form_id: number;
+  status_name: string;
 }
 
 export interface RequestsDetails {
@@ -207,4 +208,31 @@ export interface ApplicantAttach {
   fileName: string;
   fileExt: string;
   fileSize: string;
+}
+
+export interface NotificationList {
+  notification_id?: number;
+  notification_name: string;
+  notification_message: string;
+  notification_receiver?: string[];
+  notification_receiver_id?: number;
+  receiver_type_name?: string;
+  action_name?: string;
+  action_id?: number;
+  is_active?: number | boolean;
+  created_by?: string;
+  created_date?: string;
+  updated_by?: string;
+  updated_date?: string;
+}
+export interface NotificationActionList {
+  action_id: number;
+  action_name: string;
+  action_description: string;
+  is_active: number | boolean;
+}
+export interface NotificationReceiversList {
+  receiver_id: number;
+  receiver_name: string;
+  is_active: number | boolean;
 }

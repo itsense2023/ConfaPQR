@@ -1,21 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { SearchRequestRoutingModule } from './search-request-routing.module';
+import { NotificationsRoutingModule } from './notifications-routing.module';
+import { NotificationsComponent } from './notifications.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
-import { SearchRequestComponent } from './search-request.component';
 import { ToastModule } from 'primeng/toast';
-import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
-  declarations: [SearchRequestComponent],
+  declarations: [NotificationsComponent],
   imports: [
     CommonModule,
-    SearchRequestRoutingModule,
+    NotificationsRoutingModule,
     ButtonModule,
     TableModule,
     PaginatorModule,
@@ -23,8 +22,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     InputSwitchModule,
     SharedModule,
     ToastModule,
-    MultiSelectModule,
   ],
-  exports: [SearchRequestComponent],
+  exports: [NotificationsComponent],
 })
-export class SearchRequestModule {}
+export class NotificationsModule {}

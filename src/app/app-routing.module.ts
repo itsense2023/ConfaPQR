@@ -77,21 +77,30 @@ const routes: Routes = [
       ),
   },
   {
-    path: RoutesApp.CREATE_REQUEST,
-    //canActivate: [sessionGuard],
-    component: LayoutRequestComponent,
-    loadChildren: () =>
-      import('./components/private/create-request/create-request.module').then(
-        m => m.CreateRequestModule
-      ),
-  },
-  {
     path: RoutesApp.REQUEST_DETAILS + '/:id',
     canActivate: [sessionGuard],
     component: LayoutComponent,
     loadChildren: () =>
       import('./components/private/request-details/request-details.module').then(
         m => m.RequestDetailsModule
+      ),
+  },
+  {
+    path: RoutesApp.NOTIFICATIONS,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/notifications/notifications.module').then(
+        m => m.NotificationsModule
+      ),
+  },
+  {
+    path: RoutesApp.CREATE_REQUEST,
+    //canActivate: [sessionGuard],
+    component: LayoutRequestComponent,
+    loadChildren: () =>
+      import('./components/private/create-request/create-request.module').then(
+        m => m.CreateRequestModule
       ),
   },
   {
