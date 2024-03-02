@@ -215,7 +215,7 @@ export interface NotificationList {
   notification_name: string;
   notification_message: string;
   notification_receiver?: string[];
-  receiver_type_id?: number;
+  notification_receiver_id?: number;
   receiver_type_name?: string;
   action_name?: string;
   action_id?: number;

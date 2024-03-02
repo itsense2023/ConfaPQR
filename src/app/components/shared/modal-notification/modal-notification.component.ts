@@ -36,11 +36,11 @@ export class ModalNotificationComponent implements OnInit {
     private formBuilder: FormBuilder
   ) {
     this.formGroup = new FormGroup({
-      notification_id: new FormControl(null, [Validators.required]),
+      notification_id: new FormControl(null),
       notification_name: new FormControl(null, [Validators.required]),
       notification_message: new FormControl(null, [Validators.required]),
       action_id: new FormControl(null, [Validators.required]),
-      receiver_type_id: new FormControl(null),
+      notification_receiver_id: new FormControl(null),
       notification_receiver: new FormControl(null, [Validators.required]),
     });
   }
@@ -107,7 +107,7 @@ export class ModalNotificationComponent implements OnInit {
       notification_name: this.formGroup.controls['notification_name'].value,
       notification_message: this.formGroup.controls['notification_message'].value,
       action_id: this.formGroup.controls['action_id'].value,
-      receiver_type_id: this.formGroup.controls['receiver_type_id'].value,
+      notification_receiver_id: this.formGroup.controls['notification_receiver_id'].value,
       notification_receiver: [this.formGroup.controls['notification_receiver'].value],
     };
     console.log(payload);

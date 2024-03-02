@@ -98,15 +98,15 @@
           <div class="col-12">
             <label> *Tipos de destinatarios </label>
             <p-dropdown
-              formControlName="receiver_type_id"
+              formControlName="notification_receiver_id"
               [options]="notificationReceiversList"
               optionLabel="receiver_name"
               optionValue="receiver_id"
               placeholder="Seleccione una opción"></p-dropdown>
             <label class="invalid">
               {{
-                formGroup.get('receiver_type_id')?.hasError('required') &&
-                formGroup.get('receiver_type_id')?.touched
+                formGroup.get('notification_receiver_id')?.hasError('required') &&
+                formGroup.get('notification_receiver_id')?.touched
                   ? 'Campo requerido'
                   : ''
               }}</label
