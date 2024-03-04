@@ -13,3 +13,36 @@
   color: $color-red;
   font-size: small;
 }
+
+.recipents-emails {
+  margin: 5px 10px;
+  font-size: small;
+}
+
+@media screen and (min-width: 768px) and (max-width: 1374px) {
+  .row-recipients {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: end;
+
+    &-input {
+      width: 100%;
+      margin-right: 10px;
+    }
+  }
+}
+
+@media screen and (min-width: 1375px) {
+  .row-recipients {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: end;
+
+    &-input {
+      width: 100%;
+      margin-right: 10px;
+    }
+  }
+}
