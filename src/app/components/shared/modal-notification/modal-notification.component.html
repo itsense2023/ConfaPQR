@@ -30,7 +30,15 @@
               [options]="notificationActionsList"
               optionLabel="action_name"
               optionValue="action_id"
-              placeholder="Seleccione"></p-dropdown>
+              placeholder="Seleccione el tipo de evento"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('action_id')?.hasError('required') &&
+                formGroup.get('action_id')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}</label
+            >
           </div>
           <div class="col-12">
             <label> *Nombre del mensaje </label>
@@ -62,6 +70,7 @@
               rows="5"
               cols="30"
               pInputTextarea
+              [style]="{ 'font-size': '12px' }"
               placeholder="Escriba nombre"
               formControlName="notification_message"></textarea>
             <label class="invalid">
@@ -79,6 +88,16 @@
             >
           </div>
           <div class="col-12">
+            <label> Tipos de destinatarios </label>
+            <p-dropdown
+              formControlName="notification_receiver_id"
+              [style]="{ height: '35px' }"
+              [options]="notificationReceiversList"
+              optionLabel="receiver_name"
+              optionValue="receiver_id"
+              [placeholder]="buttonmsg==='Modificar'? formGroup.get('notification_receiver_id').value: Seleccione una opción"></p-dropdown>
+          </div>
+          <div class="col-12">
             <div class="row-recipients">
               <div class="row-recipients-input">
                 <label> Destinatarios especificos </label>
@@ -87,42 +106,26 @@
                   formControlName="notification_receiver"
                   pInputText
                   pKeyFilter="string"
-                  placeholder="Escriba nombre" />
+                  placeholder="Escriba los destinatarios" />
                 <label class="invalid">
                   {{
-                    formGroup.get('notification_receiver')?.hasError('required') &&
-                    formGroup.get('notification_receiver')?.touched
-                      ? 'Campo requerido'
-                      : ''
-                  }}{{
                     formGroup.get('notification_receiver')?.hasError('pattern') &&
                     formGroup.get('notification_receiver')?.touched
-                      ? 'Solo ingrese texto'
+                      ? 'Ingrese correo electrónico'
                       : ''
                   }}</label
                 >
               </div>
               <p-button
                 icon="pi pi-plus"
+                (onClick)="addRecipients()"
                 [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"></p-button>
             </div>
-          </div>
-          <div class="col-12">
-            <label> Tipos de destinatarios </label>
-            <p-dropdown
-              formControlName="notification_receiver_id"
-              [options]="notificationReceiversList"
-              optionLabel="receiver_name"
-              optionValue="receiver_id"
-              placeholder="Seleccione una opción"></p-dropdown>
-            <label class="invalid">
-              {{
-                formGroup.get('notification_receiver_id')?.hasError('required') &&
-                formGroup.get('notification_receiver_id')?.touched
-                  ? 'Campo requerido'
-                  : ''
-              }}</label
-            >
+            <div class="recipents-emails">
+              <div *ngFor="let recipent of recipients">
+                {{ recipent }}
+              </div>
+            </div>
           </div>
         </div>
       </form>

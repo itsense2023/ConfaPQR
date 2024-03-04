@@ -14,11 +14,9 @@
   font-size: small;
 }
 
-.row-recipients {
-  display: flex;
-  flex-direction: row;
-  //justify-content: space-around;
-  align-items: end;
+.recipents-emails {
+  margin: 5px 10px;
+  font-size: small;
 }
 
 @media screen and (min-width: 768px) and (max-width: 1374px) {
