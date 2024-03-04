@@ -13,6 +13,7 @@ import { CardModule } from 'primeng/card';
 import { TabViewModule } from 'primeng/tabview';
 import { DatePipe } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
+import { ReactiveFormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [RequestDetailsComponent],
@@ -29,6 +30,7 @@ import { ToastModule } from 'primeng/toast';
     TabViewModule,
     DatePipe,
     ToastModule,
+    ReactiveFormsModule,
   ],
   exports: [RequestDetailsComponent],
 })

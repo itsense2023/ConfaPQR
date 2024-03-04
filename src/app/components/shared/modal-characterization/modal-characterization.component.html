@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '50vw' }" [modal]="true">
+<p-dialog [(visible)]="visible" [style]="{ width: '80vw' }" [modal]="true">
   <ng-template pTemplate="headless">
     <div class="modal-content">
       <div class="login-form-header">
@@ -17,16 +17,16 @@
           <div class="col-6">
             <label> *Tipo de solicitante reclasificación </label>
             <p-dropdown
-              formControlName="action_id"
-              [options]="requestTypeList"
-              optionLabel="request_type_name"
-              optionValue="request_type_id"
+              formControlName="applicant_type_id"
+              [options]="applicantTypeList"
+              optionLabel="applicant_type_name"
+              optionValue="applicant_type_id"
               placeholder="Seleccione"></p-dropdown>
           </div>
           <div class="col-6">
             <label> *Tipo de solicitud reclasificación </label>
             <p-dropdown
-              formControlName="action_id"
+              formControlName="request_type_id"
               [options]="requestTypeList"
               optionLabel="request_type_name"
               optionValue="request_type_id"
@@ -68,16 +68,13 @@
         </div>
         <div class="row my-4 px-5">
           <div class="col-12">
-            <label> *Destinatarios especificos </label>
-            <div class="col-6">
-              <label> Categoria </label>
-              <p-dropdown
-                formControlName="category_id"
-                [options]="categoryList"
-                optionLabel="category_name"
-                optionValue="category_id"
-                placeholder="Seleccione"></p-dropdown>
-            </div>
+            <label> Categoria </label>
+            <p-dropdown
+              formControlName="category_id"
+              [options]="categoryList"
+              optionLabel="category_name"
+              optionValue="category_id"
+              placeholder="Seleccione"></p-dropdown>
           </div>
         </div>
       </form>
