@@ -70,33 +70,45 @@
                 formGroup.get('notification_message')?.touched
                   ? 'Campo requerido'
                   : ''
-              }}</label
-            >
-          </div>
-          <div class="col-12">
-            <label> *Destinatarios especificos </label>
-            <input
-              [readonly]="read_only"
-              formControlName="notification_receiver"
-              pInputText
-              pKeyFilter="string"
-              placeholder="Escriba nombre" />
-            <label class="invalid">
-              {{
-                formGroup.get('notification_receiver')?.hasError('required') &&
-                formGroup.get('notification_receiver')?.touched
-                  ? 'Campo requerido'
-                  : ''
               }}{{
-                formGroup.get('notification_receiver')?.hasError('pattern') &&
-                formGroup.get('notification_receiver')?.touched
+                formGroup.get('notification_message')?.hasError('pattern') &&
+                formGroup.get('notification_message')?.touched
                   ? 'Solo ingrese texto'
                   : ''
               }}</label
             >
           </div>
           <div class="col-12">
-            <label> *Tipos de destinatarios </label>
+            <div class="row-recipients">
+              <div class="row-recipients-input">
+                <label> Destinatarios especificos </label>
+                <input
+                  [readonly]="read_only"
+                  formControlName="notification_receiver"
+                  pInputText
+                  pKeyFilter="string"
+                  placeholder="Escriba nombre" />
+                <label class="invalid">
+                  {{
+                    formGroup.get('notification_receiver')?.hasError('required') &&
+                    formGroup.get('notification_receiver')?.touched
+                      ? 'Campo requerido'
+                      : ''
+                  }}{{
+                    formGroup.get('notification_receiver')?.hasError('pattern') &&
+                    formGroup.get('notification_receiver')?.touched
+                      ? 'Solo ingrese texto'
+                      : ''
+                  }}</label
+                >
+              </div>
+              <p-button
+                icon="pi pi-plus"
+                [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"></p-button>
+            </div>
+          </div>
+          <div class="col-12">
+            <label> Tipos de destinatarios </label>
             <p-dropdown
               formControlName="notification_receiver_id"
               [options]="notificationReceiversList"

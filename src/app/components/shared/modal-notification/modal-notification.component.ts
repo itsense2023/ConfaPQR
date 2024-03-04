@@ -37,11 +37,17 @@ export class ModalNotificationComponent implements OnInit {
   ) {
     this.formGroup = new FormGroup({
       notification_id: new FormControl(null),
-      notification_name: new FormControl(null, [Validators.required]),
-      notification_message: new FormControl(null, [Validators.required]),
-      action_id: new FormControl(null, [Validators.required]),
+      notification_name: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z ]+$'),
+      ]),
+      notification_message: new FormControl(null, [
+        Validators.required,
+        Validators.pattern('^[^#$%&]+$'),
+      ]),
+      action_id: new FormControl(null),
       notification_receiver_id: new FormControl(null),
-      notification_receiver: new FormControl(null, [Validators.required]),
+      notification_receiver: new FormControl(null),
     });
   }
   ngOnInit(): void {
