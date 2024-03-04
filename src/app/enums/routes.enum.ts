@@ -13,6 +13,7 @@ export enum RoutesApp {
   REQUEST_DETAILS = 'request-details',
   REQUEST_FORM = 'request-form',
   NOTIFICATIONS = 'notifications',
+  PROCESS_REQUEST = 'process-request',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',

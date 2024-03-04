@@ -95,6 +95,15 @@ const routes: Routes = [
       ),
   },
   {
+    path: RoutesApp.PROCESS_REQUEST,
+    canActivate: [sessionGuard],
+    component: LayoutComponent,
+    loadChildren: () =>
+      import('./components/private/process-request/process-request.module').then(
+        m => m.ProcessRequestModule
+      ),
+  },
+  {
     path: RoutesApp.CREATE_REQUEST,
     //canActivate: [sessionGuard],
     component: LayoutRequestComponent,
