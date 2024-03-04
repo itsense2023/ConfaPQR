@@ -42,6 +42,7 @@ export class NotificationsComponent implements OnInit {
     this.userService.getNotificationList().subscribe({
       next: (response: BodyResponse<NotificationList[]>) => {
         if (response.code === 200) {
+          console.log(response.data);
           this.notificationList = response.data;
           this.notificationList.forEach(item => {
             item.is_active = item.is_active === 1 ? true : false;

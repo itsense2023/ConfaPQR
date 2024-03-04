@@ -26,15 +26,15 @@
           <div class="col-6">
             <label> *Tipo de evento </label>
             <p-dropdown
-              formControlName="action_id"
+              formControlName="action_name"
               [options]="notificationActionsList"
               optionLabel="action_name"
-              optionValue="action_id"
+              optionValue="action_name"
               placeholder="Seleccione el tipo de evento"></p-dropdown>
             <label class="invalid">
               {{
-                formGroup.get('action_id')?.hasError('required') &&
-                formGroup.get('action_id')?.touched
+                formGroup.get('action_name')?.hasError('required') &&
+                formGroup.get('action_name')?.touched
                   ? 'Campo requerido'
                   : ''
               }}</label
@@ -90,11 +90,11 @@
           <div class="col-12">
             <label> Tipos de destinatarios </label>
             <p-dropdown
-              formControlName="notification_receiver_id"
+              formControlName="receiver_type_name"
               [style]="{ height: '35px' }"
               [options]="notificationReceiversList"
               optionLabel="receiver_name"
-              optionValue="receiver_id"
+              optionValue="receiver_type_name"
               placeholder="Seleccione una opción"></p-dropdown>
           </div>
           <div class="col-12">
