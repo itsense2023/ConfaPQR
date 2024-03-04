@@ -1,20 +1,25 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
+  ApplicantTypeList,
+  CategoryList,
   ModalityList,
   NotificationActionList,
   NotificationList,
   NotificationReceiversList,
+  QualityDimensionList,
+  RequestTypeList,
 } from '../../../models/users.interface';
 import { Users } from '../../../services/users.service';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
+import { MessageService } from 'primeng/api';
 
 @Component({
-  selector: 'app-modal-notification',
-  templateUrl: './modal-notification.component.html',
-  styleUrl: './modal-notification.component.scss',
+  selector: 'app-modal-characterization',
+  templateUrl: './modal-characterization.component.html',
+  styleUrl: './modal-characterization.component.scss',
 })
-export class ModalNotificationComponent implements OnInit {
+export class ModalCharacterizationComponent implements OnInit {
   @Input() login = false;
   @Input() select = false;
   @Input() message = '';
@@ -29,10 +34,15 @@ export class ModalNotificationComponent implements OnInit {
   modalityList!: ModalityList[];
   notificationReceiversList: NotificationReceiversList[] = [];
   //formGroup: FormGroup;
+  applicantTypeList: ApplicantTypeList[] = [];
+  requestTypeList: RequestTypeList[] = [];
+  categoryList: CategoryList[] = [];
+  qualityList: QualityDimensionList[] = [];
 
   constructor(
     private userService: Users,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private messageService: MessageService
   ) {
     this.formGroup = new FormGroup({
       notification_id: new FormControl(null),
@@ -59,6 +69,92 @@ export class ModalNotificationComponent implements OnInit {
   formGroup: FormGroup<any> = new FormGroup<any>({});
   showDialog() {
     this.visible = true;
+  }
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
+  getRequestTypesList() {
+    this.userService.getRequestTypesList().subscribe({
+      next: (response: BodyResponse<RequestTypeList[]>) => {
+        if (response.code === 200) {
+          this.requestTypeList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getApplicantTypesList() {
+    this.userService.getApplicantTypesList().subscribe({
+      next: (response: BodyResponse<ApplicantTypeList[]>) => {
+        if (response.code === 200) {
+          this.applicantTypeList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getQualityDimensionsTable() {
+    this.userService.getQualityDimensionsList().subscribe({
+      next: (response: BodyResponse<QualityDimensionList[]>) => {
+        if (response.code === 200) {
+          this.qualityList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getModalityTable() {
+    this.userService.getModalityList().subscribe({
+      next: (response: BodyResponse<ModalityList[]>) => {
+        if (response.code === 200) {
+          this.modalityList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getCategoryTableByModality(modality_id: number) {
+    this.userService.getCategoryListByModality(modality_id).subscribe({
+      next: (response: BodyResponse<CategoryList[]>) => {
+        if (response.code === 200) {
+          this.categoryList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
   getNotificationActionsTable() {
     this.userService.getNotificationActionList().subscribe({

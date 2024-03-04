@@ -236,3 +236,9 @@ export interface NotificationReceiversList {
   receiver_name: string;
   is_active: number | boolean;
 }
+export interface QualityDimensionList {
+  quality_dimension_id: number;
+  quality_dimension_name: string;
+  quality_dimension_description: string;
+  is_active: number | boolean;
+}

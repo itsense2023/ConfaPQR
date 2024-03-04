@@ -1,0 +1,105 @@
+<p-dialog [(visible)]="visible" [style]="{ width: '50vw' }" [modal]="true">
+  <ng-template pTemplate="headless">
+    <div class="modal-content">
+      <div class="login-form-header">
+        <div class="login-form-header__item login-form-header__item_1"></div>
+        <div class="login-form-header__item login-form-header__item_2"></div>
+        <div class="login-form-header__item login-form-header__item_3"></div>
+        <div class="login-form-header__item login-form-header__item_4"></div>
+        <div class="login-form-header__item login-form-header__item_5"></div>
+        <div class="login-form-header__item login-form-header__item_6"></div>
+      </div>
+      <div class="row my-4 px-5">
+        <div class="col-12 text-center">Caracterizar solicitud</div>
+      </div>
+      <form [formGroup]="formGroup">
+        <div class="row my-4 px-5">
+          <div class="col-6">
+            <label> *Tipo de solicitante reclasificación </label>
+            <p-dropdown
+              formControlName="action_id"
+              [options]="requestTypeList"
+              optionLabel="request_type_name"
+              optionValue="request_type_id"
+              placeholder="Seleccione"></p-dropdown>
+          </div>
+          <div class="col-6">
+            <label> *Tipo de solicitud reclasificación </label>
+            <p-dropdown
+              formControlName="action_id"
+              [options]="requestTypeList"
+              optionLabel="request_type_name"
+              optionValue="request_type_id"
+              placeholder="Seleccione"></p-dropdown>
+          </div>
+        </div>
+        <div class="row my-4 px-5">
+          <label> ¿La solicitud corresponde a PQR? </label>
+          <p-checkbox
+            name="groupname"
+            value="val1"
+            label="Value 1"
+            [(ngModel)]="selectedValues"></p-checkbox>
+          <p-checkbox
+            name="groupname"
+            value="val2"
+            label="Value 2"
+            [(ngModel)]="selectedValues"></p-checkbox>
+        </div>
+        <div class="row my-4 px-5">
+          <div class="col-6">
+            <label> Dimensión de calidad </label>
+            <p-dropdown
+              formControlName="quality_dimension_id"
+              [options]="qualityList"
+              optionLabel="quality_dimension_name"
+              optionValue="quality_dimension_id"
+              placeholder="Seleccione"></p-dropdown>
+          </div>
+          <div class="col-6">
+            <label> Modalidad </label>
+            <p-dropdown
+              formControlName="modality_id"
+              [options]="modalityList"
+              optionLabel="modality_name"
+              optionValue="modality_id"
+              placeholder="Seleccione"></p-dropdown>
+          </div>
+        </div>
+        <div class="row my-4 px-5">
+          <div class="col-12">
+            <label> *Destinatarios especificos </label>
+            <div class="col-6">
+              <label> Categoria </label>
+              <p-dropdown
+                formControlName="category_id"
+                [options]="categoryList"
+                optionLabel="category_name"
+                optionValue="category_id"
+                placeholder="Seleccione"></p-dropdown>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div *ngIf="read_only">
+        <div class="row my-4 px-5">
+          <div class="col-12 d-flex justify-content-evenly">
+            <p-button label="Cerrar" severity="secondary" (click)="closeDialog(false)"></p-button>
+          </div>
+        </div>
+      </div>
+      <div *ngIf="!read_only">
+        <div class="row my-4 px-5">
+          <div class="col-12 d-flex justify-content-evenly">
+            <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
+            <p-button
+              [label]="buttonmsg"
+              [disabled]="formGroup.invalid"
+              (click)="closeDialog(true)"></p-button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</p-dialog>
+<p-toast></p-toast>
