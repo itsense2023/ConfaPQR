@@ -13,6 +13,8 @@ import {
 } from '../../../models/users.interface';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { url } from 'inspector';
+import { RoutesApp } from '../../../enums/routes.enum';
 
 @Component({
   selector: 'app-request-details',
@@ -40,12 +42,16 @@ export class RequestDetailsComponent implements OnInit {
   ApplicantAttach: ApplicantAttach[] = [];
   informative: boolean = false;
   severity = '';
-  requestProcess: FormGroup<any> = new FormGroup<any>({});
   errorExtensionFile!: boolean;
   errorSizeFile!: boolean;
   fileNameList: string[] = [];
   arrayAssignedAttachment: ApplicantAttachments[] = [];
   fileInput: any;
+  routeProcessRequest!: string;
+  routeSearchRequest!: string;
+  routeTab!: string;
+
+  requestProcess: FormGroup;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -54,25 +60,30 @@ export class RequestDetailsComponent implements OnInit {
     private route: ActivatedRoute,
     private messageService: MessageService
   ) {
-    this.requestProcess = new FormGroup({
-      category_id: new FormControl(null, [Validators.required]),
-      category_name: new FormControl(null, [Validators.required]),
-      tipology_name: new FormControl(null, [Validators.required]),
-      cause_name: new FormControl(null),
-      modality_id: new FormControl(null, [Validators.required]),
+    this.requestProcess = this.formBuilder.group({
+      message: [null, [Validators.required, Validators.maxLength(500)]],
     });
   }
 
   ngOnInit() {
+    let routeIf = localStorage.getItem('route');
+    if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
+      this.routeTab = routeIf;
+    } else if (routeIf?.includes(RoutesApp.PROCESS_REQUEST)) {
+      this.routeTab = routeIf;
+    }
+    console.log(this.routeTab);
     this.route.params.subscribe(params => {
       this.request_id = +params['id'];
     });
     this.getRequestDetails(this.request_id);
     this.getRequestHistoric(this.request_id);
   }
+
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
+
   preprocessAttachments(applicantAttachments: string[]) {
     const newData = JSON.parse(JSON.stringify(applicantAttachments));
     applicantAttachments.forEach((attachmentUrl, index) => {
@@ -97,9 +108,7 @@ export class RequestDetailsComponent implements OnInit {
       next: (response: BodyResponse<RequestsDetails>) => {
         if (response.code === 200) {
           this.requestDetails = response.data;
-          console.log(this.requestDetails);
           this.preprocessAttachments(this.requestDetails['applicant_attachments']);
-          console.log('ApplicantAttach', this.ApplicantAttach);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -198,6 +207,13 @@ export class RequestDetailsComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
+    }
+  }
+  showProcessTab(): boolean {
+    if (this.routeTab.includes(RoutesApp.PROCESS_REQUEST)) {
+      return true;
+    } else {
+      return false;
     }
   }
   downloadFile(download_url: string) {
