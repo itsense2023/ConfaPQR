@@ -57,6 +57,10 @@ export class ModalCharacterizationComponent implements OnInit {
     console.log(this.read_only);
     this.getNotificationActionsTable();
     this.getNotificationReceiversTable();
+    this.getRequestTypesList();
+    this.getApplicantTypesList();
+    this.getQualityDimensionsTable();
+    this.getModalityTable();
     if (this.buttonmsg !== 'Crear' && this.notificationForm) {
       this.formGroup.patchValue(this.notificationForm);
     } else {

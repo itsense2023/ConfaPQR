@@ -249,6 +249,68 @@
             </p-tabPanel>
           </p-tabView>
         </p-tabPanel>
+        <p-tabPanel header="Tramitar solicitud" headerStyleClass="p-tabview-nav-link-4">
+          <div class="process-container">
+            <div class="card-form-container">
+              <form [formGroup]="requestProcess">
+                <div class="card-text">
+                  <label class="card-text-placeholder">Mensaje*</label>
+                  <textarea
+                    rows="5"
+                    cols="30"
+                    id="mensage"
+                    formControlName="mensage"
+                    [style]="{ 'border-radius': '20px' }"
+                    type="text"
+                    placeholder="*Descripción detallada de la solicitud"
+                    pInputTextarea>
+                  </textarea>
+                  <label class="card-form-input-placeholder-invalid">
+                    {{
+                      requestProcess.get('mensage')?.hasError('required') &&
+                      requestProcess.get('mensage')?.touched
+                        ? ' Campo Requerido'
+                        : ''
+                    }}
+                    {{
+                      requestProcess.get('mensage')?.hasError('maxlength')
+                        ? ' Maximo 1000 caracteres'
+                        : ''
+                    }}</label
+                  >
+                </div>
+              </form>
+              <div class="card-buttonUp">
+                <label class="card-buttonUp-placeholder">Adjuntar archivo*</label>
+                <div class="card-buttonUp-custom-button">
+                  <input
+                    type="file"
+                    #archive_request
+                    class="card-buttonUp-custom-icon"
+                    name="archive_request"
+                    (change)="onFileSelected($event)"
+                    accept=".jpg,.png,.pdf,.xls,.xlsx,.doc,.docx"
+                    maxFileSize="20971520"
+                    multiple />
+                  <label class="card-buttonUp-label" (click)="openFileInput()">
+                    <i class="pi pi-file-pdf"></i>Adjuntar archivo
+                    <i class="pi pi-upload"></i>
+                  </label>
+                  <label class="card-form-input-placeholder-invalid"
+                    >{{ errorSizeFile ? 'El archivo cargado supera las 20MB' : ''
+                    }}{{ errorExtensionFile ? 'Extension no permitida' : '' }}</label
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="container-button">
+              <p-button
+                label="Enviar respuesta"
+                (click)="submitAnswer()"
+                [style]="{ 'border-radius': '10px' }"></p-button>
+            </div>
+          </div>
+        </p-tabPanel>
         <p-tabPanel header="Histórico Gestión" headerStyleClass="p-tabview-nav-link-3">
           <div class="process-container">
             <p-table
@@ -322,3 +384,10 @@
   [informative]="informative"
   [severity]="severity"
   (setRta)="closeDialogAlert($event)"></app-modal-alert>
+
+<app-modal-characterization
+  *ngIf="visibleCharacterization"
+  [select]="true"
+  [visible]="visibleCharacterization"
+  [message]="message"
+  (setRta)="closeDialog($event)"></app-modal-characterization>

@@ -384,7 +384,7 @@ export class Users {
       Authorization: token || '',
     });
     return this.http.get<BodyResponse<QualityDimensionList[]>>(
-      `${environment.API_PUBLIC}${EndPointRoute.QUALITY_DIMENSION_LIST}}`,
+      `${environment.API_PUBLIC}${EndPointRoute.QUALITY_DIMENSION_LIST}`,
       { headers }
     );
   }
