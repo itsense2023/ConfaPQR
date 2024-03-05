@@ -12,7 +12,7 @@ export enum RoutesApp {
   CREATE_REQUEST = 'create-request',
   REQUEST_DETAILS = 'request-details',
   REQUEST_FORM = 'request-form',
-  NOTIFICATIONS = 'notifications',
+  NOTIFICATIONS = 'configure-notifications',
   PROCESS_REQUEST = 'process-request',
 }
 export enum EndPointRoute {
