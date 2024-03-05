@@ -89,6 +89,7 @@ export class SearchRequestComponent implements OnInit {
       },
     });
   }
+
   getRequestTypeList() {
     this.userService.getRequestTypesList().subscribe({
       next: (response: BodyResponse<RequestTypeList[]>) => {
@@ -185,6 +186,8 @@ export class SearchRequestComponent implements OnInit {
     }
   }
   redirectDetails(request_id: number) {
+    localStorage.removeItem('route');
+    localStorage.setItem('route', this.router.url);
     this.router.navigate([RoutesApp.REQUEST_DETAILS, request_id]);
   }
 }
