@@ -68,6 +68,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.visibleCharacterization = true;
     let routeIf = localStorage.getItem('route');
     if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
       this.routeTab = routeIf;

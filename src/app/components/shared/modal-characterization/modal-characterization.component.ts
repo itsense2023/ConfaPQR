@@ -126,6 +126,7 @@ export class ModalCharacterizationComponent implements OnInit {
       next: (response: BodyResponse<ModalityList[]>) => {
         if (response.code === 200) {
           this.modalityList = response.data.filter(obj => obj.is_active !== 0);
+          console.log(this.modalityList);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -138,11 +139,17 @@ export class ModalCharacterizationComponent implements OnInit {
       },
     });
   }
+  getModality() {
+    console.log(this.formGroup.get('modality_id')?.value.modality_id);
+    this.getCategoryTableByModality(2);
+  }
+
   getCategoryTableByModality(modality_id: number) {
     this.userService.getCategoryListByModality(modality_id).subscribe({
       next: (response: BodyResponse<CategoryList[]>) => {
         if (response.code === 200) {
           this.categoryList = response.data.filter(obj => obj.is_active !== 0);
+          console.log(this.categoryList);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }

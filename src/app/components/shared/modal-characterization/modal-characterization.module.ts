@@ -7,6 +7,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { DropdownModule } from 'primeng/dropdown';
 import { ModalCharacterizationComponent } from './modal-characterization.component';
 import { ToastModule } from 'primeng/toast';
+import { TreeSelectModule } from 'primeng/treeselect';
 
 @NgModule({
   declarations: [ModalCharacterizationComponent],
@@ -19,6 +20,7 @@ import { ToastModule } from 'primeng/toast';
     DropdownModule,
     ReactiveFormsModule,
     ToastModule,
+    TreeSelectModule,
   ],
   exports: [ModalCharacterizationComponent],
 })
