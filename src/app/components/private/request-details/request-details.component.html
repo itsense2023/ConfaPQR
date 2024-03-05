@@ -1,5 +1,5 @@
 <div class="row mb-2">
-  <div class="title">Consultar solicitudes</div>
+  <div class="title">{{ showProcessTab() ? 'Tramitar solicitudes' : 'Consultar solicitudes' }}</div>
 </div>
 @if (requestDetails) {
   <p-card>
@@ -49,8 +49,8 @@
     </ul>
   </p-card>
 
-  <div class="card">
-    <div class="container-button">
+  <div class="card" style="margin: 35px 0 75px 0">
+    <div class="container-button" *ngIf="!showProcessTab()">
       <p-button
         [label]="
           requestDetails.assigned_user === null || requestDetails.assigned_user === ''
@@ -249,57 +249,60 @@
             </p-tabPanel>
           </p-tabView>
         </p-tabPanel>
-        <p-tabPanel header="Tramitar solicitud" headerStyleClass="p-tabview-nav-link-4">
-          <div class="process-container">
-            <div class="card-form-container">
-              <form [formGroup]="requestProcess">
-                <div class="card-text">
-                  <label class="card-text-placeholder">Mensaje*</label>
-                  <textarea
-                    rows="5"
-                    cols="30"
-                    id="mensage"
-                    formControlName="mensage"
-                    [style]="{ 'border-radius': '20px' }"
-                    type="text"
-                    placeholder="*Descripción detallada de la solicitud"
-                    pInputTextarea>
-                  </textarea>
-                  <label class="card-form-input-placeholder-invalid">
-                    {{
-                      requestProcess.get('mensage')?.hasError('required') &&
-                      requestProcess.get('mensage')?.touched
-                        ? ' Campo Requerido'
-                        : ''
-                    }}
-                    {{
-                      requestProcess.get('mensage')?.hasError('maxlength')
-                        ? ' Maximo 1000 caracteres'
-                        : ''
-                    }}</label
-                  >
-                </div>
-              </form>
-              <div class="card-buttonUp">
-                <label class="card-buttonUp-placeholder">Adjuntar archivo*</label>
-                <div class="card-buttonUp-custom-button">
-                  <input
-                    type="file"
-                    #archive_request
-                    class="card-buttonUp-custom-icon"
-                    name="archive_request"
-                    (change)="onFileSelected($event)"
-                    accept=".jpg,.png,.pdf,.xls,.xlsx,.doc,.docx"
-                    maxFileSize="20971520"
-                    multiple />
-                  <label class="card-buttonUp-label" (click)="openFileInput()">
-                    <i class="pi pi-file-pdf"></i>Adjuntar archivo
-                    <i class="pi pi-upload"></i>
-                  </label>
-                  <label class="card-form-input-placeholder-invalid"
-                    >{{ errorSizeFile ? 'El archivo cargado supera las 20MB' : ''
-                    }}{{ errorExtensionFile ? 'Extension no permitida' : '' }}</label
-                  >
+        <p-tabPanel
+          *ngIf="showProcessTab()"
+          header="Tramitar solicitud"
+          headerStyleClass="p-tabview-nav-link-4">
+          <div class="formProcess">
+            <form [formGroup]="requestProcess">
+              <div class="formProcess-card-text">
+                <label class="formProcess-card-text-placeholder"
+                  >Respuesta Solicitud
+                  <p style="color: red">*</p></label
+                >
+                <textarea
+                  rows="5"
+                  cols="30"
+                  formControlName="mensage"
+                  [style]="{ 'border-radius': '5px' }"
+                  type="text"
+                  placeholder="*Descripción detallada de la solicitud"
+                  pInputTextarea>
+                </textarea>
+                <label class="card-form-input-placeholder-invalid">
+                  {{
+                    requestProcess.get('mensage')?.hasError('required') &&
+                    requestProcess.get('mensage')?.touched
+                      ? ' Campo Requerido'
+                      : ''
+                  }}
+                  {{
+                    requestProcess.get('mensage')?.hasError('maxlength')
+                      ? ' Maximo 500 caracteres'
+                      : ''
+                  }}</label
+                >
+              </div>
+            </form>
+            <div class="formProcess-buttonUp">
+              <label class="formProcess-card-text-placeholder">Adjuntos</label>
+              <div class="formProcess-buttonUp-custom-button">
+                <input
+                  type="file"
+                  #archive_request
+                  class="formProcess-buttonUp-custom-icon"
+                  name="archive_request"
+                  (change)="onFileSelected($event)"
+                  accept=".jpg,.png,.pdf,.xls,.xlsx,.doc,.docx"
+                  maxFileSize="20971520"
+                  multiple />
+                <label class="formProcess-buttonUp-label" (click)="openFileInput()">
+                  Seleccionar
+                  <i style="margin-left: 5px" class="pi pi-upload"></i>
+                </label>
+                <div class="formProcess-labelUpload">
+                  <p class="formProcess-labelUpload-name">fileName</p>
+                  <i class="formProcess-labelUpload-name pi pi-times"></i>
                 </div>
               </div>
             </div>

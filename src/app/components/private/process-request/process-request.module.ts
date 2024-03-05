@@ -10,6 +10,8 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { ToastModule } from 'primeng/toast';
 import { MultiSelectModule } from 'primeng/multiselect';
+import { TabViewModule } from 'primeng/tabview';
+
 @NgModule({
   declarations: [ProcessRequestComponent],
   imports: [
@@ -23,6 +25,7 @@ import { MultiSelectModule } from 'primeng/multiselect';
     SharedModule,
     ToastModule,
     MultiSelectModule,
+    TabViewModule,
   ],
   exports: [ProcessRequestComponent],
 })

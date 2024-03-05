@@ -185,6 +185,8 @@ export class ProcessRequestComponent implements OnInit {
     }
   }
   redirectDetails(request_id: number) {
+    localStorage.removeItem('route');
+    localStorage.setItem('route', this.router.url);
     this.router.navigate([RoutesApp.REQUEST_DETAILS, request_id]);
   }
 }

@@ -17,6 +17,7 @@ export class CreateRequestComponent {
   applicantList!: ApplicantTypeList[];
   requestList!: RequestTypeList[];
   visibleDialogDataT = false;
+
   constructor(
     private router: Router,
     private formBuilder: FormBuilder,
@@ -51,9 +52,11 @@ export class CreateRequestComponent {
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
+
   getRequest() {
     this.getRequestList(this.optionsRequest.controls['applicant_id'].value['applicant_type_id']);
   }
+
   getApplicantList() {
     this.userService.getApplicantTypesList().subscribe({
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
@@ -92,7 +95,6 @@ export class CreateRequestComponent {
   }
 
   sendOptions() {
-    console.log(this.optionsRequest.controls['applicant_id'].value);
     localStorage.setItem(
       'applicant-type',
       JSON.stringify(this.optionsRequest.controls['applicant_id'].value)

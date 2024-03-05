@@ -51,6 +51,7 @@ export class LoginComponent {
         if (response.code === 200) {
           sessionStorage.setItem(SessionStorageItems.SESSION, response.data);
           const decodedToken: ISession = jwtDecode(response.data);
+          console.log('decodedToken', decodedToken);
           const menu: TreeNode[] = this.convertirLinks(decodedToken.links);
           if (menu) {
             sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
@@ -74,9 +75,8 @@ export class LoginComponent {
 
   convertirLinks(links: ILink[]): TreeNode[] {
     const arrayResultante: TreeNode[] = [];
-
     links.forEach(link => {
-      if (link.url) {
+      if (link.perfilLinks) {
         const objetoConvertido: TreeNode = {
           key: `${link.modulo_id}-${link.moduloNombre}`,
           label: link.nombre,
@@ -91,7 +91,6 @@ export class LoginComponent {
         arrayResultante.push(objetoConvertido);
       }
     });
-
     return arrayResultante;
   }
 

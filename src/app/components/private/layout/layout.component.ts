@@ -15,6 +15,7 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     const arrayAlmacenado = sessionStorage.getItem(SessionStorageItems.MENU);
+    console.log(arrayAlmacenado);
     console.log(arrayAlmacenado?.replaceAll('_', '-'));
     this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado.replaceAll('_', '-')) : [];
   }
@@ -57,7 +58,6 @@ export class LayoutComponent implements OnInit {
     sessionStorage.clear();
   }
   redirect(url: string) {
-    console.log(url);
     this.router.navigate([url]);
   }
 }
