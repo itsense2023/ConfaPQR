@@ -26,6 +26,7 @@ import {
   NotificationReceiversList,
   QualityDimensionList,
   CharacterizationCreate,
+  answerRequest,
 } from '../models/users.interface';
 
 @Injectable({
@@ -495,7 +496,7 @@ export class Users {
       { headers }
     );
   }
-  answerRequest(payload: AssignUserRequest) {
+  answerRequest(payload: answerRequest) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

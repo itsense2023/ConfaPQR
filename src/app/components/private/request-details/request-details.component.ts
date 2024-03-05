@@ -1,4 +1,4 @@
-import { Component, HostListener, OnInit } from '@angular/core';
+import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
@@ -10,6 +10,7 @@ import {
   RequestHistoric,
   RequestsDetails,
   RequestsList,
+  answerRequest,
 } from '../../../models/users.interface';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
@@ -22,6 +23,8 @@ import { RoutesApp } from '../../../enums/routes.enum';
   styleUrl: './request-details.component.scss',
 })
 export class RequestDetailsComponent implements OnInit {
+  @ViewChild('archive_request') fileInput!: ElementRef;
+
   requestList: RequestsList[] = [];
   requestDetails?: RequestsDetails;
   requestHistoric: RequestHistoric[] = [];
@@ -46,7 +49,6 @@ export class RequestDetailsComponent implements OnInit {
   errorSizeFile!: boolean;
   fileNameList: string[] = [];
   arrayAssignedAttachment: ApplicantAttachments[] = [];
-  fileInput: any;
   routeProcessRequest!: string;
   routeSearchRequest!: string;
   routeTab!: string;
@@ -61,7 +63,7 @@ export class RequestDetailsComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.requestProcess = this.formBuilder.group({
-      message: [null, [Validators.required, Validators.maxLength(500)]],
+      mensage: [null, [Validators.required, Validators.maxLength(500)]],
     });
   }
 
@@ -72,7 +74,7 @@ export class RequestDetailsComponent implements OnInit {
     } else if (routeIf?.includes(RoutesApp.PROCESS_REQUEST)) {
       this.routeTab = routeIf;
     }
-    console.log(this.routeTab);
+
     this.route.params.subscribe(params => {
       this.request_id = +params['id'];
     });
@@ -126,13 +128,12 @@ export class RequestDetailsComponent implements OnInit {
       next: (response: BodyResponse<RequestHistoric[]>) => {
         if (response.code === 200) {
           //this.requestHistoric = response.data;
-          console.log(response.data);
           this.requestHistoricAttach = response.data.filter(
             item => item.action === 'Archivos adjuntos'
           );
           this.requestHistoric = response.data.filter(item => item.action !== 'Archivos adjuntos');
-          console.log(this.requestHistoric);
-          console.log(this.requestHistoricAttach);
+          //console.log(this.requestHistoric);
+          //console.log(this.requestHistoricAttach);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -147,7 +148,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   assignRequest(request_details: RequestsDetails) {
-    console.log('request_details', request_details);
+    //console.log('request_details', request_details);
     if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
@@ -224,7 +225,7 @@ export class RequestDetailsComponent implements OnInit {
   isValidExtension(file: File): boolean {
     const extensionesValidas = ['.jpg', '.png', '.pdf', '.doc', '.xlsx', '.docx', '.xls'];
     const fileExtension = file?.name?.split('.').pop()?.toLowerCase();
-    console.log(fileExtension);
+    //console.log(fileExtension);
     return !extensionesValidas.includes('.' + fileExtension);
   }
   openFileInput() {
@@ -271,15 +272,25 @@ export class RequestDetailsComponent implements OnInit {
       reader.readAsDataURL(file);
     }
   }
+
+  getAssigned(): ApplicantAttachments[] {
+    return this.arrayAssignedAttachment;
+  }
+
+  clearFileInput(index: number) {
+    this.fileNameList.splice(index, 1);
+  }
+
   submitAnswer() {
-    this.visibleCharacterization = true;
-    /*const payload: AssignUserRequest = {
-      request_id: 0,
-      request_status: 2,
-      request_answer: '',
-      assigned_attachments: [],
-      assigned_user: '',
-    };
+    let payload!: answerRequest;
+    if (this.requestDetails) {
+      payload = {
+        request_id: this.requestDetails?.request_id | 0,
+        request_status: 3,
+        request_answer: this.requestProcess.get('mensage')?.value,
+        assigned_attachments: this.getAssigned(),
+      };
+    }
     this.userService.answerRequest(payload).subscribe({
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
@@ -295,7 +306,10 @@ export class RequestDetailsComponent implements OnInit {
         this.visibleCharacterization = true;
         console.log('La suscripción ha sido completada.');
       },
-    });*/
+    });
+    this.requestProcess.reset();
+    this.fileNameList = [];
+    this.visibleCharacterization = true;
   }
   setParameterCharacterization(payload: CharacterizationCreate) {
     this.userService.characterizeRequest(payload).subscribe({

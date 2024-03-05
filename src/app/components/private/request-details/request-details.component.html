@@ -266,10 +266,10 @@
                   formControlName="mensage"
                   [style]="{ 'border-radius': '5px' }"
                   type="text"
-                  placeholder="*Descripción detallada de la solicitud"
+                  placeholder="Escribir mensaje"
                   pInputTextarea>
                 </textarea>
-                <label class="card-form-input-placeholder-invalid">
+                <label class="formProcess-card-text-placeholder-invalid">
                   {{
                     requestProcess.get('mensage')?.hasError('required') &&
                     requestProcess.get('mensage')?.touched
@@ -300,15 +300,24 @@
                   Seleccionar
                   <i style="margin-left: 5px" class="pi pi-upload"></i>
                 </label>
-                <div class="formProcess-labelUpload">
-                  <p class="formProcess-labelUpload-name">fileName</p>
-                  <i class="formProcess-labelUpload-name pi pi-times"></i>
+                <label class="formProcess-card-text-placeholder-invalid"
+                  >{{ errorSizeFile ? 'El archivo cargado supera las 20MB' : ''
+                  }}{{ errorExtensionFile ? 'Extension no permitida' : '' }}</label
+                >
+                <div
+                  class="formProcess-labelUpload"
+                  *ngFor="let fileName of fileNameList; let i = index">
+                  <p class="formProcess-labelUpload-name">{{ fileName }}</p>
+                  <i
+                    (click)="clearFileInput(i)"
+                    class="formProcess-labelUpload-name pi pi-times"></i>
                 </div>
               </div>
             </div>
             <div class="container-button">
               <p-button
                 label="Enviar respuesta"
+                [disabled]="requestProcess.invalid"
                 (click)="submitAnswer()"
                 [style]="{ 'border-radius': '10px' }"></p-button>
             </div>

@@ -137,6 +137,12 @@ export interface RequestFormList {
   assigned_attachments?: ApplicantAttachments[] | null;
   form_id?: number;
 }
+export interface answerRequest {
+  request_status: number;
+  request_answer: string;
+  request_id: number;
+  assigned_attachments?: ApplicantAttachments[] | null;
+}
 export interface ApplicantAttachments {
   base64file: string;
   source_name: string;
