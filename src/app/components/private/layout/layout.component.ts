@@ -58,7 +58,6 @@ export class LayoutComponent implements OnInit {
     sessionStorage.clear();
   }
   redirect(url: string) {
-    console.log(url);
     this.router.navigate([url]);
   }
 }
