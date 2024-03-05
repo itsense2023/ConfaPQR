@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '50vw' }" [modal]="true">
+<p-dialog [(visible)]="visible" [style]="{ width: '60vw' }" [modal]="true">
   <ng-template pTemplate="headless">
     <div class="modal-content">
       <div class="login-form-header">
@@ -26,15 +26,15 @@
           <div class="col-6">
             <label> *Tipo de evento </label>
             <p-dropdown
-              formControlName="action_name"
+              formControlName="action_id"
               [options]="notificationActionsList"
               optionLabel="action_name"
-              optionValue="action_name"
+              optionValue="action_id"
               placeholder="Seleccione el tipo de evento"></p-dropdown>
             <label class="invalid">
               {{
-                formGroup.get('action_name')?.hasError('required') &&
-                formGroup.get('action_name')?.touched
+                formGroup.get('action_id')?.hasError('required') &&
+                formGroup.get('action_id')?.touched
                   ? 'Campo requerido'
                   : ''
               }}</label
@@ -90,11 +90,11 @@
           <div class="col-12">
             <label> Tipos de destinatarios </label>
             <p-dropdown
-              formControlName="receiver_type_name"
+              formControlName="notification_receiver_id"
               [style]="{ height: '35px' }"
               [options]="notificationReceiversList"
               optionLabel="receiver_name"
-              optionValue="receiver_type_name"
+              optionValue="receiver_id"
               placeholder="Seleccione una opción"></p-dropdown>
           </div>
           <div class="col-12">

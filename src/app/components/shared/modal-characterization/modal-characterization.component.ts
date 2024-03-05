@@ -3,6 +3,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import {
   ApplicantTypeList,
   CategoryList,
+  CharacterizationCreate,
   ModalityList,
   NotificationActionList,
   NotificationList,
@@ -26,13 +27,13 @@ export class ModalCharacterizationComponent implements OnInit {
   @Input() buttonmsg = '';
   @Input() visible: boolean = false;
   @Input() read_only: boolean = false;
-  @Input() notificationForm?: NotificationList;
+  @Input() request_id?: number;
   @Output() setRta = new EventEmitter<boolean>();
-  @Output() setRtaParameter = new EventEmitter<NotificationList>();
-  notificationActionsList: NotificationActionList[] = [];
+  @Output() setRtaParameter = new EventEmitter<CharacterizationCreate>();
+  //notificationActionsList: NotificationActionList[] = [];
   inputValue: string[] = [''];
   modalityList!: ModalityList[];
-  notificationReceiversList: NotificationReceiversList[] = [];
+  //notificationReceiversList: NotificationReceiversList[] = [];
   //formGroup: FormGroup;
   applicantTypeList: ApplicantTypeList[] = [];
   requestTypeList: RequestTypeList[] = [];
@@ -45,27 +46,21 @@ export class ModalCharacterizationComponent implements OnInit {
     private messageService: MessageService
   ) {
     this.formGroup = new FormGroup({
-      notification_id: new FormControl(null),
-      notification_name: new FormControl(null, [Validators.required]),
-      notification_message: new FormControl(null, [Validators.required]),
-      action_id: new FormControl(null, [Validators.required]),
-      notification_receiver_id: new FormControl(null),
-      notification_receiver: new FormControl(null, [Validators.required]),
+      request_id: new FormControl(null),
+      applicant_type_id: new FormControl(null, [Validators.required]),
+      request_type_id: new FormControl(null, [Validators.required]),
+      is_pqr: new FormControl(null, [Validators.required]),
+      quality_dimension_id: new FormControl(null),
+      modality_id: new FormControl(null, [Validators.required]),
+      category_id: new FormControl(null, [Validators.required]),
     });
   }
   ngOnInit(): void {
     console.log(this.read_only);
-    this.getNotificationActionsTable();
-    this.getNotificationReceiversTable();
     this.getRequestTypesList();
     this.getApplicantTypesList();
     this.getQualityDimensionsTable();
     this.getModalityTable();
-    if (this.buttonmsg !== 'Crear' && this.notificationForm) {
-      this.formGroup.patchValue(this.notificationForm);
-    } else {
-      this.formGroup.reset();
-    }
     //this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
     //this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
   }
@@ -160,54 +155,18 @@ export class ModalCharacterizationComponent implements OnInit {
       },
     });
   }
-  getNotificationActionsTable() {
-    this.userService.getNotificationActionList().subscribe({
-      next: (response: BodyResponse<NotificationActionList[]>) => {
-        if (response.code === 200) {
-          this.notificationActionsList = response.data;
-          this.notificationActionsList.forEach(item => {
-            item.is_active = item.is_active === 1 ? true : false;
-          });
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
-  }
-  getNotificationReceiversTable() {
-    this.userService.getNotificationReceiversList().subscribe({
-      next: (response: BodyResponse<NotificationReceiversList[]>) => {
-        if (response.code === 200) {
-          this.notificationReceiversList = response.data;
-          this.notificationReceiversList.forEach(item => {
-            item.is_active = item.is_active === 1 ? true : false;
-          });
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
-  }
+
   closeDialog(value: boolean) {
     this.setRta.emit(value);
     console.log(this.formGroup);
-    const payload: NotificationList = {
-      //notification_id: +this.formGroup.controls['notification_id'].value,
-      notification_name: this.formGroup.controls['notification_name'].value,
-      notification_message: this.formGroup.controls['notification_message'].value,
-      action_id: this.formGroup.controls['action_id'].value,
-      notification_receiver_id: this.formGroup.controls['notification_receiver_id'].value,
-      notification_receiver: [this.formGroup.controls['notification_receiver'].value],
+    const payload: CharacterizationCreate = {
+      request_id: +this.formGroup.controls['request_id'].value,
+      applicant_type_id: this.formGroup.controls['applicant_type_id'].value,
+      request_type_id: this.formGroup.controls['request_type_id'].value,
+      is_pqr: this.formGroup.controls['is_pqr'].value,
+      quality_dimension_id: this.formGroup.controls['quality_dimension_id'].value,
+      modality_id: this.formGroup.controls['modality_id'].value,
+      category_id: this.formGroup.controls['category_id'].value,
     };
     console.log(payload);
     this.setRtaParameter.emit(payload);

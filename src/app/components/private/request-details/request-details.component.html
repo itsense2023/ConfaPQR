@@ -390,4 +390,6 @@
   [select]="true"
   [visible]="visibleCharacterization"
   [message]="message"
-  (setRta)="closeDialog($event)"></app-modal-characterization>
+  [request_id]="request_id"
+  (setRta)="closeDialogCharacterization($event)"
+  (setRtaParameter)="setParameterCharacterization($event)"></app-modal-characterization>

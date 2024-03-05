@@ -25,6 +25,7 @@ import {
   NotificationActionList,
   NotificationReceiversList,
   QualityDimensionList,
+  CharacterizationCreate,
 } from '../models/users.interface';
 
 @Injectable({
@@ -502,6 +503,18 @@ export class Users {
     });
     return this.http.post<BodyResponse<string>>(
       `${environment.API_PUBLIC}${EndPointRoute.ANSWER_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  characterizeRequest(payload: CharacterizationCreate) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CHARACTERIZE_REQUEST}`,
       payload,
       { headers }
     );

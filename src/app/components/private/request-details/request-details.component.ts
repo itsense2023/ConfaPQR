@@ -5,6 +5,8 @@ import { Users } from '../../../services/users.service';
 import {
   ApplicantAttach,
   ApplicantAttachments,
+  AssignUserRequest,
+  CharacterizationCreate,
   RequestHistoric,
   RequestsDetails,
   RequestsList,
@@ -164,6 +166,9 @@ export class RequestDetailsComponent implements OnInit {
   closeDialogAlert(value: boolean) {
     this.visibleDialogAlert = false;
   }
+  closeDialogCharacterization(value: boolean) {
+    this.visibleCharacterization = false;
+  }
   setParameter(inputValue: string) {
     if (!this.request_details) return;
     if (this.request_details['assigned_user'] == inputValue) {
@@ -252,5 +257,46 @@ export class RequestDetailsComponent implements OnInit {
   }
   submitAnswer() {
     this.visibleCharacterization = true;
+    /*const payload: AssignUserRequest = {
+      request_id: 0,
+      request_status: 2,
+      request_answer: '',
+      assigned_attachments: [],
+      assigned_user: '',
+    };
+    this.userService.answerRequest(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.visibleCharacterization = true;
+        console.log('La suscripción ha sido completada.');
+      },
+    });*/
+  }
+  setParameterCharacterization(payload: CharacterizationCreate) {
+    this.userService.characterizeRequest(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.ngOnInit();
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
 }

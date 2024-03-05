@@ -56,4 +56,5 @@ export enum EndPointRoute {
   REQUEST_LIST = 'get_form/',
   CREATE_REQUEST = 'request/create',
   ANSWER_REQUEST = 'request/answer',
+  CHARACTERIZE_REQUEST = 'request/characterization/create',
 }
