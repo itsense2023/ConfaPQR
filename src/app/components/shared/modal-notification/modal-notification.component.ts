@@ -55,8 +55,8 @@ export class ModalNotificationComponent implements OnInit {
         Validators.required,
         Validators.pattern('^[^#$%&]+$'),
       ]),
-      action_name: new FormControl(null, Validators.required),
-      receiver_type_name: new FormControl(null),
+      action_id: new FormControl(null, Validators.required),
+      notification_receiver_id: new FormControl(null),
       notification_receiver: new FormControl(null, [
         Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
       ]),
@@ -68,6 +68,7 @@ export class ModalNotificationComponent implements OnInit {
     this.getNotificationActionsTable();
     this.getNotificationReceiversTable();
     if (this.buttonmsg !== 'Crear' && this.notificationForm) {
+      console.log(this.notificationForm);
       this.formGroup.patchValue(this.notificationForm);
       console.log(this.formGroup);
       this.recipients = this.notificationForm.notification_receiver as string[];
@@ -136,8 +137,8 @@ export class ModalNotificationComponent implements OnInit {
       //notification_id: +this.formGroup.controls['notification_id'].value,
       notification_name: this.formGroup.controls['notification_name'].value,
       notification_message: this.formGroup.controls['notification_message'].value,
-      action_name: this.formGroup.get('action_name')?.value,
-      receiver_type_name: this.formGroup.get('receiver_type_name')?.value || null,
+      action_id: this.formGroup.get('action_id')?.value,
+      notification_receiver_id: this.formGroup.get('notification_receiver_id')?.value || null,
       notification_receiver: this.recipients || null,
     };
     console.log(payload);

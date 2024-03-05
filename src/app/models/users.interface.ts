@@ -84,7 +84,7 @@ export interface AssignUserRequest {
   applicant_cellphone?: string;
   request_description?: string;
   request_days?: number;
-  assigned_user: string;
+  assigned_user?: string;
   request_answer?: string;
   data_treatment?: boolean;
   applicant_attachments?: string[];
@@ -241,4 +241,14 @@ export interface QualityDimensionList {
   quality_dimension_name: string;
   quality_dimension_description: string;
   is_active: number | boolean;
+}
+export interface CharacterizationCreate {
+  request_id: number;
+  applicant_type_id: number;
+  request_type_id: number;
+  is_pqr: number;
+  quality_dimension_id: number;
+  modality_id: number;
+  category_id: number;
+  month?: string;
 }
