@@ -1,0 +1,42 @@
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+  tr {
+    position: relative;
+  }
+  
+  .circle {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    left: -20px;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  
+  /* Define CSS variables for each number of days */
+  :root {
+    --color-4: $color-deep-red;
+    --color-9: $color-deep-yellow;
+    --color-11: $color-deep-green;
+  }
+  
+  /* Create CSS rules for each number of days */
+  tr:nth-child(1) .circle,
+  tr:nth-child(2) .circle,
+  tr:nth-child(3) .circle,
+  tr:nth-child(4) .circle {
+    --circle-color: var(--color-4);
+  }
+  
+  tr:nth-child(5) .circle,
+  tr:nth-child(6) .circle,
+  tr:nth-child(7) .circle,
+  tr:nth-child(8) .circle {
+    --circle-color: var(--color-9);
+  }
+  
+  tr:nth-child(9) .circle,
+  tr:nth-child(10) .circle {
+    --circle-color: var(--color-11);
+  }

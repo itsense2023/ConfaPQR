@@ -13,10 +13,12 @@ export enum RoutesApp {
   REQUEST_DETAILS = 'request-details',
   REQUEST_FORM = 'request-form',
   NOTIFICATIONS = 'notifications',
+  PROCESS_REQUEST = 'process-request',
 }
 export enum EndPointRoute {
   USERS_LIST = 'db/users',
   ALL_REQUESTS = 'request/getall',
+  ALL_REQUESTS_BY_ASSIGNED_USER = 'request/byassigned',
   REQUEST_DETAILS = 'request/details',
   REQUEST_HISTORIC = 'historic/by/request',
   CREATE_USER = 'user/create',
@@ -39,6 +41,8 @@ export enum EndPointRoute {
   UPDATE_MODALITY = 'modality/modify',
   INACTIVATE_MODALITY = 'modality/in-activate',
   CATEGORY_LIST = 'db/categories',
+  QUALITY_DIMENSION_LIST = 'db/quality_dimensions',
+  CATEGORIES_BY_MODALITY = 'categories/by',
   NOTIFICATION_LIST = 'db/notifications',
   NOTIFICATION_ACTION_LIST = 'db/notification_actions',
   NOTIFICATION_RECEIVER_LIST = 'db/receivers',
@@ -51,4 +55,6 @@ export enum EndPointRoute {
   REQUEST_BY_APPLICANT = '/requeststypes/by',
   REQUEST_LIST = 'get_form/',
   CREATE_REQUEST = 'request/create',
+  ANSWER_REQUEST = 'request/answer',
+  CHARACTERIZE_REQUEST = 'request/characterization/create',
 }

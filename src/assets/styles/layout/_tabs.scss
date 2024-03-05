@@ -68,6 +68,19 @@
     }
   }
 
+  &-4 {
+
+    border: 1.5px solid $color-green;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+
+    &>.p-tabview-nav-link[aria-selected='true'] {
+      background-color: $color-green;
+      color: $color-white;
+      border: 0;
+    }
+  }
+
   &-sub {
     border: none;
 

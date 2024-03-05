@@ -1,37 +1,29 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-
-import { RequestDetailsRoutingModule } from './request-details-routing.module';
+import { ProcessRequestRoutingModule } from './process-request-routing.module';
+import { ProcessRequestComponent } from './process-request.component';
 import { ButtonModule } from 'primeng/button';
 import { TableModule } from 'primeng/table';
 import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
-import { RequestDetailsComponent } from './request-details.component';
-import { CardModule } from 'primeng/card';
-import { TabViewModule } from 'primeng/tabview';
-import { DatePipe } from '@angular/common';
 import { ToastModule } from 'primeng/toast';
-import { ReactiveFormsModule } from '@angular/forms';
-
+import { MultiSelectModule } from 'primeng/multiselect';
 @NgModule({
-  declarations: [RequestDetailsComponent],
+  declarations: [ProcessRequestComponent],
   imports: [
     CommonModule,
-    RequestDetailsRoutingModule,
+    ProcessRequestRoutingModule,
     ButtonModule,
     TableModule,
     PaginatorModule,
     DropdownModule,
     InputSwitchModule,
     SharedModule,
-    CardModule,
-    TabViewModule,
-    DatePipe,
     ToastModule,
-    ReactiveFormsModule,
+    MultiSelectModule,
   ],
-  exports: [RequestDetailsComponent],
+  exports: [ProcessRequestComponent],
 })
-export class RequestDetailsModule {}
+export class ProcessRequestModule {}

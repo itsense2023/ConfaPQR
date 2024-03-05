@@ -4,11 +4,15 @@ import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import {
   ApplicantAttach,
+  ApplicantAttachments,
+  AssignUserRequest,
+  CharacterizationCreate,
   RequestHistoric,
   RequestsDetails,
   RequestsList,
 } from '../../../models/users.interface';
 import { MessageService } from 'primeng/api';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-request-details',
@@ -24,6 +28,7 @@ export class RequestDetailsComponent implements OnInit {
   visibleDialog = false;
   visibleDialogInput = false;
   visibleDialogAlert = false;
+  visibleCharacterization = false;
   message = '';
   message2 = '';
   buttonmsg = '';
@@ -35,12 +40,28 @@ export class RequestDetailsComponent implements OnInit {
   ApplicantAttach: ApplicantAttach[] = [];
   informative: boolean = false;
   severity = '';
+  requestProcess: FormGroup<any> = new FormGroup<any>({});
+  errorExtensionFile!: boolean;
+  errorSizeFile!: boolean;
+  fileNameList: string[] = [];
+  arrayAssignedAttachment: ApplicantAttachments[] = [];
+  fileInput: any;
+
   constructor(
+    private formBuilder: FormBuilder,
     private userService: Users,
     private router: Router,
     private route: ActivatedRoute,
     private messageService: MessageService
-  ) {}
+  ) {
+    this.requestProcess = new FormGroup({
+      category_id: new FormControl(null, [Validators.required]),
+      category_name: new FormControl(null, [Validators.required]),
+      tipology_name: new FormControl(null, [Validators.required]),
+      cause_name: new FormControl(null),
+      modality_id: new FormControl(null, [Validators.required]),
+    });
+  }
 
   ngOnInit() {
     this.route.params.subscribe(params => {
@@ -145,6 +166,9 @@ export class RequestDetailsComponent implements OnInit {
   closeDialogAlert(value: boolean) {
     this.visibleDialogAlert = false;
   }
+  closeDialogCharacterization(value: boolean) {
+    this.visibleCharacterization = false;
+  }
   setParameter(inputValue: string) {
     if (!this.request_details) return;
     if (this.request_details['assigned_user'] == inputValue) {
@@ -180,5 +204,99 @@ export class RequestDetailsComponent implements OnInit {
     const anchor = document.createElement('a');
     anchor.href = download_url;
     anchor.click();
+  }
+  isValidExtension(file: File): boolean {
+    const extensionesValidas = ['.jpg', '.png', '.pdf', '.doc', '.xlsx', '.docx', '.xls'];
+    const fileExtension = file?.name?.split('.').pop()?.toLowerCase();
+    console.log(fileExtension);
+    return !extensionesValidas.includes('.' + fileExtension);
+  }
+  openFileInput() {
+    this.fileInput.nativeElement.click();
+  }
+  onFileSelected(event: any) {
+    const files: FileList = event.target.files;
+
+    for (let i = 0; i < files.length; i++) {
+      const file: File = files[i];
+
+      let fileSizeFormat: string;
+      const fileName: string = file.name;
+      const fileSizeInKiloBytes = file.size / 1024;
+      if (fileSizeInKiloBytes < 1024) {
+        fileSizeFormat = fileSizeInKiloBytes.toFixed(2) + 'KB';
+      } else {
+        const fileSizeMegabytes = fileSizeInKiloBytes / 1024;
+        fileSizeFormat = fileSizeMegabytes.toFixed(2) + 'MB';
+      }
+      if (this.isValidExtension(file)) {
+        this.errorExtensionFile = true;
+        event.target.files = [];
+      }
+
+      if (file.size > 20971520) {
+        this.errorSizeFile = true;
+        event.target.files = [];
+      }
+
+      const reader = new FileReader();
+      reader.onload = (e: any) => {
+        const base64String: string = e.target.result.split(',')[1];
+
+        const applicantAttach: ApplicantAttachments = {
+          base64file: base64String,
+          source_name: fileName,
+          fileweight: fileSizeFormat,
+        };
+
+        this.fileNameList.push(fileName);
+        this.arrayAssignedAttachment.push(applicantAttach);
+      };
+      reader.readAsDataURL(file);
+    }
+  }
+  submitAnswer() {
+    this.visibleCharacterization = true;
+    /*const payload: AssignUserRequest = {
+      request_id: 0,
+      request_status: 2,
+      request_answer: '',
+      assigned_attachments: [],
+      assigned_user: '',
+    };
+    this.userService.answerRequest(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.visibleCharacterization = true;
+        console.log('La suscripción ha sido completada.');
+      },
+    });*/
+  }
+  setParameterCharacterization(payload: CharacterizationCreate) {
+    this.userService.characterizeRequest(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response.code === 200) {
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        this.ngOnInit();
+        console.log('La suscripción ha sido completada.');
+      },
+    });
   }
 }

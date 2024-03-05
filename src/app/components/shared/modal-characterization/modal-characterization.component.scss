@@ -1,0 +1,15 @@
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+.modal-content {
+  background-color: $color-white;
+  overflow-y: scroll;
+}
+
+.error-label {
+  color: $color-red;
+}
+
+.invalid {
+  color: $color-red;
+  font-size: small;
+}

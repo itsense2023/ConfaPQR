@@ -42,6 +42,7 @@ export class NotificationsComponent implements OnInit {
     this.userService.getNotificationList().subscribe({
       next: (response: BodyResponse<NotificationList[]>) => {
         if (response.code === 200) {
+          console.log(response.data);
           this.notificationList = response.data;
           this.notificationList.forEach(item => {
             item.is_active = item.is_active === 1 ? true : false;
@@ -61,11 +62,11 @@ export class NotificationsComponent implements OnInit {
 
   inActiveNotification(notification_details: NotificationList) {
     if (!notification_details.is_active) {
-      this.message = '¿Seguro que desea Inactivar categoría?';
+      this.message = '¿Seguro que desea Inactivar notificación?';
       this.visibleDialog = true;
       notification_details.is_active = 0;
     } else {
-      this.message = '¿Seguro que desea Activar categoría?';
+      this.message = '¿Seguro que desea Activar notificación?';
       this.visibleDialog = true;
       notification_details.is_active = 1;
     }
