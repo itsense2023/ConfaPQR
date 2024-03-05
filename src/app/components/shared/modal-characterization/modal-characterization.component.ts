@@ -10,6 +10,7 @@ import {
   NotificationReceiversList,
   QualityDimensionList,
   RequestTypeList,
+  TipologiesCauses,
 } from '../../../models/users.interface';
 import { Users } from '../../../services/users.service';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
@@ -39,7 +40,8 @@ export class ModalCharacterizationComponent implements OnInit {
   requestTypeList: RequestTypeList[] = [];
   categoryList: CategoryList[] = [];
   qualityList: QualityDimensionList[] = [];
-
+  TipologyList: TipologiesCauses[] = [];
+  CauseList: TipologiesCauses[] = [];
   constructor(
     private userService: Users,
     private formBuilder: FormBuilder,
@@ -57,7 +59,6 @@ export class ModalCharacterizationComponent implements OnInit {
   }
   ngOnInit(): void {
     console.log(this.read_only);
-    this.getRequestTypesList();
     this.getApplicantTypesList();
     this.getQualityDimensionsTable();
     this.getModalityTable();
@@ -71,22 +72,6 @@ export class ModalCharacterizationComponent implements OnInit {
   }
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
-  }
-  getRequestTypesList() {
-    this.userService.getRequestTypesList().subscribe({
-      next: (response: BodyResponse<RequestTypeList[]>) => {
-        if (response.code === 200) {
-          this.requestTypeList = response.data.filter(obj => obj.is_active !== 0);
-        } else {
-        }
-      },
-      error: (err: any) => {
-        console.log(err);
-      },
-      complete: () => {
-        console.log('La suscripción ha sido completada.');
-      },
-    });
   }
   getApplicantTypesList() {
     this.userService.getApplicantTypesList().subscribe({
@@ -139,6 +124,22 @@ export class ModalCharacterizationComponent implements OnInit {
       },
     });
   }
+  getRequestsTypeByApplicantType(request_type_id: number) {
+    this.userService.getRequestsTypeByApplicantType(request_type_id).subscribe({
+      next: (response: BodyResponse<RequestTypeList[]>) => {
+        if (response.code === 200) {
+          this.requestTypeList = response.data.filter(obj => obj.is_active !== 0);
+        } else {
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
   getModality() {
     console.log(this.formGroup.get('modality_id')?.value.modality_id);
     this.getCategoryTableByModality(2);
@@ -162,7 +163,48 @@ export class ModalCharacterizationComponent implements OnInit {
       },
     });
   }
-
+  getTipologiesListByCategory(category_name_string: string) {
+    const payload: TipologiesCauses = {
+      category_name: category_name_string,
+    };
+    this.userService.getTipologiesListByCategory(payload).subscribe({
+      next: (response: BodyResponse<TipologiesCauses[]>) => {
+        if (response.code === 200) {
+          this.TipologyList = response.data;
+          console.log(this.categoryList);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getCausesListByTipology(tipology_name_string: string) {
+    const payload: TipologiesCauses = {
+      tipology_name: tipology_name_string,
+    };
+    this.userService.getCausesListByTipology(payload).subscribe({
+      next: (response: BodyResponse<TipologiesCauses[]>) => {
+        if (response.code === 200) {
+          this.CauseList = response.data;
+          console.log(this.categoryList);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
   closeDialog(value: boolean) {
     this.setRta.emit(value);
     console.log(this.formGroup);

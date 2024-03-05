@@ -258,3 +258,10 @@ export interface CharacterizationCreate {
   category_id: number;
   month?: string;
 }
+export interface TipologiesCauses {
+  category_name?: string;
+  tipology_name?: string;
+  cause_name?: string;
+  category_id?: number;
+  is_active?: number | boolean;
+}
