@@ -30,17 +30,27 @@
              
           ],
           "perfilLinks":[
-             {
-                "modulo_id":"184",
-                "moduloNombre":"Configurar notificaciones",
-                "nombre":"Configurar notificaciones",
-                "url":"/configure_notifications",
-                "estado":true,
-                "usuarioLinks":[
-                   
-                ]
-             },
-             {
+            {
+               "modulo_id":"184",
+               "moduloNombre":"Configurar notificaciones",
+               "nombre":"Configurar notificaciones",
+               "url":"/configure_notifications",
+               "estado":true,
+               "usuarioLinks":[
+                  
+               ]
+            },
+            {
+               "modulo_id":"184",
+               "moduloNombre":"Parametrizar responsables",
+               "nombre":"Parametrizar responsables",
+               "url":"/request_manager",
+               "estado":true,
+               "usuarioLinks":[
+                  
+               ]
+            },
+            {
                 "modulo_id":"184",
                 "moduloNombre":"Parametrizar solicitantes, solicitudes y asociados",
                 "nombre":"Parametrizar solicitantes, solicitudes y asociados",
@@ -72,8 +82,8 @@
              },
              {
                 "modulo_id":"184",
-                "moduloNombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
-                "nombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
+                "moduloNombre":"Parametrizar modalidad y categoria",
+                "nombre":"Parametrizar modalidad y categoria",
                 "url":"/",
                 "estado":true,
                 "perfilLinks":[
@@ -107,6 +117,19 @@
           "perfilLinks":[
              
           ]
-       }
+       },
+       {
+         "modulo_id":"184",
+         "moduloNombre":"Generar Reporte",
+         "nombre":"Generar Reporte",
+         "url":"/request_report",
+         "estado":true,
+         "usuarioLinks":[
+            
+         ],
+         "perfilLinks":[
+            
+         ]
+      }
     ]
  }

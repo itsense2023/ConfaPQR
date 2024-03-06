@@ -11,7 +11,7 @@
     <p-table
       [value]="categoryList"
       [scrollable]="true"
-      scrollHeight="600px"
+      scrollHeight="500px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="80"
       selectionMode="single"
@@ -27,7 +27,7 @@
             Código<p-sortIcon field="category_id"></p-sortIcon>
           </th>
           <th style="width: 10%">Categoría</th>
-          <th style="width: 20%">Tipología</th>
+          <th style="width: 20%; max-width: 50px">Tipología</th>
           <th style="width: 34%">Causa y/o Subtipología</th>
           <th style="width: 20%">Modalidad</th>
           <th style="width: 10%">Estado</th>
@@ -38,11 +38,11 @@
       <ng-template pTemplate="body" let-categoryList>
         <tr>
           <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_id }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.tipology_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.cause_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.modality_name }}</td>
-          <td class="d-flex">
+          <td>{{ categoryList.category_name }}</td>
+          <td>{{ categoryList.tipology_name }}</td>
+          <td>{{ categoryList.cause_name }}</td>
+          <td>{{ categoryList.modality_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="categoryList.is_active"
               (onChange)="inActiveCategory(categoryList)"></p-inputSwitch>

@@ -9,91 +9,184 @@
         <div class="login-form-header__item login-form-header__item_5"></div>
         <div class="login-form-header__item login-form-header__item_6"></div>
       </div>
+
       <div class="row my-4 px-5">
-        <div class="col-12 text-center">Caracterizar solicitud</div>
+        <div class="col-12 title">Caracterizar solicitud</div>
       </div>
       <form [formGroup]="formGroup">
         <div class="row my-4 px-5">
           <div class="col-6">
-            <label> *Tipo de solicitante reclasificación </label>
+            <label class="label-select"> *Tipo de solicitante reclasificación </label>
             <p-dropdown
+              [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="applicant_type_id"
               [options]="applicantTypeList"
               optionLabel="applicant_type_name"
+              (onChange)="getRequestType()"
               optionValue="applicant_type_id"
               placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('applicant_type_id')?.hasError('required') &&
+                formGroup.get('applicant_type_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
           </div>
           <div class="col-6">
-            <label> *Tipo de solicitud reclasificación </label>
+            <label class="label-select"> *Tipo de solicitud reclasificación </label>
             <p-dropdown
               formControlName="request_type_id"
+              [style]="{ height: '30px', 'align-items': 'center' }"
               [options]="requestTypeList"
               optionLabel="request_type_name"
               optionValue="request_type_id"
               placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('request_type_id')?.hasError('required') &&
+                formGroup.get('request_type_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
           </div>
         </div>
         <div class="row my-4 px-5">
-          <label> ¿La solicitud corresponde a PQR? </label>
-          <p-checkbox
-            name="groupname"
-            value="val1"
-            label="Value 1"
-            formControlName="selectedValuesyes"></p-checkbox>
-          <p-checkbox
-            name="groupname"
-            value="val2"
-            label="Value 2"
-            formControlName="selectedValuesno"></p-checkbox>
+          <label class="label-select"> ¿La solicitud corresponde a PQR? </label>
+          <div class="container-group">
+            <div class="container-group-checkbox">
+              <p-radioButton
+                name="is_pqr"
+                value="si"
+                (click)="enableQualityandModality()"
+                formControlName="is_pqr"></p-radioButton>
+              <label class="container-group-label" for="selectYes">Si</label>
+            </div>
+            <div class="container-group-checkbox">
+              <p-radioButton
+                name="is_pqr"
+                value="no"
+                (click)="enableQualityandModality()"
+                formControlName="is_pqr"></p-radioButton>
+              <label class="container-group-label" for="selectNo">No</label>
+            </div>
+          </div>
         </div>
-        <div class="row my-4 px-5">
+        <div class="row my-4 px-5" *ngIf="modalBoolean">
           <div class="col-6">
-            <label> Dimensión de calidad </label>
+            <label class="label-select"> Dimensión de calidad </label>
             <p-dropdown
+              [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="quality_dimension_id"
               [options]="qualityList"
               optionLabel="quality_dimension_name"
               optionValue="quality_dimension_id"
               placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('quality_dimension_id')?.hasError('required') &&
+                formGroup.get('quality_dimension_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
           </div>
           <div class="col-6">
-            <label> Modalidad </label>
+            <label class="label-select"> Modalidad </label>
             <p-dropdown
-              (onChange)="getModality()"
+              [style]="{ height: '30px', 'align-items': 'center' }"
+              (onChange)="getCategory()"
               formControlName="modality_id"
               [options]="modalityList"
               optionLabel="modality_name"
               optionValue="modality_id"
               placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('modality_id')?.hasError('required') &&
+                formGroup.get('modality_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
           </div>
         </div>
-        <div class="row my-4 px-5">
-          <div class="col-12">
-            <label> Categoria </label>
+        <div class="row my-4 px-5" *ngIf="enableCategoryandTipology()">
+          <div class="col-6">
+            <label class="label-select"> Categoria</label>
             <p-dropdown
+              [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="category_id"
+              (onChange)="getTipology()"
               [options]="categoryList"
               optionLabel="category_name"
-              optionValue="category_id"
               placeholder="Seleccione"></p-dropdown>
-            <!-- <p-treeSelect
-              class="md:w-20rem w-full"
-              containerStyleClass="w-full"
-              formControlName="selectedNodes"
-              [options]="categoryList"
-              placeholder="Select Item"></p-treeSelect> -->
+            <label class="invalid">
+              {{
+                formGroup.get('category_id')?.hasError('required') &&
+                formGroup.get('category_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
+          </div>
+          <div class="col-6">
+            <label class="label-select"> Tipologia </label>
+            <p-dropdown
+              [style]="{ height: '30px', 'align-items': 'center' }"
+              formControlName="tipology_id"
+              (onChange)="getCauses()"
+              [options]="TipologyList"
+              optionLabel="tipology_name"
+              optionValue="tipology_name"
+              placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('tipology_id')?.hasError('required') &&
+                formGroup.get('tipology_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
+          </div>
+        </div>
+        <div class="row my-4 px-5" *ngIf="formGroup.get('tipology_id')?.value">
+          <div class="col-6">
+            <label class="label-select"> Causas</label>
+            <p-dropdown
+              [style]="{ height: '30px', 'align-items': 'center' }"
+              formControlName="cause_id"
+              [options]="CauseList"
+              optionLabel="cause_name"
+              optionValue="cause_name"
+              placeholder="Seleccione"></p-dropdown>
+            <label class="invalid">
+              {{
+                formGroup.get('cause_id')?.hasError('required') &&
+                formGroup.get('cause_id')?.touched
+                  ? 'Campo Requerido'
+                  : ''
+              }}</label
+            >
           </div>
         </div>
       </form>
-      <div *ngIf="read_only">
-        <div class="row my-4 px-5">
+      <!-- *ngIf="read_only" -->
+      <div>
+        <div class="row my-4 px-5" style="margin: 10px auto">
           <div class="col-12 d-flex justify-content-evenly">
-            <p-button label="Cerrar" severity="secondary" (click)="closeDialog(false)"></p-button>
+            <p-button
+              label="Cerrar solicitud"
+              severity="danger"
+              [disabled]="formGroup.invalid"
+              (click)="closeDialog(false)"></p-button>
           </div>
         </div>
       </div>
-      <div *ngIf="!read_only">
-        <div class="row my-4 px-5">
+      <!-- <div *ngIf="!read_only">
+        <div class="row my-4 px-5" style="margin: 10px auto">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
             <p-button
@@ -102,7 +195,7 @@
               (click)="closeDialog(true)"></p-button>
           </div>
         </div>
-      </div>
+      </div> -->
     </div>
   </ng-template>
 </p-dialog>

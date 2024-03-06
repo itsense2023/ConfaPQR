@@ -10,6 +10,7 @@ import {
 } from '../../../models/users.interface';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { MessageService } from 'primeng/api';
+import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
 
 @Component({
   selector: 'app-process-request',
@@ -18,6 +19,7 @@ import { MessageService } from 'primeng/api';
 })
 export class ProcessRequestComponent implements OnInit {
   requestList: RequestsList[] = [];
+  requestListByAssigned: RequestsList[] = [];
   aplicantList: ApplicantTypeList[] = [];
   requestTypeList: RequestTypeList[] = [];
   userList: UserList[] = [];
@@ -37,6 +39,7 @@ export class ProcessRequestComponent implements OnInit {
   daysOption!: number[];
   selectedDaysOptions!: number[];
   selectedStatusOptions!: string[];
+  user: string = '';
   constructor(
     private userService: Users,
     private router: Router,
@@ -44,7 +47,10 @@ export class ProcessRequestComponent implements OnInit {
   ) {}
 
   ngOnInit() {
+    this.user = sessionStorage.getItem(SessionStorageItems.USER) || '';
+    console.log(this.user);
     this.getRequestList();
+    this.getRequestListByAssignedUser();
     this.getApplicantTypeList();
     this.getRequestTypeList();
     this.getUsersList();
@@ -58,6 +64,25 @@ export class ProcessRequestComponent implements OnInit {
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestList = response.data;
+          this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
+          this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getRequestListByAssignedUser() {
+    this.userService.getRequestListByAssignedUser(this.user).subscribe({
+      next: (response: BodyResponse<RequestsList[]>) => {
+        if (response.code === 200) {
+          this.requestListByAssigned = response.data;
           this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
           this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
         } else {

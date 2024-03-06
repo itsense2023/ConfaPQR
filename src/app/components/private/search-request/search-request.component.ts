@@ -37,6 +37,8 @@ export class SearchRequestComponent implements OnInit {
   daysOption!: number[];
   selectedDaysOptions!: number[];
   selectedStatusOptions!: string[];
+  enableAssign: boolean = false;
+
   constructor(
     private userService: Users,
     private router: Router,
@@ -130,14 +132,15 @@ export class SearchRequestComponent implements OnInit {
     if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable de solicitud';
       this.buttonmsg = 'Asignar';
+      request_details.request_status = 2;
     } else {
       this.message = 'Reasignar responsable de solicitud';
       this.buttonmsg = 'Reasignar';
+      request_details.request_status = 3;
     }
     this.visibleDialogInput = true;
     this.parameter = ['Colaborador'];
     this.request_details = request_details;
-    console.log(request_details);
   }
 
   closeDialog(value: boolean) {
@@ -154,8 +157,10 @@ export class SearchRequestComponent implements OnInit {
   }
   closeDialogAlert(value: boolean) {
     this.visibleDialogAlert = false;
+    this.enableAssign = value;
   }
   setParameter(inputValue: string) {
+    if (!this.enableAssign) return;
     if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
       this.informative = true;

@@ -53,6 +53,7 @@ export class LoginComponent {
           const decodedToken: ISession = jwtDecode(response.data);
           console.log('decodedToken', decodedToken);
           const menu: TreeNode[] = this.convertirLinks(decodedToken.links);
+          sessionStorage.setItem(SessionStorageItems.USER, decodedToken.usuario);
           if (menu) {
             sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
           }

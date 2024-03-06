@@ -52,8 +52,8 @@ export class RequestDetailsComponent implements OnInit {
   routeProcessRequest!: string;
   routeSearchRequest!: string;
   routeTab!: string;
-
   requestProcess: FormGroup;
+  enableAssign: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,7 +68,6 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    //this.visibleCharacterization = true;
     let routeIf = localStorage.getItem('route');
     if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
       this.routeTab = routeIf;
@@ -82,7 +81,9 @@ export class RequestDetailsComponent implements OnInit {
     this.getRequestDetails(this.request_id);
     this.getRequestHistoric(this.request_id);
   }
-
+  test() {
+    this.visibleCharacterization = true;
+  }
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
@@ -106,7 +107,7 @@ export class RequestDetailsComponent implements OnInit {
       };
     });
   }
-  preprocessAttachmentsAssigned(assignedAttachments: string[]) {
+  /*preprocessAttachmentsAssigned(assignedAttachments: string[]) {
     const newData = JSON.parse(JSON.stringify(assignedAttachments));
     assignedAttachments.forEach((attachmentUrl, index) => {
       const parts: string[] = attachmentUrl.split('/');
@@ -124,6 +125,29 @@ export class RequestDetailsComponent implements OnInit {
         fileExt: fileExt,
       };
     });
+  }*/
+  preprocessAttachmentsAssigned(assignedAttachments: string[]) {
+    if (assignedAttachments && Array.isArray(assignedAttachments)) {
+      assignedAttachments.forEach((attachmentUrl: string, index: number) => {
+        const parts: string[] = attachmentUrl.split('/');
+        const filename: string = parts[parts.length - 1];
+        const filenameParts: string[] = filename.split('@');
+        const fileSize: string = filenameParts[filenameParts.length - 1];
+        const fileNameWithoutSize: string = filenameParts.slice(0, -1).join('@');
+        const lastDotIndex: number = fileNameWithoutSize.lastIndexOf('.');
+        const fileName: string = fileNameWithoutSize.slice(0, lastDotIndex);
+        const fileExt: string = fileNameWithoutSize.slice(lastDotIndex + 1);
+        this.AssignedAttach[index] = {
+          url: attachmentUrl.split('@')[0],
+          fileName: fileNameWithoutSize,
+          fileSize: fileSize,
+          fileExt: fileExt,
+        };
+      });
+    } else {
+      console.log('no entro');
+      // Manejo de caso en el que assignedAttachments.difference no es un array o no está definido
+    }
   }
   getRequestDetails(request_id: number) {
     this.userService.getRequestDetails(request_id).subscribe({
@@ -174,9 +198,11 @@ export class RequestDetailsComponent implements OnInit {
     if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
+      request_details.request_status = 2;
     } else {
       this.message = 'Reasignar responsable al requerimiento';
       this.buttonmsg = 'Reasignar';
+      request_details.request_status = 3;
     }
     this.visibleDialogInput = true;
     this.parameter = ['Usuario'];
@@ -191,6 +217,7 @@ export class RequestDetailsComponent implements OnInit {
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
+    this.enableAssign = value;
     if (value) {
       // accion de eliminar
     }
@@ -202,7 +229,7 @@ export class RequestDetailsComponent implements OnInit {
     this.visibleCharacterization = false;
   }
   setParameter(inputValue: string) {
-    if (!this.request_details) return;
+    if (!this.request_details || !this.enableAssign) return;
     if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
       this.informative = true;
@@ -303,7 +330,7 @@ export class RequestDetailsComponent implements OnInit {
     this.fileNameList.splice(index, 1);
   }
 
-  submitAnswer() {
+  submitAnswer(request_details: RequestsDetails) {
     let payload!: answerRequest;
     if (this.requestDetails) {
       payload = {
@@ -325,13 +352,13 @@ export class RequestDetailsComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
+        this.request_details = request_details;
+        this.requestProcess.reset();
+        this.fileNameList = [];
         this.visibleCharacterization = true;
         console.log('La suscripción ha sido completada.');
       },
     });
-    this.requestProcess.reset();
-    this.fileNameList = [];
-    this.visibleCharacterization = true;
   }
   setParameterCharacterization(payload: CharacterizationCreate) {
     this.userService.characterizeRequest(payload).subscribe({
