@@ -13,11 +13,9 @@ import {
   CategoryList,
   CharacterizationCreate,
   ModalityList,
-  NotificationActionList,
-  NotificationList,
-  NotificationReceiversList,
   QualityDimensionList,
   RequestTypeList,
+  RequestsDetails,
   TipologiesCauses,
 } from '../../../models/users.interface';
 import { Users } from '../../../services/users.service';
@@ -36,7 +34,7 @@ export class ModalCharacterizationComponent implements OnInit {
   @Input() buttonmsg = '';
   @Input() visible: boolean = false;
   @Input() read_only: boolean = false;
-  @Input() request_id?: number;
+  @Input() request_details?: RequestsDetails;
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CharacterizationCreate>();
   inputValue: string[] = [''];
@@ -73,6 +71,9 @@ export class ModalCharacterizationComponent implements OnInit {
     this.getApplicantTypesList();
     this.getQualityDimensionsTable();
     this.getModalityTable();
+    this.formGroup.get('applicant_type_id')?.setValue(this.request_details?.applicant_type_id);
+    this.getRequestsTypeByApplicantType(this.request_details!.applicant_type_id);
+    this.formGroup.get('request_type_id')?.setValue(this.request_details?.request_type_id);
   }
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
@@ -103,8 +104,8 @@ export class ModalCharacterizationComponent implements OnInit {
     this.getRequestsTypeByApplicantType(this.formGroup.get('applicant_type_id')?.value);
   }
 
-  getRequestsTypeByApplicantType(request_type_id: number) {
-    this.userService.getRequestsTypeByApplicantType(request_type_id).subscribe({
+  getRequestsTypeByApplicantType(applicant_type_id: number) {
+    this.userService.getRequestsTypeByApplicantType(applicant_type_id).subscribe({
       next: (response: BodyResponse<RequestTypeList[]>) => {
         if (response.code === 200) {
           this.requestTypeList = response.data.filter(obj => obj.is_active !== 0);

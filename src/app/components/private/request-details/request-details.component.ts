@@ -81,7 +81,9 @@ export class RequestDetailsComponent implements OnInit {
     this.getRequestDetails(this.request_id);
     this.getRequestHistoric(this.request_id);
   }
-
+  test() {
+    this.visibleCharacterization = true;
+  }
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
   }
@@ -306,7 +308,7 @@ export class RequestDetailsComponent implements OnInit {
     this.fileNameList.splice(index, 1);
   }
 
-  submitAnswer() {
+  submitAnswer(request_details: RequestsDetails) {
     let payload!: answerRequest;
     if (this.requestDetails) {
       payload = {
@@ -328,6 +330,7 @@ export class RequestDetailsComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
+        this.request_details = request_details;
         this.requestProcess.reset();
         this.fileNameList = [];
         this.visibleCharacterization = true;

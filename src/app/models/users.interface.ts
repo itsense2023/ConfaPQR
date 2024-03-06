@@ -40,7 +40,9 @@ export interface RequestsDetails {
   status_name: string;
   request_status?: number;
   applicant_type_name: string;
+  applicant_type_id: number;
   request_type_name: string;
+  request_type_id: number;
   catalog_item_name: string;
   doc_id: string;
   applicant_name: string;

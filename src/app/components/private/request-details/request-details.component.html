@@ -315,7 +315,7 @@
             <p-button
               label="Enviar respuesta"
               [disabled]="requestProcess.invalid"
-              (click)="submitAnswer()"
+              (click)="submitAnswer(requestDetails)"
               [style]="{ 'border-radius': '10px' }"></p-button>
           </div>
         </div>
@@ -364,6 +364,7 @@
       </p-tabPanel>
     </p-tabView>
   </div>
+  <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'" (click)="test()"></p-button>
 }
 <p-toast></p-toast>
 
@@ -398,6 +399,6 @@
   [select]="true"
   [visible]="visibleCharacterization"
   [message]="message"
-  [request_id]="request_id"
+  [request_details]="request_details"
   (setRta)="closeDialogCharacterization($event)"
   (setRtaParameter)="setParameterCharacterization($event)"></app-modal-characterization>
