@@ -76,11 +76,12 @@
               [showMenu]="true">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
+                  [style]="{ heigth: '30px' }"
                   [options]="aplicantList"
                   (onChange)="filter($event.value)"
                   optionValue="applicant_type_name"
                   optionLabel="applicant_type_name"
-                  placeholder="Any"
+                  placeholder="Seleccione"
                   [showClear]="true">
                 </p-multiSelect>
               </ng-template>
@@ -104,11 +105,12 @@
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
                   [filter]="false"
+                  [style]="{ heigth: '30px' }"
                   [options]="requestTypeList"
                   (onChange)="filter($event.value)"
                   optionValue="request_type_name"
                   optionLabel="request_type_name"
-                  placeholder="Any"
+                  placeholder="Seleccione"
                   [showClear]="true">
                 </p-multiSelect>
               </ng-template>
@@ -123,10 +125,11 @@
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
                   (onChange)="filter($event.value)"
+                  [style]="{ heigth: '30px' }"
                   [filter]="false"
                   [options]="statusOptions"
                   [(ngModel)]="selectedStatusOptions"
-                  placeholder="Any"
+                  placeholder="Seleccione"
                   [showClear]="true">
                 </p-multiSelect>
               </ng-template>
@@ -141,10 +144,11 @@
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
                   (onChange)="filter($event.value)"
+                  [style]="{ heigth: '30px' }"
                   [filter]="false"
                   [options]="daysOption"
                   [(ngModel)]="selectedDaysOptions"
-                  placeholder="Any"
+                  placeholder="Seleccione"
                   [showClear]="true">
                 </p-multiSelect>
               </ng-template>
@@ -164,7 +168,7 @@
                   [options]="userList"
                   optionLabel="user_name"
                   optionValue="user_name"
-                  placeholder="Any"
+                  placeholder="Seleccione"
                   [showClear]="true">
                 </p-multiSelect>
               </ng-template>
