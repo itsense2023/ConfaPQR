@@ -141,7 +141,6 @@ export class SearchRequestComponent implements OnInit {
     this.visibleDialogInput = true;
     this.parameter = ['Colaborador'];
     this.request_details = request_details;
-    console.log(request_details);
   }
 
   closeDialog(value: boolean) {

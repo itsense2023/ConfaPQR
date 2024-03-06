@@ -107,7 +107,7 @@ export class RequestDetailsComponent implements OnInit {
       };
     });
   }
-  preprocessAttachmentsAssigned(assignedAttachments: string[]) {
+  /*preprocessAttachmentsAssigned(assignedAttachments: string[]) {
     const newData = JSON.parse(JSON.stringify(assignedAttachments));
     assignedAttachments.forEach((attachmentUrl, index) => {
       const parts: string[] = attachmentUrl.split('/');
@@ -125,6 +125,29 @@ export class RequestDetailsComponent implements OnInit {
         fileExt: fileExt,
       };
     });
+  }*/
+  preprocessAttachmentsAssigned(assignedAttachments: string[]) {
+    if (assignedAttachments && Array.isArray(assignedAttachments)) {
+      assignedAttachments.forEach((attachmentUrl: string, index: number) => {
+        const parts: string[] = attachmentUrl.split('/');
+        const filename: string = parts[parts.length - 1];
+        const filenameParts: string[] = filename.split('@');
+        const fileSize: string = filenameParts[filenameParts.length - 1];
+        const fileNameWithoutSize: string = filenameParts.slice(0, -1).join('@');
+        const lastDotIndex: number = fileNameWithoutSize.lastIndexOf('.');
+        const fileName: string = fileNameWithoutSize.slice(0, lastDotIndex);
+        const fileExt: string = fileNameWithoutSize.slice(lastDotIndex + 1);
+        this.AssignedAttach[index] = {
+          url: attachmentUrl.split('@')[0],
+          fileName: fileNameWithoutSize,
+          fileSize: fileSize,
+          fileExt: fileExt,
+        };
+      });
+    } else {
+      console.log('no entro');
+      // Manejo de caso en el que assignedAttachments.difference no es un array o no está definido
+    }
   }
   getRequestDetails(request_id: number) {
     this.userService.getRequestDetails(request_id).subscribe({
@@ -216,7 +239,6 @@ export class RequestDetailsComponent implements OnInit {
       this.severity = 'danger';
       return;
     }
-    this.request_details['request_status'] = 2;
     this.request_details['assigned_user'] = inputValue;
     if (inputValue) {
       this.userService.assignUserToRequest(this.request_details).subscribe({

@@ -201,7 +201,7 @@
           <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
             <div class="process-container">
               <p-table
-                [value]="requestHistoricAttach"
+                [value]="AssignedAttach"
                 [scrollable]="true"
                 scrollHeight="400px"
                 [virtualScroll]="true"
@@ -224,22 +224,25 @@
                     <th style="width: 10%"></th>
                   </tr>
                 </ng-template>
-                <ng-template pTemplate="body" let-requestHistoricAttach>
+                <ng-template pTemplate="body" let-AssignedAttach>
                   <tr>
                     <td [ngStyle]="{ 'text-align': 'center' }">
-                      {{ requestHistoricAttach.difference }}
+                      {{ AssignedAttach.fileName }}
                     </td>
                     <td [ngStyle]="{ 'text-align': 'center' }">
-                      {{ requestHistoricAttach.updated_date }}
+                      {{ requestDetails.updated_date }}
                     </td>
                     <td [ngStyle]="{ 'text-align': 'center' }">
-                      {{ requestHistoricAttach.difference[0].split('.')[1] }}
+                      {{ AssignedAttach.fileExt }}
                     </td>
                     <td [ngStyle]="{ 'text-align': 'center' }">
-                      {{ requestHistoricAttach.difference }}
+                      {{ AssignedAttach.fileSize }}
                     </td>
                     <td>
-                      <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'"></p-button>
+                      <p-button
+                        icon="pi pi-download"
+                        [styleClass]="'btn-icon-info'"
+                        (click)="downloadFile(AssignedAttach.url)"></p-button>
                     </td>
                   </tr>
                 </ng-template>
@@ -351,7 +354,7 @@
                 <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_date }}</td>
                 <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_time }}</td>
                 <td [ngStyle]="{ 'text-align': 'center' }">
-                  {{ requestDetails.applicant_name }}
+                  {{ requestHistoric.updated_by }}
                 </td>
                 <td [ngStyle]="{ 'text-align': 'center' }">
                   {{ requestHistoric.assigned_user }}
@@ -364,7 +367,6 @@
       </p-tabPanel>
     </p-tabView>
   </div>
-  <p-button icon="pi pi-download" [styleClass]="'btn-icon-info'" (click)="test()"></p-button>
 }
 <p-toast></p-toast>
 

@@ -8,7 +8,7 @@
     <p-tabPanel header="Mis solicitudes" headerStyleClass="p-tabview-nav-link-process-1">
       <p-table
         #dt
-        [value]="requestList"
+        [value]="requestListByAssigned"
         [scrollable]="true"
         scrollHeight="400px"
         [virtualScroll]="true"
@@ -173,32 +173,35 @@
             </td>
           </tr>
         </ng-template>-->
-        <ng-template pTemplate="body" let-requestList>
+        <ng-template pTemplate="body" let-requestListByAssigned>
           <tr>
-            <td>{{ requestList.filing_number }}</td>
-            <td>{{ requestList.filing_date }}</td>
-            <td>{{ requestList.applicant_type_name }}</td>
-            <td>{{ requestList.doc_id }}</td>
-            <td>{{ requestList.applicant_name }}</td>
-            <td>{{ requestList.request_type_name }}</td>
-            <td>{{ requestList.status_name }}</td>
+            <td>{{ requestListByAssigned.filing_number }}</td>
+            <td>{{ requestListByAssigned.filing_date }}</td>
+            <td>{{ requestListByAssigned.applicant_type_name }}</td>
+            <td>{{ requestListByAssigned.doc_id }}</td>
+            <td>{{ requestListByAssigned.applicant_name }}</td>
+            <td>{{ requestListByAssigned.request_type_name }}</td>
+            <td>{{ requestListByAssigned.status_name }}</td>
             <td>
               <span
                 class="circle"
-                style="--circle-color: var(--color-{{ requestList.request_days }});"></span>
-              {{ requestList.request_days }} día(s) hábiles
+                style="--circle-color: var(--color-{{
+                  requestListByAssigned.request_days
+                }});"></span>
+              {{ requestListByAssigned.request_days }} día(s) hábiles
             </td>
-            <td>{{ requestList.assigned_user }}</td>
+            <td>{{ requestListByAssigned.assigned_user }}</td>
             <td>
               <p-button
                 icon="pi pi-eye"
                 [styleClass]="'btn-icon-info'"
-                (click)="redirectDetails(requestList.request_id)"></p-button>
+                (click)="redirectDetails(requestListByAssigned.request_id)"></p-button>
             </td>
             <td>
-              <button class="custom-button" (click)="assignRequest(requestList)">
+              <button class="custom-button" (click)="assignRequest(requestListByAssigned)">
                 {{
-                  requestList.assigned_user === null || requestList.assigned_user === ''
+                  requestListByAssigned.assigned_user === null ||
+                  requestListByAssigned.assigned_user === ''
                     ? 'Asignar'
                     : 'Reasignar'
                 }}
@@ -213,7 +216,7 @@
         #dt
         [value]="requestList"
         [scrollable]="true"
-        scrollHeight="600px"
+        scrollHeight="400px"
         [virtualScroll]="true"
         [virtualScrollItemSize]="80"
         selectionMode="single"
