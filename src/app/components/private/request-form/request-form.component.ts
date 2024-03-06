@@ -70,7 +70,7 @@ export class RequestFormComponent implements OnInit {
       {
         document_type: ['', Validators.required],
         number_id: [''],
-        name: ['', [Validators.required, Validators.pattern('^[a-zA-Z ]+$')]],
+        name: ['', [Validators.required, Validators.pattern('^[^@#$%&]+$')]],
         cellphone: ['', [Validators.required, Validators.pattern('^[0-9]+$')]],
         email: [
           '',

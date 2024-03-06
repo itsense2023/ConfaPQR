@@ -68,7 +68,6 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visibleCharacterization = true;
     let routeIf = localStorage.getItem('route');
     if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
       this.routeTab = routeIf;
@@ -304,13 +303,12 @@ export class RequestDetailsComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
+        this.requestProcess.reset();
+        this.fileNameList = [];
         this.visibleCharacterization = true;
         console.log('La suscripción ha sido completada.');
       },
     });
-    this.requestProcess.reset();
-    this.fileNameList = [];
-    this.visibleCharacterization = true;
   }
   setParameterCharacterization(payload: CharacterizationCreate) {
     this.userService.characterizeRequest(payload).subscribe({
