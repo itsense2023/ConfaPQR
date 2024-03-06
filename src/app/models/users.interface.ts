@@ -53,6 +53,8 @@ export interface RequestsDetails {
   applicant_attachments: string[];
   assigned_attachments: string[];
   form_id: number;
+  updated_by?: string;
+  updated_date?: string;
 }
 
 export interface RequestHistoric {

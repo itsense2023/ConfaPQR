@@ -1,11 +1,10 @@
-import { Component, ElementRef, HostListener, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import {
   ApplicantAttach,
   ApplicantAttachments,
-  AssignUserRequest,
   CharacterizationCreate,
   RequestHistoric,
   RequestsDetails,
@@ -43,6 +42,7 @@ export class RequestDetailsComponent implements OnInit {
   request_id: number = 0;
   tabWidth!: number;
   ApplicantAttach: ApplicantAttach[] = [];
+  AssignedAttach: ApplicantAttach[] = [];
   informative: boolean = false;
   severity = '';
   errorExtensionFile!: boolean;
@@ -68,7 +68,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.visibleCharacterization = true;
+    //this.visibleCharacterization = true;
     let routeIf = localStorage.getItem('route');
     if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
       this.routeTab = routeIf;
@@ -106,12 +106,32 @@ export class RequestDetailsComponent implements OnInit {
       };
     });
   }
+  preprocessAttachmentsAssigned(assignedAttachments: string[]) {
+    const newData = JSON.parse(JSON.stringify(assignedAttachments));
+    assignedAttachments.forEach((attachmentUrl, index) => {
+      const parts: string[] = attachmentUrl.split('/');
+      const filename: string = parts[parts.length - 1];
+      const filenameParts: string[] = filename.split('@');
+      const fileSize: string = filenameParts[filenameParts.length - 1];
+      const fileNameWithoutSize: string = filenameParts.slice(0, -1).join('@');
+      const lastDotIndex: number = fileNameWithoutSize.lastIndexOf('.');
+      const fileName: string = fileNameWithoutSize.slice(0, lastDotIndex);
+      const fileExt: string = fileNameWithoutSize.slice(lastDotIndex + 1);
+      this.AssignedAttach[index] = {
+        url: attachmentUrl.split('@')[0],
+        fileName: fileNameWithoutSize,
+        fileSize: fileSize,
+        fileExt: fileExt,
+      };
+    });
+  }
   getRequestDetails(request_id: number) {
     this.userService.getRequestDetails(request_id).subscribe({
       next: (response: BodyResponse<RequestsDetails>) => {
         if (response.code === 200) {
           this.requestDetails = response.data;
           this.preprocessAttachments(this.requestDetails['applicant_attachments']);
+          this.preprocessAttachmentsAssigned(this.requestDetails['assigned_attachments']);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -133,6 +153,7 @@ export class RequestDetailsComponent implements OnInit {
             item => item.action === 'Archivos adjuntos'
           );
           this.requestHistoric = response.data.filter(item => item.action !== 'Archivos adjuntos');
+          console.log('this.requestHistoricAttach', this.requestHistoricAttach);
           //console.log(this.requestHistoric);
           //console.log(this.requestHistoricAttach);
         } else {
