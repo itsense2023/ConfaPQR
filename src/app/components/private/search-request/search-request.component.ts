@@ -62,6 +62,7 @@ export class SearchRequestComponent implements OnInit {
           this.requestList = response.data;
           this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
           this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
+          //console.log(this.statusOptions);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
