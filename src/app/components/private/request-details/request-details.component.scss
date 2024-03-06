@@ -36,6 +36,12 @@
       color: $color-gray;
       font-size: 20px;
       font-weight: normal;
+
+      &-invalid {
+        color: $color-red;
+        font-size: x-small;
+        margin-left: 5px;
+      }
     }
   }
 
@@ -47,6 +53,7 @@
     &-custom-button {
       display: inline-block;
       position: relative;
+      margin-top: 10px;
     }
 
     &-custom-icon {
@@ -72,7 +79,7 @@
   &-labelUpload {
     display: flex;
     flex-direction: row;
-    margin: 10px 0;
+    margin: 5px 0;
     align-items: baseline;
 
     &-name {

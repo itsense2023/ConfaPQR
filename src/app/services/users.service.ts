@@ -26,6 +26,8 @@ import {
   NotificationReceiversList,
   QualityDimensionList,
   CharacterizationCreate,
+  answerRequest,
+  TipologiesCauses,
 } from '../models/users.interface';
 
 @Injectable({
@@ -378,6 +380,30 @@ export class Users {
       { headers }
     );
   }
+  getTipologiesListByCategory(payload: TipologiesCauses) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<TipologiesCauses[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.TIPOLOGIES_BY_CATEGORY}`,
+      payload,
+      { headers }
+    );
+  }
+  getCausesListByTipology(payload: TipologiesCauses) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<TipologiesCauses[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CAUSES_BY_TIPOLOGY}`,
+      payload,
+      { headers }
+    );
+  }
   getQualityDimensionsList() {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
@@ -495,7 +521,7 @@ export class Users {
       { headers }
     );
   }
-  answerRequest(payload: AssignUserRequest) {
+  answerRequest(payload: answerRequest) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',

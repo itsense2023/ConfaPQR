@@ -59,6 +59,7 @@
           <div class="col-6">
             <label> Modalidad </label>
             <p-dropdown
+              (onChange)="getModality()"
               formControlName="modality_id"
               [options]="modalityList"
               optionLabel="modality_name"
@@ -75,6 +76,12 @@
               optionLabel="category_name"
               optionValue="category_id"
               placeholder="Seleccione"></p-dropdown>
+            <!-- <p-treeSelect
+              class="md:w-20rem w-full"
+              containerStyleClass="w-full"
+              formControlName="selectedNodes"
+              [options]="categoryList"
+              placeholder="Select Item"></p-treeSelect> -->
           </div>
         </div>
       </form>

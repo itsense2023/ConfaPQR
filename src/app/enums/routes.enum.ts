@@ -43,6 +43,8 @@ export enum EndPointRoute {
   CATEGORY_LIST = 'db/categories',
   QUALITY_DIMENSION_LIST = 'db/quality_dimensions',
   CATEGORIES_BY_MODALITY = 'categories/by',
+  TIPOLOGIES_BY_CATEGORY = 'tipologies/by/category',
+  CAUSES_BY_TIPOLOGY = 'cause/by/tipology',
   NOTIFICATION_LIST = 'db/notifications',
   NOTIFICATION_ACTION_LIST = 'db/notification_actions',
   NOTIFICATION_RECEIVER_LIST = 'db/receivers',

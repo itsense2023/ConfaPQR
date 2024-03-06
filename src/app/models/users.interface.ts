@@ -53,6 +53,8 @@ export interface RequestsDetails {
   applicant_attachments: string[];
   assigned_attachments: string[];
   form_id: number;
+  updated_by?: string;
+  updated_date?: string;
 }
 
 export interface RequestHistoric {
@@ -136,6 +138,12 @@ export interface RequestFormList {
   applicant_attachments?: ApplicantAttachments[] | null;
   assigned_attachments?: ApplicantAttachments[] | null;
   form_id?: number;
+}
+export interface answerRequest {
+  request_status: number;
+  request_answer: string;
+  request_id: number;
+  assigned_attachments?: ApplicantAttachments[] | null;
 }
 export interface ApplicantAttachments {
   base64file: string;
@@ -251,4 +259,11 @@ export interface CharacterizationCreate {
   modality_id: number;
   category_id: number;
   month?: string;
+}
+export interface TipologiesCauses {
+  category_name?: string;
+  tipology_name?: string;
+  cause_name?: string;
+  category_id?: number;
+  is_active?: number | boolean;
 }
