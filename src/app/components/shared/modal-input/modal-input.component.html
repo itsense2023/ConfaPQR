@@ -20,7 +20,8 @@
               pInputText
               pKeyFilter="string"
               [placeholder]="parameter[1]"
-              formControlName="inputValue1" />
+              formControlName="inputValue1"
+              class="custom-input" />
             <label class="invalid">
               {{
                 formGroup.get('inputValue1')?.hasError('required') &&
@@ -44,7 +45,8 @@
               cols="30"
               pInputTextarea
               [placeholder]="parameter[3]"
-              formControlName="inputValue2"></textarea>
+              formControlName="inputValue2"
+              class="custom-input"></textarea>
             <label class="invalid">
               {{
                 formGroup.get('inputValue2')?.hasError('required') &&

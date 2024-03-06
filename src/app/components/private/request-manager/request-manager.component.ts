@@ -113,10 +113,10 @@ export class RequestManagerComponent implements OnInit {
     }
     return testData;
   };
-
   closeDialog(value: boolean) {
+    console.log(value);
     this.visibleDialog = false;
-    if (this.informative) {
+    if (this.informative || !value) {
       return;
     } else if (this.enableDelete) {
       this.userService.invisibleUser(this.user_details).subscribe({

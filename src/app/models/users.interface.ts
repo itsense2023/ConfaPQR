@@ -38,6 +38,7 @@ export interface RequestsDetails {
   filing_date: string;
   filing_time: string;
   status_name: string;
+  request_status?: number;
   applicant_type_name: string;
   request_type_name: string;
   catalog_item_name: string;

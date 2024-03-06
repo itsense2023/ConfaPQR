@@ -52,8 +52,8 @@ export class RequestDetailsComponent implements OnInit {
   routeProcessRequest!: string;
   routeSearchRequest!: string;
   routeTab!: string;
-
   requestProcess: FormGroup;
+  enableAssign: boolean = false;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -174,9 +174,11 @@ export class RequestDetailsComponent implements OnInit {
     if (request_details.assigned_user == null || request_details.assigned_user == '') {
       this.message = 'Asignar responsable al requerimiento';
       this.buttonmsg = 'Asignar';
+      request_details.request_status = 2;
     } else {
       this.message = 'Reasignar responsable al requerimiento';
       this.buttonmsg = 'Reasignar';
+      request_details.request_status = 3;
     }
     this.visibleDialogInput = true;
     this.parameter = ['Usuario'];
@@ -191,6 +193,7 @@ export class RequestDetailsComponent implements OnInit {
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
+    this.enableAssign = value;
     if (value) {
       // accion de eliminar
     }
@@ -202,7 +205,7 @@ export class RequestDetailsComponent implements OnInit {
     this.visibleCharacterization = false;
   }
   setParameter(inputValue: string) {
-    if (!this.request_details) return;
+    if (!this.request_details || !this.enableAssign) return;
     if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
       this.informative = true;
@@ -212,6 +215,7 @@ export class RequestDetailsComponent implements OnInit {
       this.severity = 'danger';
       return;
     }
+    this.request_details['request_status'] = 2;
     this.request_details['assigned_user'] = inputValue;
     if (inputValue) {
       this.userService.assignUserToRequest(this.request_details).subscribe({

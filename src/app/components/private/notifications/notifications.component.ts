@@ -172,6 +172,8 @@ export class NotificationsComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
+    } else {
+      this.ngOnInit();
     }
   }
 }

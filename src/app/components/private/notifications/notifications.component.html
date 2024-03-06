@@ -26,10 +26,10 @@
           <th pSortableColumn="category_id" style="width: 3%">
             Código<p-sortIcon field="category_id"></p-sortIcon>
           </th>
-          <th style="width: 15%">Nombre</th>
-          <th style="width: 20%">Mensaje</th>
-          <th style="width: 20%">Destinatarios</th>
-          <th style="width: 20%">Tipo de destinatario</th>
+          <th style="width: 10%">Nombre</th>
+          <th style="width: 40%">Mensaje</th>
+          <th style="width: 10%">Destinatarios</th>
+          <th style="width: 10%">Tipo de destinatario</th>
           <th style="width: 16%">Estado</th>
           <th style="width: 3%"></th>
           <th style="width: 3%"></th>
@@ -38,14 +38,14 @@
       <ng-template pTemplate="body" let-notificationList>
         <tr>
           <td [ngStyle]="{ 'text-align': 'center' }">{{ notificationList.notification_id }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ notificationList.notification_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">
+          <td>{{ notificationList.notification_name }}</td>
+          <td>
             {{ notificationList.notification_message }}
           </td>
-          <td [ngStyle]="{ 'text-align': 'center' }">
+          <td>
             {{ notificationList.notification_receiver }}
           </td>
-          <td [ngStyle]="{ 'text-align': 'center' }">
+          <td>
             {{ notificationList.receiver_type_name }}
           </td>
           <td class="d-flex">

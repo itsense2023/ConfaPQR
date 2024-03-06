@@ -29,7 +29,7 @@
           <th style="width: 35%">Modalidad</th>
           <th style="width: 15%">Estado</th>
           <th style="width: 10%"></th>
-          <th style="width: 10%"></th>
+          <!--<th style="width: 10%"></th>-->
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-modalityList>
@@ -52,12 +52,12 @@
               [styleClass]="'btn-icon-warning'"
               (click)="editModality(modalityList)"></p-button>
           </td>
-          <td [ngStyle]="{ 'text-align': 'center' }">
+          <!--<td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-eye"
               [styleClass]="'btn-icon-info'"
               (click)="displayModality(modalityList)"></p-button>
-          </td>
+          </td>-->
         </tr>
       </ng-template>
     </p-table>
