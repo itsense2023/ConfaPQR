@@ -1,7 +1,7 @@
 <p-card [style]="{ margin: '10px 50px 100px 50px' }">
   <div class="card-header-container">
     <h3 class="card_title">
-      {{ applicantType.applicant_type_id === 1 ? 'Empresa' : 'Demas Solicitudes' }}
+      {{ applicantType.applicant_type_id === 1 ? 'Empresa' : 'Demás Solicitudes' }}
     </h3>
   </div>
   <p-card class="card-form">
@@ -25,6 +25,7 @@
             class="card-form-input-select"
             placeholder="*Tipo de documento"
             [options]="optionsCompany"
+            [(ngModel)]="value"
             optionLabel="catalog_item_name"></p-dropdown>
           <p-dropdown
             *ngIf="applicantType.applicant_type_id !== 1"
@@ -169,6 +170,7 @@
           formControlName="mensage"
           [style]="{ 'border-radius': '20px' }"
           type="text"
+          class="custom-input"
           placeholder="*Descripción detallada de la solicitud"
           pInputTextarea>
         </textarea>
@@ -184,7 +186,7 @@
         >
       </div>
     </form>
-    <div class="card-buttonUp" [style]="{ width: '40rem', margin: '0 auto' }">
+    <div class="card-buttonUp" [style]="{ width: '40rem', margin: '10px auto' }">
       <label class="card-buttonUp-placeholder">Adjuntar archivo*</label>
       <div class="card-buttonUp-custom-button">
         <input

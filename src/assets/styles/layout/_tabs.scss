@@ -1,7 +1,7 @@
 @import '../abstracts/variables';
 
 .p-tabview .p-tabview-nav {
-  background-color: $color-white;
+  background-color: transparent;
   margin: 35px 0;
   display: flex;
   border: none;
@@ -146,7 +146,7 @@
 }
 
 .p-tabview .p-tabview-panels {
-  padding: 0;
+  padding: 26px 10px;
   max-width: 100%;
 
   border-top: none;
@@ -155,8 +155,8 @@
 }
 
 .p-tabview .p-tabview-nav-content {
-  margin-bottom: -18px;
-  height: 80px;
+  //margin-bottom: -18px;
+  height: 74px;
   width: 600px;
 
 }

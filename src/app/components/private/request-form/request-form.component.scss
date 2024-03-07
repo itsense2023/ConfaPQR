@@ -1,5 +1,13 @@
 @import '../../../../assets/styles/abstracts/variables.scss';
 
+.custom-input {
+  font-size: small;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  color: #66798d;
+  /* Agrega cualquier otro estilo necesario */
+}
+
 .card {
   &-header-container {
     border-bottom: 2px solid $color-white-smoke;
