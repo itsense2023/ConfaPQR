@@ -10,6 +10,7 @@ import {
 } from '../../../models/users.interface';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { MessageService } from 'primeng/api';
+import { Table } from 'primeng/table';
 
 @Component({
   selector: 'app-search-request',
@@ -38,6 +39,7 @@ export class SearchRequestComponent implements OnInit {
   selectedDaysOptions!: number[];
   selectedStatusOptions!: string[];
   enableAssign: boolean = false;
+  loading: boolean = true;
 
   constructor(
     private userService: Users,
@@ -50,6 +52,11 @@ export class SearchRequestComponent implements OnInit {
     this.getApplicantTypeList();
     this.getRequestTypeList();
     this.getUsersList();
+    this.loading = false;
+  }
+
+  clear(table: Table) {
+    table.clear();
   }
 
   showSuccessMessage(state: string, title: string, message: string) {

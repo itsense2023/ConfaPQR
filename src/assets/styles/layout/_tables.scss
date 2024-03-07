@@ -2,13 +2,15 @@
 
 th {
   text-align: center;
-  // background-color: $color-jelly-bean-blue; 
+  background-color: $color-white-smoke;
   color: $color-gray;
   font-weight: 400;
   font-size: 12px;
   font-family: $font-medium;
-  border-left: 1px solid #f8f8f8;
-  border-right: 1px solid #f8f8f8;
+  width: 200px;
+
+  border-left: 1px solid $color-white-smoke;
+  border-right: 1px solid $color-white-smoke;
 
 }
 
@@ -19,11 +21,12 @@ td {
 }
 
 tr {
-  border-bottom: 1px solid $color-cultured;
+  border-bottom: 1px solid $color-white-smoke;
 }
 
 thead {
   padding: 10px 20px !important;
+  border-top-left-radius: 20px
 }
 
 .action-right {
