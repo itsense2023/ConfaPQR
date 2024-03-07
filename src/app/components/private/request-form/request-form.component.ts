@@ -47,6 +47,7 @@ export class RequestFormComponent implements OnInit {
       regex: '^[0-9]{0,9}$',
     },
   ];
+  value!: {};
 
   ngOnInit(): void {
     let applicant = localStorage.getItem('applicant-type');
@@ -66,6 +67,11 @@ export class RequestFormComponent implements OnInit {
     private messageService: MessageService,
     private router: Router
   ) {
+    this.value = {
+      catalog_item_id: 1,
+      catalog_item_name: 'NIT',
+      regex: '^[0-9]{0,9}$',
+    };
     this.requestForm = this.formBuilder.group(
       {
         document_type: ['', Validators.required],

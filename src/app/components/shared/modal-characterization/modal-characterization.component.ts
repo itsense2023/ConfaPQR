@@ -1,4 +1,5 @@
 import {
+  AfterContentChecked,
   Component,
   EventEmitter,
   Input,
@@ -27,7 +28,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './modal-characterization.component.html',
   styleUrl: './modal-characterization.component.scss',
 })
-export class ModalCharacterizationComponent implements OnInit {
+export class ModalCharacterizationComponent implements OnInit, AfterContentChecked {
   @Input() login = false;
   @Input() select = false;
   @Input() message = '';
@@ -74,6 +75,9 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('applicant_type_id')?.setValue(this.request_details?.applicant_type_id);
     this.getRequestsTypeByApplicantType(this.request_details!.applicant_type_id);
     this.formGroup.get('request_type_id')?.setValue(this.request_details?.request_type_id);
+  }
+  ngAfterContentChecked(): void {
+    this.enableQualityandModality();
   }
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
@@ -128,6 +132,8 @@ export class ModalCharacterizationComponent implements OnInit {
       this.formGroup.get('modality_id')?.addValidators(Validators.required);
     } else {
       this.modalBoolean = false;
+      this.formGroup.get('quality_dimension_id')?.clearValidators;
+      this.formGroup.get('modality_id')?.clearValidators;
     }
   }
 
