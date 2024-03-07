@@ -80,14 +80,15 @@
             field="applicant_type_name"
             matchMode="in"
             [showMenu]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <ng-template pTemplate="filter" let-applicant_type_name let-filter="filterCallback">
               <p-multiSelect
                 [style]="{ heigth: '30px' }"
                 [options]="aplicantList"
                 (onChange)="filter($event.value)"
-                optionValue="applicant_type_name"
+                [ngModel]="applicant_type_name"
                 optionLabel="applicant_type_name"
-                placeholder="any">
+                optionValue="applicant_type_name"
+                placeholder="Seleccione">
                 <ng-template let-option pTemplate="item">
                   <div class="inline-block vertical-align-middle">
                     <span class="ml-1 mt-1">{{ option.applicant_type_name }}</span>
@@ -109,12 +110,13 @@
             [showMenu]="false"
             field="request_type_name"
             matchMode="in">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <ng-template pTemplate="filter" let-request_type_name let-filter="filterCallback">
               <p-multiSelect
                 [style]="{ heigth: '30px' }"
                 [options]="requestTypeList"
                 (onChange)="filter($event.value)"
                 optionValue="request_type_name"
+                [ngModel]="request_type_name"
                 optionLabel="request_type_name"
                 placeholder="Seleccione">
               </p-multiSelect>
@@ -127,7 +129,7 @@
             field="status_name"
             matchMode="in"
             [showMenu]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <ng-template pTemplate="filter" let-selectedStatusOptions let-filter="filterCallback">
               <p-multiSelect
                 (onChange)="filter($event.value)"
                 [style]="{ heigth: '30px' }"
@@ -145,7 +147,7 @@
             field="request_days"
             matchMode="in"
             [showMenu]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <ng-template pTemplate="filter" let-selectedDaysOptions let-filter="filterCallback">
               <p-multiSelect
                 (onChange)="filter($event.value)"
                 [style]="{ heigth: '30px' }"
@@ -163,11 +165,12 @@
             field="assigned_user"
             matchMode="in"
             [showMenu]="false">
-            <ng-template pTemplate="filter" let-value let-filter="filterCallback">
+            <ng-template pTemplate="filter" let-user_name let-filter="filterCallback">
               <p-multiSelect
                 (onChange)="filter($event.value)"
                 [style]="{ heigth: '30px' }"
                 [options]="userList"
+                [ngModel]="user_name"
                 optionLabel="user_name"
                 optionValue="user_name"
                 placeholder="Seleccione"
