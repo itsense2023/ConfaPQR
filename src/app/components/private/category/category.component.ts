@@ -178,6 +178,8 @@ export class CategoryComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
+    } else {
+      this.ngOnInit();
     }
   }
 }

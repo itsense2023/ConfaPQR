@@ -152,6 +152,7 @@ export class SearchRequestComponent implements OnInit {
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
+    this.enableAssign = value;
     if (value) {
       // accion de eliminar
     }
@@ -161,6 +162,7 @@ export class SearchRequestComponent implements OnInit {
     this.enableAssign = value;
   }
   setParameter(inputValue: string) {
+    console.log(this.enableAssign);
     if (!this.enableAssign) return;
     if (this.request_details['assigned_user'] == inputValue) {
       this.visibleDialogAlert = true;
@@ -173,6 +175,7 @@ export class SearchRequestComponent implements OnInit {
     }
     this.request_details['assigned_user'] = inputValue;
     if (inputValue) {
+      console.log('entro');
       this.userService.assignUserToRequest(this.request_details).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
