@@ -10,6 +10,7 @@
 .container-button {
   display: flex;
   justify-content: flex-end;
+  margin-top: 10px;
   /* Align items to the end of the container */
 }
 
@@ -144,10 +145,11 @@
     }
 
     &-col {
-      width: 150px;
+      width: 200px;
       margin: 0 40px;
 
     }
+
 
     &-col-description {
       width: auto;
@@ -207,6 +209,14 @@
     &-col {
       width: 200px;
       margin: 0 41px;
+
+    }
+
+
+
+    &-col-description {
+      width: auto;
+      margin: 0 40px;
 
     }
   }

@@ -170,6 +170,7 @@ export class RequestFormComponent implements OnInit {
 
   clearFileInput(index: number) {
     this.fileNameList.splice(index, 1);
+    this.arrayApplicantAttachment.splice(index, 1);
   }
 
   isValidExtension(file: File): boolean {
