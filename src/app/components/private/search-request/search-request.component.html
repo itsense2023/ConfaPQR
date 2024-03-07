@@ -6,10 +6,10 @@
 <div class="row mt-auto">
   <div class="col-12">
     <p-table
-      #dt
+      #dt2
       [value]="requestList"
       [scrollable]="true"
-      scrollHeight="500px"
+      scrollHeight="600px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="80"
       selectionMode="single"
@@ -72,13 +72,17 @@
             <p-columnFilter
               style="width: 100px"
               field="applicant_type_name"
-              matchMode="in"
-              [showMenu]="false">
+              matchMode="equals"
+              [showMenu]="true">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
-                  [filter]="false"
+                  [style]="{ heigth: '30px' }"
                   [options]="aplicantList"
-                  optionLabel="applicant_type_name">
+                  (onChange)="filter($event.value)"
+                  optionValue="applicant_type_name"
+                  optionLabel="applicant_type_name"
+                  placeholder="Seleccione"
+                  [showClear]="true">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
@@ -96,13 +100,18 @@
             <p-columnFilter
               style="width: 100px"
               field="request_type_name"
-              matchMode="in"
+              matchMode="equals"
               [showMenu]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
                   [filter]="false"
+                  [style]="{ heigth: '30px' }"
                   [options]="requestTypeList"
-                  optionLabel="request_type_name">
+                  (onChange)="filter($event.value)"
+                  optionValue="request_type_name"
+                  optionLabel="request_type_name"
+                  placeholder="Seleccione"
+                  [showClear]="true">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
@@ -111,13 +120,17 @@
             <p-columnFilter
               style="width: 100px"
               field="status_name"
-              matchMode="in"
+              matchMode="equals"
               [showMenu]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
+                  (onChange)="filter($event.value)"
+                  [style]="{ heigth: '30px' }"
                   [filter]="false"
                   [options]="statusOptions"
-                  [(ngModel)]="selectedStatusOptions">
+                  [(ngModel)]="selectedStatusOptions"
+                  placeholder="Seleccione"
+                  [showClear]="true">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
@@ -126,13 +139,17 @@
             <p-columnFilter
               style="width: 100px"
               field="request_days"
-              matchMode="in"
+              matchMode="equals"
               [showMenu]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
+                  (onChange)="filter($event.value)"
+                  [style]="{ heigth: '30px' }"
                   [filter]="false"
                   [options]="daysOption"
-                  [(ngModel)]="selectedDaysOptions">
+                  [(ngModel)]="selectedDaysOptions"
+                  placeholder="Seleccione"
+                  [showClear]="true">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
@@ -141,37 +158,24 @@
             <p-columnFilter
               style="width: 100px"
               field="assigned_user"
-              matchMode="in"
+              matchMode="equals"
               [showMenu]="false">
               <ng-template pTemplate="filter" let-value let-filter="filterCallback">
                 <p-multiSelect
+                  (onChange)="filter($event.value)"
                   [filter]="false"
                   [style]="{ heigth: '30px' }"
                   [options]="userList"
-                  optionLabel="user_name">
+                  optionLabel="user_name"
+                  optionValue="user_name"
+                  placeholder="Seleccione"
+                  [showClear]="true">
                 </p-multiSelect>
               </ng-template>
             </p-columnFilter>
           </th>
         </tr>
       </ng-template>
-      <!--<ng-template pTemplate="body" let-requestList let-columns="columns">
-        <tr [pSelectableRow]="requestList">
-          <td *ngFor="let col of columns">
-            {{ requestList[col.field] }}
-          </td>
-      <ng-template pTemplate="body" let-requestList let-columns="columns">
-        <tr [pSelectableRow]="requestList">
-          <td>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
-          </td>
-          <td>
-            <p-button
-              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
-              (click)="assignRequest(requestList)"></p-button>
-          </td>
-        </tr>
-      </ng-template>-->
       <ng-template pTemplate="body" let-requestList>
         <tr>
           <td>{{ requestList.filing_number }}</td>
