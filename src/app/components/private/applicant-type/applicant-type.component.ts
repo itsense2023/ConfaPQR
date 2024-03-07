@@ -126,6 +126,8 @@ export class ApplicantTypeComponent implements OnInit {
           console.log('La suscripción ha sido completada.');
         },
       });
+    } else {
+      this.ngOnInit();
     }
   }
   closeDialogInput(value: boolean) {
