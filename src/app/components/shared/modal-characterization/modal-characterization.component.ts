@@ -41,6 +41,7 @@ export class ModalCharacterizationComponent implements OnInit {
   CauseList: TipologiesCauses[] = [];
   modalBoolean!: boolean;
   categoryBoolean!: boolean;
+  causeBoolean!: boolean;
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
   constructor(
@@ -71,12 +72,11 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('modality_id')?.valueChanges.subscribe(value => {
       if (value === 2) {
         this.enableConditionalCategoryandTipology();
+        this.enableConditionalCause();
       } else {
         this.disableConditionalCategoryandTipology();
+        this.disableConditionalCause();
       }
-    });
-    this.formGroup.get('category_id')?.valueChanges.subscribe(value => {
-      this.formGroup.get('cause_id')?.setValue(null);
     });
   }
 
@@ -122,6 +122,18 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('tipology_id')?.updateValueAndValidity();
     this.formGroup.get('cause_id')?.setValidators(Validators.required);
     this.categoryBoolean = true;
+  }
+
+  disableConditionalCause() {
+    this.formGroup.get('cause_id')?.clearValidators();
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.causeBoolean = false;
+  }
+
+  enableConditionalCause() {
+    this.formGroup.get('cause_id')?.clearValidators();
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.causeBoolean = true;
   }
 
   showDialog() {

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
@@ -53,10 +53,6 @@ export class SearchRequestComponent implements OnInit {
     this.getRequestTypeList();
     this.getUsersList();
     this.loading = false;
-  }
-
-  clear(table: Table) {
-    table.clear();
   }
 
   showSuccessMessage(state: string, title: string, message: string) {

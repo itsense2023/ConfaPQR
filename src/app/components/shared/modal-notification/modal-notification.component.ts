@@ -7,7 +7,7 @@ import {
   Output,
   SimpleChanges,
 } from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   CategoryList,
   ModalityList,
@@ -39,27 +39,31 @@ export class ModalNotificationComponent implements OnInit {
   modalityList!: ModalityList[];
   notificationReceiversList: NotificationReceiversList[] = [];
   recipients: string[] = [];
-  //formGroup: FormGroup;
+  regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$/;
+  msgError!: string;
+  formGroup: FormGroup;
 
   constructor(
     private userService: Users,
     private formBuilder: FormBuilder
   ) {
-    this.formGroup = new FormGroup({
-      notification_id: new FormControl(null),
-      notification_name: new FormControl(null, [
-        Validators.required,
-        Validators.pattern('^[a-zA-Z ]+$'),
-      ]),
-      notification_message: new FormControl(null, [
-        Validators.required,
-        Validators.pattern('^[^#$%&]+$'),
-      ]),
-      action_id: new FormControl(null, Validators.required),
-      notification_receiver_id: new FormControl(null),
-      notification_receiver: new FormControl(null, [
-        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
-      ]),
+    this.formGroup = this.formBuilder.group({
+      notification_id: [null],
+      notification_name: [
+        null,
+        [
+          Validators.required,
+          // eslint-disable-next-line prettier/prettier
+      Validators.pattern('^[^0-9@#$%&]*$'),
+        ],
+      ],
+      notification_message: [null, [Validators.required, Validators.pattern('^[^#$%&]+$')]],
+      action_id: [null, Validators.required],
+      notification_receiver_id: [null],
+      notification_receiver: [
+        null,
+        [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$')],
+      ],
     });
   }
 
@@ -78,14 +82,18 @@ export class ModalNotificationComponent implements OnInit {
     }
   }
 
-  formGroup: FormGroup<any> = new FormGroup<any>({});
+  //formGroup: FormGroup<any> = new FormGroup<any>({});
   showDialog() {
     this.visible = true;
   }
 
   addRecipients() {
-    this.recipients.push(this.formGroup.get('notification_receiver')?.value);
-    this.formGroup.get('notification_receiver')?.setValue('');
+    if (this.regex.test(this.formGroup.get('notification_receiver')?.value)) {
+      this.recipients.push(this.formGroup.get('notification_receiver')?.value);
+      this.formGroup.get('notification_receiver')?.setValue('');
+    } else {
+      this.msgError = 'Ingrese correo valido';
+    }
   }
 
   getNotificationActionsTable() {
@@ -132,6 +140,7 @@ export class ModalNotificationComponent implements OnInit {
 
   closeDialog(value: boolean) {
     this.setRta.emit(value);
+
     //console.log(this.formGroup.value);
     const payload: NotificationList = {
       notification_id: +this.formGroup.controls['notification_id'].value,
@@ -139,7 +148,10 @@ export class ModalNotificationComponent implements OnInit {
       notification_message: this.formGroup.controls['notification_message'].value,
       action_id: this.formGroup.get('action_id')?.value,
       notification_receiver_id: this.formGroup.get('notification_receiver_id')?.value || null,
-      notification_receiver: this.recipients || null,
+      notification_receiver:
+        this.recipients.length > 0
+          ? this.recipients
+          : [this.formGroup.get('notification_receiver')?.value],
     };
     console.log(payload);
     this.setRtaParameter.emit(payload);

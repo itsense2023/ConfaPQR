@@ -5,7 +5,7 @@
 </div>
 <div class="mt-auto">
   <p-table
-    #dt
+    #dt3
     [value]="requestList"
     dataKey="id"
     [rows]="20"
@@ -72,7 +72,12 @@
           <p-columnFilter style="width: 206px" type="text" field="filing_number"></p-columnFilter>
         </th>
         <th>
-          <p-columnFilter style="width: 206px" type="date" field="filing_date"></p-columnFilter>
+          <p-columnFilter
+            style="width: 206px"
+            type="text"
+            matchMode="contains"
+            [showMenu]="false"
+            field="filing_date"></p-columnFilter>
         </th>
         <th>
           <p-columnFilter

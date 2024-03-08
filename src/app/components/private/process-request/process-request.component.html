@@ -8,7 +8,7 @@
     <p-tabView class="p-tabview-nav-process">
       <p-tabPanel header="Mis solicitudes" headerStyleClass="p-tabview-nav-link-process-1">
         <p-table
-          #dt
+          #dt4
           [value]="requestListByAssigned"
           [scrollable]="true"
           scrollHeight="400px"
@@ -22,6 +22,17 @@
           [exportHeader]="'customExportHeader'"
           [paginator]="true"
           [rows]="20"
+          [globalFilterFields]="[
+            'filing_number',
+            'filing_date',
+            'applicant_type_name',
+            'doc_id',
+            'applicant_name',
+            'request_type_name',
+            'status_name',
+            'request_days',
+            'assigned_user'
+          ]"
           [showCurrentPageReport]="true"
           [tableStyle]="{ 'min-width': '50rem' }"
           currentPageReportTemplate="{first} de {totalRecords}"
@@ -67,7 +78,9 @@
               <th>
                 <p-columnFilter
                   style="width: 206px"
-                  type="date"
+                  type="text"
+                  matchMode="contains"
+                  [showMenu]="false"
                   field="filing_date"></p-columnFilter>
               </th>
               <th>
@@ -140,8 +153,7 @@
                       [style]="{ heigth: '30px' }"
                       [options]="statusOptions"
                       [ngModel]="selectedStatusOptions"
-                      placeholder="Seleccione"
-                      [showClear]="true">
+                      placeholder="Seleccione">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
@@ -161,8 +173,7 @@
                       [style]="{ heigth: '30px' }"
                       [options]="daysOption"
                       [ngModel]="selectedDaysOptions"
-                      placeholder="Seleccione"
-                      [showClear]="true">
+                      placeholder="Seleccione">
                     </p-multiSelect>
                   </ng-template>
                 </p-columnFilter>
@@ -261,7 +272,7 @@
               <th>
                 <p-columnFilter
                   style="width: 206px"
-                  type="date"
+                  type="text"
                   field="filing_date"></p-columnFilter>
               </th>
               <th>
