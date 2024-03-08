@@ -7,12 +7,27 @@
   border: none;
 
   &-process {
-    margin: 10px 0;
+    margin: -42px 0;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+
+
   }
 
-  &-search {
-    margin: 35px 0
+  &-tabs {
+    margin: -42px 0;
+    border: none;
+    background-color: transparent;
+    display: flex;
+    flex-direction: column;
+
+    &>.p-tabview.p-component .p-tabview-nav-container .p-tabview-nav-content {
+      margin: 0 auto;
+    }
   }
+
 
   &>.p-tabview.p-component {
     width: 100%;
@@ -160,6 +175,7 @@
 .p-tabview .p-tabview-nav-content {
   //margin-bottom: -18px;
   height: 74px;
+  //margin: 0 auto;
   width: 600px;
 
 }
