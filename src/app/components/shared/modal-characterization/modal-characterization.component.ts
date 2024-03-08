@@ -276,7 +276,7 @@ export class ModalCharacterizationComponent implements OnInit {
       is_pqr: this.formGroup.controls['is_pqr'].value,
       quality_dimension_id: this.formGroup.controls['quality_dimension_id'].value || null,
       modality_id: this.formGroup.controls['modality_id'].value || null,
-      category_id: this.formGroup.get('category_id')?.value.category_id || null,
+      category_id: this.formGroup.get('category_id.category_id')?.value || null,
       month: this.month,
     };
     console.log(payload);
