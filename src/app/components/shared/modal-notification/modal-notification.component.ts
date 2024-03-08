@@ -134,7 +134,7 @@ export class ModalNotificationComponent implements OnInit {
     this.setRta.emit(value);
     //console.log(this.formGroup.value);
     const payload: NotificationList = {
-      //notification_id: +this.formGroup.controls['notification_id'].value,
+      notification_id: +this.formGroup.controls['notification_id'].value,
       notification_name: this.formGroup.controls['notification_name'].value,
       notification_message: this.formGroup.controls['notification_message'].value,
       action_id: this.formGroup.get('action_id')?.value,

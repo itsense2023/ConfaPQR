@@ -72,7 +72,8 @@
               pInputTextarea
               [style]="{ 'font-size': '12px' }"
               placeholder="Escriba nombre"
-              formControlName="notification_message"></textarea>
+              formControlName="notification_message"
+              class="custom-input"></textarea>
             <label class="invalid">
               {{
                 formGroup.get('notification_message')?.hasError('required') &&
