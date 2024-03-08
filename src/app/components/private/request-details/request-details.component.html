@@ -52,6 +52,7 @@
 
   <div class="container-button" *ngIf="!showProcessTab()">
     <p-button
+      *ngIf="requestDetails.status_name !== 'Cerrada'"
       [label]="
         requestDetails.assigned_user === null || requestDetails.assigned_user === ''
           ? 'Asignar'
@@ -146,107 +147,110 @@
         </ul>
       </p-tabPanel>
       <p-tabPanel header="Adjuntos" headerStyleClass="p-tabview-nav-link-2 ">
-        <p-tabView class="p-tabview-nav-search">
-          <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
-            <p-table
-              [value]="ApplicantAttach"
-              [scrollable]="true"
-              scrollHeight="400px"
-              [virtualScroll]="true"
-              [virtualScrollItemSize]="80"
-              selectionMode="single"
-              [paginator]="true"
-              [rows]="5"
-              [showCurrentPageReport]="true"
-              [tableStyle]="{ 'min-width': '52rem' }"
-              currentPageReportTemplate="{first} de {totalRecords}"
-              [rowsPerPageOptions]="[5, 10, 20]">
-              <ng-template pTemplate="header">
-                <tr style="height: 60px">
-                  <th style="width: 30%">Archivo</th>
-                  <th pSortableColumn="updated_date" style="width: 20%">
-                    Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
-                  </th>
-                  <th style="width: 20%">Formato</th>
-                  <th style="width: 20%">Peso</th>
-                  <th style="width: 10%"></th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-ApplicantAttach>
-                <tr>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ ApplicantAttach.fileName }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ requestDetails.filing_date }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ ApplicantAttach.fileExt }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ ApplicantAttach.fileSize }}
-                  </td>
-                  <td>
-                    <p-button
-                      icon="pi pi-download"
-                      [styleClass]="'btn-icon-info'"
-                      (click)="downloadFile(ApplicantAttach.url)"></p-button>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </p-tabPanel>
-          <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
-            <p-table
-              [value]="AssignedAttach"
-              [scrollable]="true"
-              scrollHeight="400px"
-              [virtualScroll]="true"
-              [virtualScrollItemSize]="80"
-              selectionMode="single"
-              [paginator]="true"
-              [rows]="5"
-              [showCurrentPageReport]="true"
-              [tableStyle]="{ 'min-width': '52rem' }"
-              currentPageReportTemplate="{first} de {totalRecords}"
-              [rowsPerPageOptions]="[5, 10, 20]">
-              <ng-template pTemplate="header">
-                <tr style="height: 60px">
-                  <th style="width: 30%">Archivo</th>
-                  <th pSortableColumn="updated_date" style="width: 20%">
-                    Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
-                  </th>
-                  <th style="width: 20%">Formato</th>
-                  <th style="width: 20%">Peso</th>
-                  <th style="width: 10%"></th>
-                </tr>
-              </ng-template>
-              <ng-template pTemplate="body" let-AssignedAttach>
-                <tr>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ AssignedAttach.fileName }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ requestDetails.updated_date }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ AssignedAttach.fileExt }}
-                  </td>
-                  <td [ngStyle]="{ 'text-align': 'center' }">
-                    {{ AssignedAttach.fileSize }}
-                  </td>
-                  <td>
-                    <p-button
-                      icon="pi pi-download"
-                      [styleClass]="'btn-icon-info'"
-                      (click)="downloadFile(AssignedAttach.url)"></p-button>
-                  </td>
-                </tr>
-              </ng-template>
-            </p-table>
-          </p-tabPanel>
-        </p-tabView>
+        <div class="p-tab-view">
+          <p-tabView class="p-tabview-nav-tabs">
+            <p-tabPanel header="Adjunto de solicitante" headerStyleClass="p-tabview-nav-link-sub">
+              <p-table
+                [value]="ApplicantAttach"
+                [scrollable]="true"
+                scrollHeight="400px"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="80"
+                selectionMode="single"
+                [paginator]="true"
+                [rows]="5"
+                [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '52rem' }"
+                currentPageReportTemplate="{first} de {totalRecords}"
+                [rowsPerPageOptions]="[5, 10, 20]">
+                <ng-template pTemplate="header">
+                  <tr style="height: 60px">
+                    <th style="width: 30%">Archivo</th>
+                    <th pSortableColumn="updated_date" style="width: 20%">
+                      Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
+                    </th>
+                    <th style="width: 20%">Formato</th>
+                    <th style="width: 20%">Peso</th>
+                    <th style="width: 10%"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-ApplicantAttach>
+                  <tr>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ ApplicantAttach.fileName }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ requestDetails.filing_date }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ ApplicantAttach.fileExt }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ ApplicantAttach.fileSize }}
+                    </td>
+                    <td>
+                      <p-button
+                        icon="pi pi-download"
+                        [styleClass]="'btn-icon-info'"
+                        (click)="downloadFile(ApplicantAttach.url)"></p-button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </p-tabPanel>
+            <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
+              <p-table
+                [value]="AssignedAttach"
+                [scrollable]="true"
+                scrollHeight="400px"
+                [virtualScroll]="true"
+                [virtualScrollItemSize]="80"
+                selectionMode="single"
+                [paginator]="true"
+                [rows]="5"
+                [showCurrentPageReport]="true"
+                [tableStyle]="{ 'min-width': '52rem' }"
+                currentPageReportTemplate="{first} de {totalRecords}"
+                [rowsPerPageOptions]="[5, 10, 20]">
+                <ng-template pTemplate="header">
+                  <tr style="height: 60px">
+                    <th style="width: 30%">Archivo</th>
+                    <th pSortableColumn="updated_date" style="width: 20%">
+                      Fecha de adjunto<p-sortIcon field="updated_date"></p-sortIcon>
+                    </th>
+                    <th style="width: 20%">Formato</th>
+                    <th style="width: 20%">Peso</th>
+                    <th style="width: 10%"></th>
+                  </tr>
+                </ng-template>
+                <ng-template pTemplate="body" let-AssignedAttach>
+                  <tr>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ AssignedAttach.fileName }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ requestDetails.updated_date }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ AssignedAttach.fileExt }}
+                    </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      {{ AssignedAttach.fileSize }}
+                    </td>
+                    <td>
+                      <p-button
+                        icon="pi pi-download"
+                        [styleClass]="'btn-icon-info'"
+                        (click)="downloadFile(AssignedAttach.url)"></p-button>
+                    </td>
+                  </tr>
+                </ng-template>
+              </p-table>
+            </p-tabPanel>
+          </p-tabView>
+        </div>
       </p-tabPanel>
+
       <p-tabPanel
         *ngIf="showProcessTab()"
         header="Tramitar solicitud"
@@ -320,6 +324,7 @@
           </div>
         </div>
       </p-tabPanel>
+
       <p-tabPanel header="Histórico Gestión" headerStyleClass="p-tabview-nav-link-3">
         <div class="process-container">
           <p-table

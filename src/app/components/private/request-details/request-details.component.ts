@@ -338,6 +338,7 @@ export class RequestDetailsComponent implements OnInit {
 
   clearFileInput(index: number) {
     this.fileNameList.splice(index, 1);
+    this.arrayAssignedAttachment.splice(index, 1);
   }
 
   submitAnswer(request_details: RequestsDetails) {

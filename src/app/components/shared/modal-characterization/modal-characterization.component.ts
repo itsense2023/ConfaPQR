@@ -41,6 +41,7 @@ export class ModalCharacterizationComponent implements OnInit {
   CauseList: TipologiesCauses[] = [];
   modalBoolean!: boolean;
   categoryBoolean!: boolean;
+  causeBoolean!: boolean;
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
   constructor(
@@ -71,8 +72,10 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('modality_id')?.valueChanges.subscribe(value => {
       if (value === 2) {
         this.enableConditionalCategoryandTipology();
+        this.enableConditionalCause();
       } else {
         this.disableConditionalCategoryandTipology();
+        this.disableConditionalCause();
       }
     });
   }
@@ -108,6 +111,7 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('category_id')?.updateValueAndValidity();
     this.formGroup.get('tipology_id')?.clearValidators();
     this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.formGroup.get('cause_id')?.clearValidators();
     this.categoryBoolean = false;
   }
 
@@ -116,7 +120,20 @@ export class ModalCharacterizationComponent implements OnInit {
     this.formGroup.get('category_id')?.updateValueAndValidity();
     this.formGroup.get('tipology_id')?.setValidators(Validators.required);
     this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.formGroup.get('cause_id')?.setValidators(Validators.required);
     this.categoryBoolean = true;
+  }
+
+  disableConditionalCause() {
+    this.formGroup.get('cause_id')?.clearValidators();
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.causeBoolean = false;
+  }
+
+  enableConditionalCause() {
+    this.formGroup.get('cause_id')?.clearValidators();
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.causeBoolean = true;
   }
 
   showDialog() {
@@ -226,7 +243,7 @@ export class ModalCharacterizationComponent implements OnInit {
       next: (response: BodyResponse<TipologiesCauses[]>) => {
         if (response.code === 200) {
           this.TipologyList = response.data;
-          //console.log(this.TipologyList);
+          console.log(this.TipologyList);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -271,7 +288,7 @@ export class ModalCharacterizationComponent implements OnInit {
       is_pqr: this.formGroup.controls['is_pqr'].value,
       quality_dimension_id: this.formGroup.controls['quality_dimension_id'].value || null,
       modality_id: this.formGroup.controls['modality_id'].value || null,
-      category_id: this.formGroup.controls['category_id'].value || null,
+      category_id: this.formGroup.get('category_id.category_id')?.value || null,
       month: this.month,
     };
     console.log(payload);

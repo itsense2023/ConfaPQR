@@ -44,6 +44,7 @@ export class NotificationsComponent implements OnInit {
         if (response.code === 200) {
           console.log(response.data);
           this.notificationList = response.data;
+          console.log(this.notificationList);
           this.notificationList.forEach(item => {
             item.is_active = item.is_active === 1 ? true : false;
           });

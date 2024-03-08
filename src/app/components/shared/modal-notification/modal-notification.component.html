@@ -72,7 +72,8 @@
               pInputTextarea
               [style]="{ 'font-size': '12px' }"
               placeholder="Escriba nombre"
-              formControlName="notification_message"></textarea>
+              formControlName="notification_message"
+              class="custom-input"></textarea>
             <label class="invalid">
               {{
                 formGroup.get('notification_message')?.hasError('required') &&
@@ -91,7 +92,7 @@
             <label> Tipos de destinatarios </label>
             <p-dropdown
               formControlName="notification_receiver_id"
-              [style]="{ height: '35px' }"
+              [style]="{ height: '30px' }"
               [options]="notificationReceiversList"
               optionLabel="receiver_name"
               optionValue="receiver_id"
@@ -112,6 +113,11 @@
                     formGroup.get('notification_receiver')?.hasError('pattern') &&
                     formGroup.get('notification_receiver')?.touched
                       ? 'Ingrese correo electrónico'
+                      : ''
+                  }}{{
+                    formGroup.get('notification_receiver')?.hasError('notInclude') &&
+                    formGroup.get('notification_receiver')?.touched
+                      ? 'Porfavor adicione el correo al listado'
                       : ''
                   }}</label
                 >
