@@ -1,14 +1,5 @@
-import {
-  AfterContentChecked,
-  Component,
-  EventEmitter,
-  Input,
-  OnChanges,
-  OnInit,
-  Output,
-  SimpleChanges,
-} from '@angular/core';
-import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import {
   ApplicantTypeList,
   CategoryList,
@@ -28,7 +19,7 @@ import { MessageService } from 'primeng/api';
   templateUrl: './modal-characterization.component.html',
   styleUrl: './modal-characterization.component.scss',
 })
-export class ModalCharacterizationComponent implements OnInit, AfterContentChecked {
+export class ModalCharacterizationComponent implements OnInit {
   @Input() login = false;
   @Input() select = false;
   @Input() message = '';
@@ -39,8 +30,9 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CharacterizationCreate>();
   inputValue: string[] = [''];
+  month!: number;
   modalityList!: ModalityList[];
-  //formGroup: FormGroup;
+
   applicantTypeList: ApplicantTypeList[] = [];
   requestTypeList: RequestTypeList[] = [];
   categoryList: CategoryList[] = [];
@@ -50,9 +42,9 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
   modalBoolean!: boolean;
   categoryBoolean!: boolean;
 
+  formGroup: FormGroup<any> = new FormGroup<any>({});
   constructor(
     private userService: Users,
-    private formBuilder: FormBuilder,
     private messageService: MessageService
   ) {
     this.formGroup = new FormGroup({
@@ -66,21 +58,67 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
       tipology_id: new FormControl(null),
       cause_id: new FormControl(null),
     });
+    this.disableConditionalModalityandQuality();
+    this.disableConditionalCategoryandTipology();
+
+    this.formGroup.get('is_pqr')?.valueChanges.subscribe(value => {
+      if (value === 1) {
+        this.enableConditionalModalityandQuality();
+      } else {
+        this.disableConditionalModalityandQuality();
+      }
+    });
+    this.formGroup.get('modality_id')?.valueChanges.subscribe(value => {
+      if (value === 2) {
+        this.enableConditionalCategoryandTipology();
+      } else {
+        this.disableConditionalCategoryandTipology();
+      }
+    });
   }
+
   ngOnInit(): void {
-    //console.log(this.read_only);
     this.getApplicantTypesList();
     this.getQualityDimensionsTable();
     this.getModalityTable();
     this.formGroup.get('applicant_type_id')?.setValue(this.request_details?.applicant_type_id);
     this.getRequestsTypeByApplicantType(this.request_details!.applicant_type_id);
     this.formGroup.get('request_type_id')?.setValue(this.request_details?.request_type_id);
-  }
-  ngAfterContentChecked(): void {
-    this.enableQualityandModality();
+    const arrayMonth = this.request_details?.filing_date.split('-').slice(1, 2) || '00';
+    this.month = parseInt(arrayMonth[0], 10);
   }
 
-  formGroup: FormGroup<any> = new FormGroup<any>({});
+  disableConditionalModalityandQuality() {
+    this.formGroup.get('modality_id')?.clearValidators();
+    this.formGroup.get('modality_id')?.updateValueAndValidity();
+    this.formGroup.get('quality_dimesion_id')?.clearValidators();
+    this.formGroup.get('quality_dimesion_id')?.updateValueAndValidity();
+    this.modalBoolean = false;
+  }
+
+  enableConditionalModalityandQuality() {
+    this.formGroup.get('modality_id')?.setValidators(Validators.required);
+    this.formGroup.get('modality_id')?.updateValueAndValidity();
+    this.formGroup.get('quality_dimesion_id')?.setValidators(Validators.required);
+    this.formGroup.get('quality_dimesion_id')?.updateValueAndValidity();
+    this.modalBoolean = true;
+  }
+  disableConditionalCategoryandTipology() {
+    this.formGroup.get('category_id')?.clearValidators();
+    this.formGroup.get('category_id')?.updateValueAndValidity();
+    this.formGroup.get('tipology_id')?.clearValidators();
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.categoryBoolean = false;
+  }
+
+  enableConditionalCategoryandTipology() {
+    this.formGroup.get('category_id')?.setValidators(Validators.required);
+    this.formGroup.get('category_id')?.updateValueAndValidity();
+    this.formGroup.get('tipology_id')?.setValidators(Validators.required);
+    this.formGroup.get('tipology_id')?.updateValueAndValidity();
+    this.categoryBoolean = true;
+  }
+
   showDialog() {
     this.visible = true;
   }
@@ -125,18 +163,6 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
     });
   }
 
-  enableQualityandModality() {
-    if (this.formGroup.get('is_pqr')?.value === 'si') {
-      this.modalBoolean = true;
-      this.formGroup.get('quality_dimension_id')?.addValidators(Validators.required);
-      this.formGroup.get('modality_id')?.addValidators(Validators.required);
-    } else {
-      this.modalBoolean = false;
-      this.formGroup.get('quality_dimension_id')?.clearValidators;
-      this.formGroup.get('modality_id')?.clearValidators;
-    }
-  }
-
   getQualityDimensionsTable() {
     this.userService.getQualityDimensionsList().subscribe({
       next: (response: BodyResponse<QualityDimensionList[]>) => {
@@ -173,25 +199,6 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
     });
   }
 
-  enableCategoryandTipology(): boolean {
-    if (this.formGroup.get('modality_id')?.value === 2) {
-      this.formGroup.get('category_id')?.addValidators(Validators.required);
-      this.formGroup.get('tipology_id')?.addValidators(Validators.required);
-      this.formGroup.get('cause_id')?.addValidators(Validators.required);
-      return true;
-    } else {
-      this.formGroup.get('tipology_id')?.removeValidators;
-      this.formGroup.get('cause_id')?.removeValidators;
-      this.formGroup.get('category_id')?.removeValidators;
-      return false;
-    }
-  }
-
-  getCategory() {
-    console.log(this.formGroup.get('modality_id'));
-    this.getCategoryTableByModality(this.formGroup.get('modality_id')?.value);
-  }
-
   getCategoryTableByModality(modality_id: number) {
     this.userService.getCategoryListByModality(modality_id).subscribe({
       next: (response: BodyResponse<CategoryList[]>) => {
@@ -210,9 +217,7 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
       },
     });
   }
-  getTipology() {
-    this.getTipologiesListByCategory(this.formGroup.get('category_id')?.value.category_name);
-  }
+
   getTipologiesListByCategory(category_name_string: string) {
     const payload: TipologiesCauses = {
       category_name: category_name_string,
@@ -235,10 +240,6 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
     });
   }
 
-  getCauses() {
-    //console.log(this.formGroup.get('tipology_id'), 'causa');
-    this.getCausesListByTipology(this.formGroup.get('tipology_id')?.value);
-  }
   getCausesListByTipology(tipology_name_string: string) {
     const payload: TipologiesCauses = {
       tipology_name: tipology_name_string,
@@ -262,17 +263,18 @@ export class ModalCharacterizationComponent implements OnInit, AfterContentCheck
   }
   closeDialog(value: boolean) {
     this.setRta.emit(value);
-    // console.log(this.formGroup);
+
     const payload: CharacterizationCreate = {
-      request_id: +this.formGroup.controls['request_id'].value,
+      request_id: this.request_details?.request_id || 0,
       applicant_type_id: this.formGroup.controls['applicant_type_id'].value,
       request_type_id: this.formGroup.controls['request_type_id'].value,
       is_pqr: this.formGroup.controls['is_pqr'].value,
-      quality_dimension_id: this.formGroup.controls['quality_dimension_id'].value,
-      modality_id: this.formGroup.controls['modality_id'].value,
-      category_id: this.formGroup.controls['category_id'].value,
+      quality_dimension_id: this.formGroup.controls['quality_dimension_id'].value || null,
+      modality_id: this.formGroup.controls['modality_id'].value || null,
+      category_id: this.formGroup.controls['category_id'].value || null,
+      month: this.month,
     };
-    // console.log(payload);
+    console.log(payload);
     this.setRtaParameter.emit(payload);
     this.visible = false;
   }

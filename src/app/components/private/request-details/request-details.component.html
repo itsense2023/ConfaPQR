@@ -146,7 +146,7 @@
         </ul>
       </p-tabPanel>
       <p-tabPanel header="Adjuntos" headerStyleClass="p-tabview-nav-link-2 ">
-        <p-tabView class="p-tabview">
+        <p-tabView class="p-tabview-nav-search">
           <p-tabPanel header="Adjunto de responsable" headerStyleClass="p-tabview-nav-link-sub">
             <p-table
               [value]="ApplicantAttach"
@@ -264,6 +264,7 @@
                 formControlName="mensage"
                 [style]="{ 'border-radius': '5px' }"
                 type="text"
+                class="custom-input"
                 placeholder="Escribir mensaje"
                 pInputTextarea>
               </textarea>
