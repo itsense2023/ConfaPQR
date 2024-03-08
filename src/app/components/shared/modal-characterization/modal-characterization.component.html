@@ -57,19 +57,11 @@
           <label class="label-select"> ¿La solicitud corresponde a PQR? </label>
           <div class="container-group">
             <div class="container-group-checkbox">
-              <p-radioButton
-                name="is_pqr"
-                value="si"
-                (click)="enableQualityandModality()"
-                formControlName="is_pqr"></p-radioButton>
+              <p-radioButton name="is_pqr" [value]="1" formControlName="is_pqr"></p-radioButton>
               <label class="container-group-label" for="selectYes">Si</label>
             </div>
             <div class="container-group-checkbox">
-              <p-radioButton
-                name="is_pqr"
-                value="no"
-                (click)="enableQualityandModality()"
-                formControlName="is_pqr"></p-radioButton>
+              <p-radioButton name="is_pqr" [value]="2" formControlName="is_pqr"></p-radioButton>
               <label class="container-group-label" for="selectNo">No</label>
             </div>
           </div>
@@ -97,7 +89,7 @@
             <label class="label-select"> Modalidad </label>
             <p-dropdown
               [style]="{ height: '30px', 'align-items': 'center' }"
-              (onChange)="getCategory()"
+              (onChange)="getCategoryTableByModality(this.formGroup.get('modality_id')?.value)"
               formControlName="modality_id"
               [options]="modalityList"
               optionLabel="modality_name"
@@ -113,15 +105,18 @@
             >
           </div>
         </div>
-        <div class="row my-4 px-5" *ngIf="enableCategoryandTipology()">
+        <div class="row my-4 px-5" *ngIf="categoryBoolean && modalBoolean">
           <div class="col-6">
             <label class="label-select"> Categoria</label>
             <p-dropdown
               [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="category_id"
-              (onChange)="getTipology()"
+              (onChange)="
+                getTipologiesListByCategory(this.formGroup.get('category_id')?.value.category_name)
+              "
               [options]="categoryList"
               optionLabel="category_name"
+              optionValue="category_id"
               placeholder="Seleccione"></p-dropdown>
             <label class="invalid">
               {{
@@ -137,7 +132,7 @@
             <p-dropdown
               [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="tipology_id"
-              (onChange)="getCauses()"
+              (onChange)="getCausesListByTipology(this.formGroup.get('tipology_id')?.value)"
               [options]="TipologyList"
               optionLabel="tipology_name"
               optionValue="tipology_name"

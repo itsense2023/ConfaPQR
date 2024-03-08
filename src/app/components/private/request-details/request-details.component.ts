@@ -15,6 +15,7 @@ import { MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { url } from 'inspector';
 import { RoutesApp } from '../../../enums/routes.enum';
+import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
 
 @Component({
   selector: 'app-request-details',
@@ -54,6 +55,7 @@ export class RequestDetailsComponent implements OnInit {
   routeTab!: string;
   requestProcess: FormGroup;
   enableAssign: boolean = false;
+  user!: string;
 
   constructor(
     private formBuilder: FormBuilder,
@@ -68,6 +70,7 @@ export class RequestDetailsComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.user = sessionStorage.getItem(SessionStorageItems.USER) || '';
     let routeIf = localStorage.getItem('route');
     if (routeIf?.includes(RoutesApp.SEARCH_REQUEST)) {
       this.routeTab = routeIf;
@@ -86,6 +89,18 @@ export class RequestDetailsComponent implements OnInit {
   }
   showSuccessMessage(state: string, title: string, message: string) {
     this.messageService.add({ severity: state, summary: title, detail: message });
+  }
+
+  showProcessTab(): boolean {
+    if (
+      this.routeTab.includes(RoutesApp.PROCESS_REQUEST) &&
+      this.user === this.requestDetails?.assigned_user &&
+      this.requestDetails.status_name != 'Cerrada'
+    ) {
+      return true;
+    } else {
+      return false;
+    }
   }
 
   preprocessAttachments(applicantAttachments: string[]) {
@@ -260,13 +275,7 @@ export class RequestDetailsComponent implements OnInit {
       });
     }
   }
-  showProcessTab(): boolean {
-    if (this.routeTab.includes(RoutesApp.PROCESS_REQUEST)) {
-      return true;
-    } else {
-      return false;
-    }
-  }
+
   downloadFile(download_url: string) {
     const anchor = document.createElement('a');
     anchor.href = download_url;

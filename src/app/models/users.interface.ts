@@ -258,10 +258,10 @@ export interface CharacterizationCreate {
   applicant_type_id: number;
   request_type_id: number;
   is_pqr: number;
-  quality_dimension_id: number;
-  modality_id: number;
-  category_id: number;
-  month?: string;
+  quality_dimension_id?: number;
+  modality_id?: number;
+  category_id?: number;
+  month?: number;
 }
 export interface TipologiesCauses {
   category_name?: string;

@@ -14,6 +14,14 @@
   /* Align items to the end of the container */
 }
 
+.custom-input {
+  font-size: small;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  color: #66798d;
+  /* Agrega cualquier otro estilo necesario */
+}
+
 .button {
   border-radius: 20px;
 }
@@ -34,8 +42,8 @@
 
     &-placeholder {
       display: flex;
-      color: $color-gray;
-      font-size: 20px;
+      color: $color-black;
+      font-size: 14px;
       font-weight: normal;
 
       &-invalid {
