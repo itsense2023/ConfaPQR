@@ -30,6 +30,7 @@
           <th style="width: 40%">Mensaje</th>
           <th style="width: 10%">Destinatarios</th>
           <th style="width: 10%">Tipo de destinatario</th>
+          <th style="width: 10%">Acción</th>
           <th style="width: 16%">Estado</th>
           <th style="width: 3%"></th>
           <th style="width: 3%"></th>
@@ -48,12 +49,15 @@
           <td>
             {{ notificationList.receiver_type_name }}
           </td>
-          <td class="d-flex">
+          <td>
+            {{ notificationList.action_name }}
+          </td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="notificationList.is_active"
               (onChange)="inActiveNotification(notificationList)"></p-inputSwitch>
             <div
-              class="d-flex align-items-center ms-2"
+              [ngStyle]="{ 'text-align': 'center' }"
               [ngClass]="{ 'input-switch-label': notificationList.is_active }">
               {{ notificationList.is_active ? 'Activo' : 'Inactivo' }}
             </div>

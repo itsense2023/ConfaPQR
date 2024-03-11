@@ -192,7 +192,7 @@ export class RequestDetailsComponent implements OnInit {
             item => item.action === 'Archivos adjuntos'
           );
           console.log('this.requestHistoricAttach', this.requestHistoricAttach);
-          this.requestHistoric = response.data.filter(item => item.action !== 'Archivos adjuntos');
+          this.requestHistoric = response.data.filter(item => item.action === 'Cambio de estado');
           console.log('this.requestHistoric', this.requestHistoric);
           //console.log(this.requestHistoric);
           //console.log(this.requestHistoricAttach);
