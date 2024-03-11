@@ -346,7 +346,7 @@ export class RequestDetailsComponent implements OnInit {
     if (this.requestDetails) {
       payload = {
         request_id: this.requestDetails?.request_id | 0,
-        request_status: 3,
+        request_status: 4,
         request_answer: this.requestProcess.get('mensage')?.value,
         assigned_attachments: this.getAssigned(),
       };
