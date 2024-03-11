@@ -81,7 +81,9 @@
               </div>
               <div class="process-container-col">
                 <label class="process-container-label"> Hora de radicación </label>
-                <li class="process-container-text">{{ requestDetails.filing_time }}</li>
+                <li class="process-container-text">
+                  {{ requestDetails.filing_time.split('+')[0] }}
+                </li>
               </div>
             </div>
             <div class="process-container-row">
@@ -354,7 +356,9 @@
             <ng-template pTemplate="body" let-requestHistoric>
               <tr>
                 <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_date }}</td>
-                <td [ngStyle]="{ 'text-align': 'center' }">{{ requestHistoric.updated_time }}</td>
+                <td [ngStyle]="{ 'text-align': 'center' }">
+                  {{ requestHistoric.updated_time.split('.')[0] }}
+                </td>
                 <td [ngStyle]="{ 'text-align': 'center' }">
                   {{ requestHistoric.updated_by }}
                 </td>
