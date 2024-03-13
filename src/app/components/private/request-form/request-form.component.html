@@ -75,13 +75,17 @@
       </div>
       <div class="card-form-row">
         <div class="card-form-input">
-          <label class="card-form-input-placeholder">Nombre de empresa o de solicitante*</label>
+          <label class="card-form-input-placeholder">
+            {{
+              applicantType.applicant_type_id === 1 ? 'Nombre de empresa' : 'Nombre de solicitante'
+            }}</label
+          >
           <input
             formControlName="name"
             pInputText
             id="name"
             class="card-form-input-options"
-            placeholder="*Ingresa el nombre" />
+            placeholder="*Ingresa el nombre completo" />
           <label class="card-form-input-placeholder-invalid">
             {{
               requestForm.get('name')?.hasError('pattern') && requestForm.get('name')?.touched
@@ -125,7 +129,8 @@
             formControlName="email"
             pInputText
             class="card-form-input-options"
-            placeholder="*Ingresa el correo electrónico" />
+            placeholder="*Ingresa el correo electrónico"
+            oncopy="return false;" />
           <label class="card-form-input-placeholder-invalid">
             {{
               requestForm.get('email')?.hasError('pattern') && requestForm.get('email')?.touched
