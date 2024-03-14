@@ -82,14 +82,16 @@ export class RequestFormComponent implements OnInit {
           '',
           [
             Validators.required,
-            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
+            // eslint-disable-next-line prettier/prettier
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\.?[a-zA-Z]{2,}$'),
           ],
         ],
         validator_email: [
           '',
           [
             Validators.required,
-            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$'),
+            // eslint-disable-next-line prettier/prettier
+            Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\.?[a-zA-Z]{2,}$'),
           ],
         ],
         mensage: ['', [Validators.required, Validators.maxLength(1000)]],
@@ -105,11 +107,11 @@ export class RequestFormComponent implements OnInit {
       if (value.catalog_item_id == 0) {
         this.errorMensaje = 'Ingrese solo números ';
       } else if (value.catalog_item_id == 15) {
-        this.errorMensaje = 'Ingrese solo números y maximo 12 digitos';
+        this.errorMensaje = 'Ingrese solo números y máximo 12 digitos';
       } else if (value.catalog_item_id == 16) {
-        this.errorMensaje = 'Formato invalido';
+        this.errorMensaje = 'Formato inválido';
       } else if (value.catalog_item_id == 1) {
-        this.errorMensaje = 'Ingrese solo números y maximo 9 digitos';
+        this.errorMensaje = 'Ingrese solo números y máximo 9 digitos';
       }
     });
   }

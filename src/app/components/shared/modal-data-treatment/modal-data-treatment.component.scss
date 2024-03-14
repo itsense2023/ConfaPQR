@@ -21,7 +21,18 @@
   border: none;
   text-decoration: underline;
 }
-
+.button-close {
+  background-color: $color-gray;
+  color: white;
+  width: 275px;
+  font-family: $font-light;
+  border-radius: 5px;
+  border: none;
+  cursor: pointer;
+  &-plus {
+    font-size: 20px;
+  }
+}
 .container-text {
   display: flex;
   flex-direction: column;

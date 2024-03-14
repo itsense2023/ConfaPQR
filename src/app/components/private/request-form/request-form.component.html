@@ -6,7 +6,7 @@
   </div>
   <p-card class="card-form">
     <div class="card-form-banner">
-      <h4 class="card-form-banner-title">Ingrese aquí tu solicitud</h4>
+      <h4 class="card-form-banner-title">Ingresa aquí tu solicitud</h4>
     </div>
 
     <form [formGroup]="requestForm" [style]="{ width: '40rem', margin: '0 auto' }">
@@ -186,7 +186,7 @@
               : ''
           }}
           {{
-            requestForm.get('mensage')?.hasError('maxlength') ? ' Maximo 1000 caracteres' : ''
+            requestForm.get('mensage')?.hasError('maxlength') ? ' Máximo 1000 caracteres' : ''
           }}</label
         >
       </div>

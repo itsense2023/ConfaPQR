@@ -62,7 +62,8 @@ export class ModalNotificationComponent implements OnInit {
       notification_receiver_id: [null],
       notification_receiver: [
         null,
-        [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+.[a-zA-Z]{2,}$')],
+        // eslint-disable-next-line prettier/prettier
+        [Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}\.?[a-zA-Z]{2,}$')],
       ],
     });
   }

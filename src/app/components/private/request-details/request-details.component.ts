@@ -10,12 +10,14 @@ import {
   RequestsDetails,
   RequestsList,
   answerRequest,
+  DownloadAttach,
 } from '../../../models/users.interface';
 import { MessageService } from 'primeng/api';
 import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { url } from 'inspector';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-request-details',
@@ -56,13 +58,14 @@ export class RequestDetailsComponent implements OnInit {
   requestProcess: FormGroup;
   enableAssign: boolean = false;
   user!: string;
-
+  base64File: string = '';
   constructor(
     private formBuilder: FormBuilder,
     private userService: Users,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private http: HttpClient
   ) {
     this.requestProcess = this.formBuilder.group({
       mensage: [null, [Validators.required, Validators.maxLength(500)]],
@@ -276,11 +279,20 @@ export class RequestDetailsComponent implements OnInit {
     }
   }
 
-  downloadFile(download_url: string) {
-    const anchor = document.createElement('a');
-    anchor.href = download_url;
-    anchor.click();
-  }
+  /*downloadFile(download_url: string) {
+    this.http
+      .get(download_url, {
+        responseType: 'blob',
+      })
+      .subscribe(blob => {
+        const urlBlob = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = urlBlob;
+        link.download = 'nombre_del_archivo';
+        link.click();
+        window.URL.revokeObjectURL(urlBlob);
+      });
+  }*/
   isValidExtension(file: File): boolean {
     const extensionesValidas = ['.jpg', '.png', '.pdf', '.doc', '.xlsx', '.docx', '.xls'];
     const fileExtension = file?.name?.split('.').pop()?.toLowerCase();
@@ -388,5 +400,61 @@ export class RequestDetailsComponent implements OnInit {
         console.log('La suscripción ha sido completada.');
       },
     });
+  }
+  displayFile(download_url: string) {
+    window.open(download_url, '_blank');
+  }
+  downloadFile(download_url: string) {
+    const parts = download_url.split('/');
+    const result = parts.slice(-2).join('/');
+    const fileName = parts.slice(-1)[0];
+    const extension = parts.slice(-1)[0].split('.')[1];
+    const payload: DownloadAttach = {
+      download_url: result,
+    };
+    this.userService.downloadRequest(payload).subscribe({
+      next: (response: BodyResponse<string>) => {
+        if (response) {
+          console.log(response);
+          this.base64File = response.data;
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+        this.downloadBase64(this.base64File, fileName, extension);
+      },
+    });
+  }
+
+  downloadBase64(base64String: string, fileName: string, extension: string) {
+    // Convert the base64 string to a blob
+    const byteCharacters = atob(base64String);
+    const byteNumbers = new Array(byteCharacters.length);
+    for (let i = 0; i < byteCharacters.length; i++) {
+      byteNumbers[i] = byteCharacters.charCodeAt(i);
+    }
+    const byteArray = new Uint8Array(byteNumbers);
+    const blob = new Blob([byteArray], { type: 'application/' + extension });
+
+    // Create a temporary anchor element
+    const link = document.createElement('a');
+    link.href = window.URL.createObjectURL(blob);
+    link.download = fileName;
+
+    // Trigger the download
+    document.body.appendChild(link);
+    link.click();
+
+    // Cleanup
+    setTimeout(() => {
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(link.href);
+    }, 0);
   }
 }

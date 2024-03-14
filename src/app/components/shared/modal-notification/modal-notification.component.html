@@ -101,7 +101,7 @@
           <div class="col-12">
             <div class="row-recipients">
               <div class="row-recipients-input">
-                <label> Destinatarios especificos </label>
+                <label> Destinatarios específicos </label>
                 <input
                   [readonly]="read_only"
                   formControlName="notification_receiver"
@@ -112,7 +112,7 @@
                   {{
                     formGroup.get('notification_receiver')?.hasError('pattern') &&
                     formGroup.get('notification_receiver')?.touched
-                      ? 'Ingrese correo electrónico'
+                      ? 'Ingrese un correo electrónico valido'
                       : ''
                   }}{{
                     formGroup.get('notification_receiver')?.hasError('notInclude') &&
@@ -148,8 +148,13 @@
             <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
             <p-button
               [label]="buttonmsg"
-              [disabled]="formGroup.invalid"
-              (click)="closeDialog(true)"></p-button>
+              [disabled]="
+                formGroup.invalid ||
+                (recipients.length === 0 &&
+                  formGroup.get('notification_receiver_id')?.value === null)
+              "
+              (click)="closeDialog(true)">
+            </p-button>
           </div>
         </div>
       </div>
