@@ -16,6 +16,7 @@
     &_img {
       height: 500px;
       width: 100%;
+      filter: blur(10px);
     }
   }
 
@@ -41,6 +42,7 @@
       display: flex;
       align-items: center;
       padding: 2% 3%;
+      
       //margin: 0 683px 0 453px;
     }
 
