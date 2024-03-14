@@ -1,4 +1,4 @@
-<p-dialog [(visible)]="visible" [style]="{ width: '80vw' }" [modal]="true">
+<p-dialog [(visible)]="visible" [style]="{ width: '100vw' }" [modal]="true">
   <ng-template pTemplate="headless">
     <div class="modal-content">
       <div class="login-form-header">
@@ -58,7 +58,7 @@
           <div class="container-group">
             <div class="container-group-checkbox">
               <p-radioButton name="is_pqr" [value]="1" formControlName="is_pqr"></p-radioButton>
-              <label class="container-group-label" for="selectYes">Si</label>
+              <label class="container-group-label" for="selectYes">Sí</label>
             </div>
             <div class="container-group-checkbox">
               <p-radioButton name="is_pqr" [value]="2" formControlName="is_pqr"></p-radioButton>
@@ -107,7 +107,7 @@
         </div>
         <div class="row my-4 px-5" *ngIf="categoryBoolean && modalBoolean">
           <div class="col-6">
-            <label class="label-select"> Categoria</label>
+            <label class="label-select"> Categoría</label>
             <p-dropdown
               [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="category_id"
@@ -127,7 +127,7 @@
             >
           </div>
           <div class="col-6">
-            <label class="label-select"> Tipologia </label>
+            <label class="label-select"> Tipología </label>
             <p-dropdown
               [style]="{ height: '30px', 'align-items': 'center' }"
               formControlName="tipology_id"

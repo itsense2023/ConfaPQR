@@ -16,6 +16,7 @@ import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms'
 import { url } from 'inspector';
 import { RoutesApp } from '../../../enums/routes.enum';
 import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-request-details',
@@ -62,7 +63,8 @@ export class RequestDetailsComponent implements OnInit {
     private userService: Users,
     private router: Router,
     private route: ActivatedRoute,
-    private messageService: MessageService
+    private messageService: MessageService,
+    private http: HttpClient
   ) {
     this.requestProcess = this.formBuilder.group({
       mensage: [null, [Validators.required, Validators.maxLength(500)]],
@@ -276,10 +278,22 @@ export class RequestDetailsComponent implements OnInit {
     }
   }
 
+  /*downloadFile(download_url: string) {
+    this.http
+      .get(download_url, {
+        responseType: 'blob',
+      })
+      .subscribe(blob => {
+        const urlBlob = window.URL.createObjectURL(blob);
+        const link = document.createElement('a');
+        link.href = urlBlob;
+        link.download = 'nombre_del_archivo';
+        link.click();
+        window.URL.revokeObjectURL(urlBlob);
+      });
+  }*/
   downloadFile(download_url: string) {
-    const anchor = document.createElement('a');
-    anchor.href = download_url;
-    anchor.click();
+    window.open(download_url, '_blank');
   }
   isValidExtension(file: File): boolean {
     const extensionesValidas = ['.jpg', '.png', '.pdf', '.doc', '.xlsx', '.docx', '.xls'];

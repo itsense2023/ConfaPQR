@@ -240,10 +240,10 @@
                       {{ AssignedAttach.fileSize }}
                     </td>
                     <td>
-                      <p-button
+                      <button
                         icon="pi pi-download"
-                        [styleClass]="'btn-icon-info'"
-                        (click)="downloadFile(AssignedAttach.url)"></p-button>
+                        class="btn-icon-info"
+                        (click)="downloadFile(AssignedAttach.url)"></button>
                     </td>
                   </tr>
                 </ng-template>
@@ -375,7 +375,7 @@
   </div>
 }
 <p-toast></p-toast>
-
+<p-button label="Abrir caracterización" severity="danger" (click)="test()"></p-button>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"

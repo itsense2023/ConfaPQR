@@ -44,7 +44,7 @@
             {{ notificationList.notification_message }}
           </td>
           <td>
-            {{ notificationList.notification_receiver }}
+            {{ notificationList.notification_receiver.join(', ') }}
           </td>
           <td>
             {{ notificationList.receiver_type_name }}
