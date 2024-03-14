@@ -1,5 +1,6 @@
 export enum RoutesApp {
   LOGIN = 'login',
+  MAIN_PAGE = 'main-page',
   REQUEST_MANAGER = 'request-manager',
   APPLICANT_TYPE = 'applicant-type',
   REQUEST_TYPE = 'request-type',
@@ -59,4 +60,5 @@ export enum EndPointRoute {
   CREATE_REQUEST = 'request/create',
   ANSWER_REQUEST = 'request/answer',
   CHARACTERIZE_REQUEST = 'request/characterization/create',
+  DOWNLOAD_ATTACH = 'download/attach',
 }

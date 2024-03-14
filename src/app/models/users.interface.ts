@@ -270,3 +270,6 @@ export interface TipologiesCauses {
   category_id?: number;
   is_active?: number | boolean;
 }
+export interface DownloadAttach {
+  download_url: string;
+}
