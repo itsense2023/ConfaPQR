@@ -57,7 +57,7 @@ export class LoginComponent {
           if (menu) {
             sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
           }
-          this.router.navigate([RoutesApp.REQUEST_MANAGER]);
+          this.router.navigate([RoutesApp.MAIN_PAGE]);
         } else {
           this.message = response.data;
           this.visibleDialog = true;
