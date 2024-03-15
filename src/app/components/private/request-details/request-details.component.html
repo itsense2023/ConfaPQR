@@ -230,6 +230,7 @@
                     <th style="width: 20%">Formato</th>
                     <th style="width: 20%">Peso</th>
                     <th style="width: 10%"></th>
+                    <th style="width: 10%"></th>
                   </tr>
                 </ng-template>
                 <ng-template pTemplate="body" let-AssignedAttach>
@@ -246,11 +247,17 @@
                     <td [ngStyle]="{ 'text-align': 'center' }">
                       {{ AssignedAttach.fileSize }}
                     </td>
+                    <td [ngStyle]="{ 'text-align': 'center' }">
+                      <p-button
+                        icon="pi pi-eye"
+                        [styleClass]="'btn-icon-info'"
+                        (click)="displayFile(AssignedAttach.url)"></p-button>
+                    </td>
                     <td>
-                      <button
+                      <p-button
                         icon="pi pi-download"
-                        class="btn-icon-info"
-                        (click)="downloadFile(AssignedAttach.url)"></button>
+                        [styleClass]="'btn-icon-info'"
+                        (click)="downloadFile(AssignedAttach.url)"></p-button>
                     </td>
                   </tr>
                 </ng-template>
