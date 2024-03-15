@@ -12,6 +12,7 @@ export interface RequestsList {
   request_id: number;
   filing_number: number;
   filing_date: string;
+  filing_date_date?: Date;
   filing_time: string;
   request_status: number;
   applicant_type: number;

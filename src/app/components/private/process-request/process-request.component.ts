@@ -11,6 +11,7 @@ import {
 import { RoutesApp } from '../../../enums/routes.enum';
 import { MessageService } from 'primeng/api';
 import { SessionStorageItems } from '../../../enums/session-storage-items.enum';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'app-process-request',
@@ -61,6 +62,15 @@ export class ProcessRequestComponent implements OnInit {
           this.requestList = response.data;
           this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
           this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
+          this.requestList = response.data.map(item => {
+            const transformedDate = formatDate(item.filing_date, 'MM/dd/yyyy', 'en-US');
+            return { ...item, filing_date: transformedDate };
+          });
+          this.requestList.forEach(item => {
+            if (typeof item.filing_date === 'string') {
+              item.filing_date_date = new Date(item.filing_date);
+            }
+          });
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
@@ -78,9 +88,18 @@ export class ProcessRequestComponent implements OnInit {
       next: (response: BodyResponse<RequestsList[]>) => {
         if (response.code === 200) {
           this.requestListByAssigned = response.data;
-          console.log(this.requestListByAssigned);
           this.daysOption = Array.from(new Set(this.requestList.map(item => item.request_days)));
           this.statusOptions = Array.from(new Set(this.requestList.map(item => item.status_name)));
+          this.requestListByAssigned = response.data.map(item => {
+            const transformedDate = formatDate(item.filing_date, 'MM/dd/yyyy', 'en-US');
+            return { ...item, filing_date: transformedDate };
+          });
+          this.requestListByAssigned.forEach(item => {
+            if (typeof item.filing_date === 'string') {
+              item.filing_date_date = new Date(item.filing_date);
+            }
+          });
+          console.log(this.requestListByAssigned);
         } else {
           this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
