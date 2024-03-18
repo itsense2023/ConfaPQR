@@ -274,3 +274,14 @@ export interface TipologiesCauses {
 export interface DownloadAttach {
   download_url: string;
 }
+
+export interface RequestStatusList {
+  request_status_id: number;
+  status_name: string;
+  status_description: string;
+  is_active: number;
+}
+export interface IsPqrCatalog {
+  id: number;
+  name: string;
+}

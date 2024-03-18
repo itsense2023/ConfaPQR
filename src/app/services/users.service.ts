@@ -29,6 +29,7 @@ import {
   answerRequest,
   TipologiesCauses,
   DownloadAttach,
+  RequestStatusList,
 } from '../models/users.interface';
 
 @Injectable({
@@ -482,6 +483,17 @@ export class Users {
     });
     return this.http.get<BodyResponse<NotificationList[]>>(
       `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_LIST}`,
+      { headers }
+    );
+  }
+  getRequestStatusList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestStatusList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_STATUS}`,
       { headers }
     );
   }

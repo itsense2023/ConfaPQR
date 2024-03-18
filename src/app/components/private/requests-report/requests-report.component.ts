@@ -5,10 +5,15 @@ import { Users } from '../../../services/users.service';
 import {
   Column,
   ExportColumn,
+  IsPqrCatalog,
+  RequestStatusList,
   RequestTypeList,
   RequestsList,
+  UserList,
 } from '../../../models/users.interface';
 import * as FileSaver from 'file-saver';
+import { FormControl, FormGroup } from '@angular/forms';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-requests-report',
@@ -29,13 +34,28 @@ export class RequestsReportComponent implements OnInit {
   cols!: Column[];
 
   exportColumns!: ExportColumn[];
+  formGroup: FormGroup<any> = new FormGroup<any>({});
+  rangeDates: Date[] | undefined;
+  statusList: RequestStatusList[] = [];
+  userList: UserList[] = [];
+  ispqrList: IsPqrCatalog[] = [];
   constructor(
     private userService: Users,
-    private router: Router
-  ) {}
+    private router: Router,
+    private messageService: MessageService
+  ) {
+    this.formGroup = new FormGroup({
+      dates_range: new FormControl(null),
+      request_status_id: new FormControl(null),
+      assigned_user: new FormControl(null),
+      is_pqr: new FormControl(null),
+    });
+  }
 
   ngOnInit() {
+    this.getRequestStatusList();
     this.getRequestList();
+    this.getUsersTable();
     this.cols = [
       { field: 'filing_number', header: 'Número de radicado', customExportHeader: 'Product Code' },
       { field: 'filing_date', header: 'Fecha de radicación' },
@@ -49,8 +69,64 @@ export class RequestsReportComponent implements OnInit {
     ];
 
     this.exportColumns = this.cols.map(col => ({ title: col.header, dataKey: col.field }));
+    this.ispqrList = [
+      {
+        id: 1,
+        name: 'Sí',
+      },
+      {
+        id: 2,
+        name: 'No',
+      },
+    ];
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
+  getRequestStatusList() {
+    this.userService.getRequestStatusList().subscribe({
+      next: (response: BodyResponse<RequestStatusList[]>) => {
+        if (response.code === 200) {
+          this.statusList = response.data; //.filter(obj => obj.is_active !== 0);
+        } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  getUsersTable() {
+    this.userService.getUsersList().subscribe({
+      next: (response: BodyResponse<UserList[]>) => {
+        if (response.code === 200) {
+          this.userList = response.data;
+          this.userList.forEach(item => {
+            item.is_active = item.is_active === 1 ? true : false;
+          });
+        } else {
+          console.log(this.userList);
+        }
+      },
+      error: (err: any) => {
+        console.log(err);
+      },
+      complete: () => {
+        console.log('La suscripción ha sido completada.');
+      },
+    });
+  }
+  cleanForm() {
+    console.log('clean');
+    this.formGroup.reset();
+  }
+  searhRequests() {
+    console.log(this.formGroup.value);
+  }
   exportPdf() {
     import('jspdf').then(jsPDF => {
       import('jspdf-autotable').then(x => {

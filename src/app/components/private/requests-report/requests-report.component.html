@@ -1,10 +1,67 @@
 <div class="row mb-2">
   <div class="col-10">
-    <div class="title-page">Consultar solicitudes</div>
+    <div class="title-page">Generar reporte de solicitudes</div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
+<form [formGroup]="formGroup">
+  <div class="position-relative custom-calendar">
+    <div class="card flex justify-content-center absolute-center">
+      <div class="row">
+        <div class="col-2">
+          <label class="label-select"> Rango de fechas </label>
+          <p-calendar
+            formControlName="dates_range"
+            selectionMode="range"
+            [readonlyInput]="true"
+            [showButtonBar]="true"
+            [showIcon]="true"
+            class="calendar"></p-calendar>
+        </div>
+        <div class="col-3">
+          <label class="label-select"> Tipo de estado </label>
+          <p-dropdown
+            formControlName="request_status_id"
+            [style]="{ height: '30px', 'align-items': 'center' }"
+            [options]="statusList"
+            optionLabel="status_name"
+            optionValue="request_status_id"
+            placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="col-3">
+          <label class="label-select"> Responsable </label>
+          <p-dropdown
+            formControlName="assigned_user"
+            [options]="userList"
+            optionLabel="user_name"
+            placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="col-2">
+          <label class="label-select"> Es una pqr? </label>
+          <p-dropdown
+            formControlName="is_pqr"
+            [options]="ispqrList"
+            optionLabel="name"
+            optionValue="id"
+            placeholder="Seleccione"></p-dropdown>
+        </div>
+        <div class="col-1" style="margin-top: 24px">
+          <p-button
+            icon="pi pi-trash"
+            [styleClass]="'btn-icon-info'"
+            (click)="cleanForm()"></p-button>
+        </div>
+        <div class="col-1" style="margin-top: 24px">
+          <p-button
+            icon="pi pi-search"
+            [styleClass]="'btn-icon-info'"
+            (click)="searhRequests()"></p-button>
+        </div>
+      </div>
+    </div>
+  </div>
+</form>
+<div class="row mt-5">
+  <div class="col-12 mt-5">
     <p-table
       #dt
       [value]="requestList"
@@ -132,7 +189,7 @@
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
