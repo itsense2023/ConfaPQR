@@ -1,5 +1,9 @@
 @import '../../../../assets/styles/abstracts/variables.scss';
 
+.ui-dropdown .ui-dropdown-item.ui-state-highlight {
+  background-color: #f0f0f0; /* Set your desired background color */
+}
+
 .container {
   display: flex;
   justify-content: space-around;
@@ -33,6 +37,13 @@
       font-size: medium;
       font-weight: bold;
       padding-top: 2%;
+    }
+    &_title {
+      color: $color-banner-blue;
+    }
+    &_text {
+      margin-left: 200px;
+      margin-right: 200px;
     }
   }
 

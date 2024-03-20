@@ -1,18 +1,24 @@
 <p-card [style]="{ margin: '0 50px 100px' }">
   <form [formGroup]="optionsRequest">
     <p-card class="container-card">
-      <p class="m-0">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed ut veniam sunt suscipit.
-        Eligendi corporis alias harum laudantium ducimus dolore accusamus voluptate dolorum magni ab
-        mollitia in, facilis voluptatibus doloribus.
-      </p>
+      <p class="m-0"></p>
+      <div class="container-card_title" [ngStyle]="{ 'text-align': 'center' }">
+        Bienvenido a nuestro aplicativo!
+      </div>
+      <div [ngStyle]="{ 'text-align': 'center' }" class="container-card_text">
+        A través de este podrás gestionar tus solicitudes relacionadas con el área de aportes y
+        subsidios. En Tipo de solicitante selecciona si eres empresa o si eres afiliado, identifica
+        tu tipo de afiliación. En Tipo de solicitud, podrás encontrar los diferentes trámites que
+        podrás realizar. Lee atentamente el texto con las recomendaciones para validar si es la
+        gestión a realizar.
+      </div>
       <div class="container">
         <div class="container-select">
           <label class="container-select-placeholder">Tipo del solicitante*</label>
           <p-dropdown
             (onChange)="getRequest()"
             formControlName="applicant_id"
-            [style]="{ 'border-radius': '20px', height: 'auto' }"
+            [style]="{ 'border-radius': '20px', height: 'auto', 'background-color': '#f0f0f0' }"
             class="container-select-options"
             [options]="applicantList"
             optionLabel="applicant_type_name"
