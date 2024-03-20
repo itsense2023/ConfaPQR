@@ -12,6 +12,7 @@ export interface RequestsList {
   request_id: number;
   filing_number: number;
   filing_date: string;
+  filing_date_date?: Date;
   filing_time: string;
   request_status: number;
   applicant_type: number;
@@ -272,4 +273,15 @@ export interface TipologiesCauses {
 }
 export interface DownloadAttach {
   download_url: string;
+}
+
+export interface RequestStatusList {
+  request_status_id: number;
+  status_name: string;
+  status_description: string;
+  is_active: number;
+}
+export interface IsPqrCatalog {
+  id: number;
+  name: string;
 }

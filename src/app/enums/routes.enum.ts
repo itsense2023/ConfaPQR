@@ -42,6 +42,7 @@ export enum EndPointRoute {
   UPDATE_MODALITY = 'modality/modify',
   INACTIVATE_MODALITY = 'modality/in-activate',
   CATEGORY_LIST = 'db/categories',
+  REQUEST_STATUS = 'db/request_status',
   QUALITY_DIMENSION_LIST = 'db/quality_dimensions',
   CATEGORIES_BY_MODALITY = 'categories/by',
   TIPOLOGIES_BY_CATEGORY = 'tipologies/by/category',

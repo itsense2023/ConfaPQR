@@ -78,10 +78,8 @@
               <th>
                 <p-columnFilter
                   style="width: 206px"
-                  type="text"
-                  matchMode="contains"
-                  [showMenu]="false"
-                  field="filing_date"></p-columnFilter>
+                  type="date"
+                  field="filing_date_date"></p-columnFilter>
               </th>
               <th>
                 <p-columnFilter
@@ -185,7 +183,7 @@
           <ng-template pTemplate="body" let-requestListByAssigned>
             <tr>
               <td>{{ requestListByAssigned.filing_number }}</td>
-              <td>{{ requestListByAssigned.filing_date }}</td>
+              <td>{{ requestListByAssigned.filing_date_date | date }}</td>
               <td>{{ requestListByAssigned.applicant_type_name }}</td>
               <td>{{ requestListByAssigned.doc_id }}</td>
               <td>{{ requestListByAssigned.applicant_name }}</td>
@@ -271,8 +269,8 @@
               <th>
                 <p-columnFilter
                   style="width: 206px"
-                  type="text"
-                  field="filing_date"></p-columnFilter>
+                  type="date"
+                  field="filing_date_date"></p-columnFilter>
               </th>
               <th>
                 <p-columnFilter
@@ -397,7 +395,7 @@
           <ng-template pTemplate="body" let-requestList>
             <tr>
               <td>{{ requestList.filing_number }}</td>
-              <td>{{ requestList.filing_date }}</td>
+              <td>{{ requestList.filing_date_date | date }}</td>
               <td>{{ requestList.applicant_type_name }}</td>
               <td>{{ requestList.doc_id }}</td>
               <td>{{ requestList.applicant_name }}</td>
