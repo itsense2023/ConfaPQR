@@ -158,4 +158,8 @@ export class ModalNotificationComponent implements OnInit {
     this.setRtaParameter.emit(payload);
     this.visible = false;
   }
+  clearFileInput(index: number) {
+    this.recipients.splice(index, 1);
+    //this.arrayAssignedAttachment.splice(index, 1);
+  }
 }

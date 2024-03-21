@@ -1,15 +1,18 @@
 <p-card [style]="{ margin: '10px 50px 100px 50px' }">
-  <div class="card-header-container">
+  <!--<div class="card-header-container">
     <h3 class="card_title">
       {{ applicantType.applicant_type_id === 1 ? 'Empresa' : 'Demás Solicitudes' }}
     </h3>
-  </div>
+  </div>-->
   <p-card class="card-form">
     <div class="card-form-banner">
       <h4 class="card-form-banner-title">Ingresa aquí tu solicitud</h4>
     </div>
 
-    <form [formGroup]="requestForm" [style]="{ width: '40rem', margin: '0 auto' }">
+    <form
+      [formGroup]="requestForm"
+      [style]="{ width: '40rem', margin: '0 auto' }"
+      class="container-card_text">
       <div class="card-form-row">
         <div class="card-form-input">
           <label class="card-form-input-placeholder">Tipo de documento*</label>
@@ -244,7 +247,7 @@
     class="card-form-button"></p-button>
 </p-card>
 <p-toast></p-toast>
-<app-modal-alert
+<!--<app-modal-alert
   *ngIf="visibleDialogAlert"
   [select]="true"
   [requestCreation]="true"
@@ -252,4 +255,13 @@
   [message]="message"
   [informative]="informative"
   [severity]="severity"
-  (setRta)="closeDialogAlert($event)"></app-modal-alert>
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>-->
+<app-modal-filing
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [requestCreation]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-filing>

@@ -27,13 +27,13 @@
             Código<p-sortIcon field="notification_id"></p-sortIcon>
           </th>
           <th style="width: 10%">Nombre</th>
-          <th style="width: 40%">Mensaje</th>
-          <th style="width: 10%">Destinatarios</th>
+          <th style="width: 50%">Mensaje</th>
+          <!--<th style="width: 10%">Destinatarios</th>-->
           <th style="width: 10%">Tipo de destinatario</th>
           <th style="width: 10%">Acción</th>
           <th style="width: 16%">Estado</th>
-          <th style="width: 3%"></th>
-          <th style="width: 3%"></th>
+          <th style="width: 2%"></th>
+          <th style="width: 2%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-notificationList>
@@ -43,9 +43,9 @@
           <td>
             {{ notificationList.notification_message }}
           </td>
-          <td>
+          <!--<td>
             {{ notificationList.notification_receiver.join(', ') }}
-          </td>
+          </td>-->
           <td>
             {{ notificationList.receiver_type_name }}
           </td>

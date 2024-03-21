@@ -353,17 +353,21 @@ export class RequestDetailsComponent implements OnInit {
     this.arrayAssignedAttachment.splice(index, 1);
   }
 
-  submitAnswer(request_details: RequestsDetails) {
-    let payload!: answerRequest;
+  characterizeRequest(request_details: RequestsDetails) {
+    this.request_details = request_details;
+    this.visibleCharacterization = true;
+  }
+  submitAnswer() {
+    let payloadAnswer!: answerRequest;
     if (this.requestDetails) {
-      payload = {
+      payloadAnswer = {
         request_id: this.requestDetails?.request_id | 0,
         request_status: 4,
         request_answer: this.requestProcess.get('mensage')?.value,
         assigned_attachments: this.getAssigned(),
       };
     }
-    this.userService.answerRequest(payload).subscribe({
+    this.userService.answerRequest(payloadAnswer).subscribe({
       next: (response: BodyResponse<string>) => {
         if (response.code === 200) {
           this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
@@ -375,10 +379,11 @@ export class RequestDetailsComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        this.request_details = request_details;
+        //this.request_details = request_details;
         this.requestProcess.reset();
         this.fileNameList = [];
-        this.visibleCharacterization = true;
+        //this.visibleCharacterization = true;
+        this.ngOnInit();
         console.log('La suscripción ha sido completada.');
       },
     });
@@ -396,7 +401,8 @@ export class RequestDetailsComponent implements OnInit {
         console.log(err);
       },
       complete: () => {
-        this.ngOnInit();
+        //this.ngOnInit();
+        this.submitAnswer();
         console.log('La suscripción ha sido completada.');
       },
     });
