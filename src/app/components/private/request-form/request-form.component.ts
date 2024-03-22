@@ -264,4 +264,7 @@ export class RequestFormComponent implements OnInit {
     this.message = filing_number.toString();
     this.severity = 'danger';
   }
+  testButtton() {
+    this.showAlertModal(75);
+  }
 }

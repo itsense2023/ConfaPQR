@@ -12,6 +12,7 @@ import { FileUploadModule } from 'primeng/fileupload';
 import { TableModule } from 'primeng/table';
 import { ToastModule } from 'primeng/toast';
 import { ModalAlertModule } from '../../shared/modal-alert/modal-alert.module';
+import { ModalFilingModule } from '../../shared/modal-filing/modal-filing.module';
 
 @NgModule({
   declarations: [RequestFormComponent],
@@ -30,6 +31,7 @@ import { ModalAlertModule } from '../../shared/modal-alert/modal-alert.module';
     TableModule,
     ToastModule,
     ModalAlertModule,
+    ModalFilingModule,
   ],
 })
 export class RequestFormModule {}

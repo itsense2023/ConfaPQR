@@ -1,8 +1,12 @@
 @import '../../../../assets/styles/abstracts/variables.scss';
 
+.fullscreen-dialog-content {
+  height: 80vh;
+  width: 95vw;
+}
+
 .modal-content {
   background-color: $color-white;
-  overflow-y: auto;
 }
 
 .title {

@@ -47,7 +47,7 @@
               formControlName="notification_name"
               pInputText
               pKeyFilter="string"
-              placeholder="Escriba nombre" />
+              placeholder="Escriba el asunto del mensaje" />
             <label class="invalid">
               {{
                 formGroup.get('notification_name')?.hasError('required') &&
@@ -71,7 +71,7 @@
               cols="30"
               pInputTextarea
               [style]="{ 'font-size': '12px' }"
-              placeholder="Escriba nombre"
+              placeholder="Escriba el texto del cuerpo del mensaje"
               formControlName="notification_message"
               class="custom-input"></textarea>
             <label class="invalid">
@@ -128,8 +128,9 @@
                 [style]="{ 'border-radius': '20px', 'background-color': '#00aeef' }"></p-button>
             </div>
             <div class="recipents-emails">
-              <div *ngFor="let recipent of recipients">
-                {{ recipent }}
+              <div *ngFor="let recipent of recipients; let i = index">
+                <p class="formProcess-labelUpload-name">{{ recipent }}</p>
+                <i (click)="clearFileInput(i)" class="formProcess-labelUpload-name pi pi-times"></i>
               </div>
             </div>
           </div>
