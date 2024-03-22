@@ -1,6 +1,6 @@
 const packageJson = require('../../package.json');
 
-const HOST = 'confa-lb-ubuntu-178194802.us-east-1.elb.amazonaws.com';
+const HOST = 'https://ss88c712j0.execute-api.us-east-1.amazonaws.com/dev';
 
 export const environment = {
   API_PUBLIC: HOST + '/',
