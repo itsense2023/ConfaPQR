@@ -8,7 +8,7 @@
 
 .menu {
   background-color: $color-white-smoke;
-  height: calc(100vh - 50px);
+  //height: calc(100vh - 50px);
 }
 
 .label-logout {
@@ -28,12 +28,14 @@
     padding: initial !important;
     border-radius: initial !important;
   }
-  ::ng-deep .p-treenode[aria-expanded='true'] > .p-treenode-content {
+
+  ::ng-deep .p-treenode[aria-expanded='true']>.p-treenode-content {
     transition: color 0.5s ease;
     color: $color-dodger-blue !important;
     background-color: $color-light-gray;
     font-weight: 500;
   }
+
   ::ng-deep .ui-panel .ui-panel-titlebar-icon {
     float: left;
   }
@@ -50,6 +52,7 @@
 .header {
   height: 50px;
   background-color: $color-dodger-blue;
+
   &-img {
     margin: 0px 20px;
     height: 40px;
@@ -59,10 +62,17 @@
 .item-label {
   color: $color-gray;
 }
+
 .item-label-select {
   color: $color-dodger-blue !important;
 }
+
 .content-data {
   padding: 20px;
   padding-right: 30px;
+  background-color: $color-white-blur-smoke;
+}
+
+.menuList {
+  cursor: pointer;
 }

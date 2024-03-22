@@ -6,7 +6,7 @@
     <p-button label="Crear modalidad" (click)="createModality()"></p-button>
   </div>
 </div>
-<div class="row">
+<div class="row mt-auto">
   <div class="col-12">
     <p-table
       [value]="modalityList"
@@ -23,17 +23,18 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="modality_id" style="width: 10%">
+          <th pSortableColumn="modality_id" style="width: 15%">
             Código<p-sortIcon field="modality_id"></p-sortIcon>
           </th>
-          <th style="width: 15%">Modalidad</th>
+          <th style="width: 35%">Modalidad</th>
           <th style="width: 15%">Estado</th>
-          <th style="width: 15%"></th>
+          <th style="width: 10%"></th>
+          <!--<th style="width: 10%"></th>-->
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-modalityList>
         <tr>
-          <td>{{ modalityList.modality_id }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">{{ modalityList.modality_id }}</td>
           <td>{{ modalityList.modality_name }}</td>
           <td class="d-flex">
             <p-inputSwitch
@@ -45,28 +46,39 @@
               {{ modalityList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
-          <td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
               (click)="editModality(modalityList)"></p-button>
+          </td>
+          <!--<td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-eye"
               [styleClass]="'btn-icon-info'"
               (click)="displayModality(modalityList)"></p-button>
-          </td>
+          </td>-->
         </tr>
       </ng-template>
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
   [visible]="visibleDialog"
   [message]="message"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
 
 <app-modal-modality
   *ngIf="visibleDialogModality"

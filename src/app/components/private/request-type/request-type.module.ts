@@ -8,6 +8,7 @@ import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { RequestTypeRoutingModule } from './request-type-routing.module';
 import { RequestTypeComponent } from './request-type.component';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [RequestTypeComponent],
@@ -20,6 +21,7 @@ import { RequestTypeComponent } from './request-type.component';
     DropdownModule,
     InputSwitchModule,
     SharedModule,
+    ToastModule,
   ],
   exports: [RequestTypeComponent],
 })

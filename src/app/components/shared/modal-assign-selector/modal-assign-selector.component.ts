@@ -55,8 +55,8 @@ export class ModalAssignSelectorComponent implements OnInit {
     this.visible = true;
   }
 
-  closeDialog() {
-    this.setRta.emit(false);
+  closeDialog(value: boolean) {
+    this.setRta.emit(value);
     const user_name = this.formGroup.controls['selectedUser'].value['user_name'];
     this.setRtaParameter.emit(user_name);
     this.visible = false;

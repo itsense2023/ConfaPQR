@@ -8,6 +8,8 @@ import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
 import { SearchRequestComponent } from './search-request.component';
+import { ToastModule } from 'primeng/toast';
+import { MultiSelectModule } from 'primeng/multiselect';
 
 @NgModule({
   declarations: [SearchRequestComponent],
@@ -20,6 +22,8 @@ import { SearchRequestComponent } from './search-request.component';
     DropdownModule,
     InputSwitchModule,
     SharedModule,
+    ToastModule,
+    MultiSelectModule,
   ],
   exports: [SearchRequestComponent],
 })

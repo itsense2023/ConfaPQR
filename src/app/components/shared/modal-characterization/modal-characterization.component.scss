@@ -1,0 +1,56 @@
+@import '../../../../assets/styles/abstracts/variables.scss';
+
+.fullscreen-dialog-content {
+  height: 80vh;
+  width: 95vw;
+}
+
+.modal-content {
+  background-color: $color-white;
+}
+
+.title {
+  text-align: start;
+  font-size: 20px;
+  font-weight: 400;
+  color: $color-gray;
+}
+
+.custom-input {
+  font-size: small;
+  border: 1px solid #ccc;
+  padding: 6px 10px;
+  color: #66798d;
+  /* Agrega cualquier otro estilo necesario */
+}
+
+
+.error-label {
+  color: $color-red;
+}
+
+.invalid {
+  color: $color-red;
+  font-size: x-small;
+}
+
+.label-select {
+  color: $color-gray;
+  font-size: 12px;
+}
+
+.container-group {
+  display: flex;
+  margin: 5px 0;
+
+  &-checkbox {
+    margin-left: 5px;
+    border-radius: 20px;
+  }
+
+  &-label {
+    color: $color-gray;
+    font-size: 10px;
+    margin: auto 2px;
+  }
+}

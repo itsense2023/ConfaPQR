@@ -51,11 +51,13 @@ export class LoginComponent {
         if (response.code === 200) {
           sessionStorage.setItem(SessionStorageItems.SESSION, response.data);
           const decodedToken: ISession = jwtDecode(response.data);
+          console.log('decodedToken', decodedToken);
           const menu: TreeNode[] = this.convertirLinks(decodedToken.links);
+          sessionStorage.setItem(SessionStorageItems.USER, decodedToken.usuario);
           if (menu) {
             sessionStorage.setItem(SessionStorageItems.MENU, JSON.stringify(menu));
           }
-          this.router.navigate([RoutesApp.REQUEST_MANAGER]);
+          this.router.navigate([RoutesApp.MAIN_PAGE]);
         } else {
           this.message = response.data;
           this.visibleDialog = true;
@@ -74,9 +76,8 @@ export class LoginComponent {
 
   convertirLinks(links: ILink[]): TreeNode[] {
     const arrayResultante: TreeNode[] = [];
-
     links.forEach(link => {
-      if (link.url) {
+      if (link.perfilLinks) {
         const objetoConvertido: TreeNode = {
           key: `${link.modulo_id}-${link.moduloNombre}`,
           label: link.nombre,
@@ -91,7 +92,6 @@ export class LoginComponent {
         arrayResultante.push(objetoConvertido);
       }
     });
-
     return arrayResultante;
   }
 

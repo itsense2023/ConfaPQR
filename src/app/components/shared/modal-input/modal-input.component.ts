@@ -13,7 +13,7 @@ export class ModalInputComponent implements OnInit {
   @Input() buttonmsg = '';
   @Input() parameter = [''];
   @Input() visible: boolean = false;
-  @Input() twoFields: boolean = false;
+  @Input() oneField: boolean = false;
   @Input() inputForm: string[] = [];
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<string[]>();
@@ -27,8 +27,8 @@ export class ModalInputComponent implements OnInit {
 
   constructor(private formBuilder: FormBuilder) {
     this.formGroup = this.formBuilder.group({
-      inputValue1: ['', Validators.required],
-      inputValue2: ['', Validators.required],
+      inputValue1: ['', [Validators.required, Validators.pattern('^[^#$%&]+$')]],
+      inputValue2: ['', [Validators.required, Validators.pattern('^[^#$%&]+$')]],
     });
   }
   ngOnInit(): void {

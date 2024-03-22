@@ -9,6 +9,7 @@ import { DropdownModule } from 'primeng/dropdown';
 import { PaginatorModule } from 'primeng/paginator';
 import { InputSwitchModule } from 'primeng/inputswitch';
 import { SharedModule } from '../../shared/shared.module';
+import { ToastModule } from 'primeng/toast';
 
 @NgModule({
   declarations: [RequestManagerComponent],
@@ -21,6 +22,7 @@ import { SharedModule } from '../../shared/shared.module';
     DropdownModule,
     InputSwitchModule,
     SharedModule,
+    ToastModule,
   ],
   exports: [RequestManagerComponent],
 })

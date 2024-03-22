@@ -14,12 +14,23 @@ import {
   CreateApplicantType,
   CreateRequestType,
   ModalityList,
+  RequestHistoric,
+  RequestFormList,
   RequestTypeList,
+  RequestsDetails,
   RequestsList,
   UserCreate,
   UserList,
+  NotificationList,
+  NotificationActionList,
+  NotificationReceiversList,
+  QualityDimensionList,
+  CharacterizationCreate,
+  answerRequest,
+  TipologiesCauses,
+  DownloadAttach,
+  RequestStatusList,
 } from '../models/users.interface';
-import { log } from 'console';
 
 @Injectable({
   providedIn: 'root',
@@ -46,6 +57,39 @@ export class Users {
     });
     return this.http.get<BodyResponse<RequestsList[]>>(
       `${environment.API_PUBLIC}${EndPointRoute.ALL_REQUESTS}`,
+      { headers }
+    );
+  }
+  getRequestListByAssignedUser(assigned_user: string) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestsList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.ALL_REQUESTS_BY_ASSIGNED_USER}/${assigned_user}`,
+      { headers }
+    );
+  }
+  getRequestDetails(payload: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestsDetails>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_DETAILS}/${payload}`,
+      { headers }
+    );
+  }
+  getRequestHistoric(payload: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestHistoric[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_HISTORIC}/${payload}`,
       { headers }
     );
   }
@@ -302,6 +346,7 @@ export class Users {
       { headers }
     );
   }
+
   modifyCategory(payload: CategoryList) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
@@ -326,14 +371,202 @@ export class Users {
       { headers }
     );
   }
+  getCategoryListByModality(modality_id: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<CategoryList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CATEGORIES_BY_MODALITY}/${modality_id}`,
+      { headers }
+    );
+  }
+  getTipologiesListByCategory(payload: TipologiesCauses) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<TipologiesCauses[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.TIPOLOGIES_BY_CATEGORY}`,
+      payload,
+      { headers }
+    );
+  }
+  getCausesListByTipology(payload: TipologiesCauses) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<TipologiesCauses[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CAUSES_BY_TIPOLOGY}`,
+      payload,
+      { headers }
+    );
+  }
+  getQualityDimensionsList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<QualityDimensionList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.QUALITY_DIMENSION_LIST}`,
+      { headers }
+    );
+  }
   getRequestsTypeByApplicantType(payload: number) {
     const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
     const headers = new HttpHeaders({
       'Content-Type': 'application/json',
       Authorization: token || '',
     });
-    return this.http.get<BodyResponse<string>>(
+    return this.http.get<BodyResponse<RequestTypeList[]>>(
       `${environment.API_PUBLIC}${EndPointRoute.REQUEST_BY_APPLICANT}/${payload}`,
+      { headers }
+    );
+  }
+
+  getFormById(applicant_id: number) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_LIST}${applicant_id}`,
+      { headers }
+    );
+  }
+
+  createRequest(payload: RequestFormList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<number>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  getNotificationActionList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationActionList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_ACTION_LIST}`,
+      { headers }
+    );
+  }
+  getNotificationReceiversList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationReceiversList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_RECEIVER_LIST}`,
+      { headers }
+    );
+  }
+  getNotificationList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<NotificationList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.NOTIFICATION_LIST}`,
+      { headers }
+    );
+  }
+  getRequestStatusList() {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.get<BodyResponse<RequestStatusList[]>>(
+      `${environment.API_PUBLIC}${EndPointRoute.REQUEST_STATUS}`,
+      { headers }
+    );
+  }
+  createNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CREATE_NOTIFICATION}`,
+      payload,
+      { headers }
+    );
+  }
+
+  modifyNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.UPDATE_NOTIFICATION}`,
+      payload,
+      { headers }
+    );
+  }
+  inactivateNotification(payload: NotificationList) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.INACTIVATE_NOTIFICATION}`,
+      payload,
+      { headers }
+    );
+  }
+  answerRequest(payload: answerRequest) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.ANSWER_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  characterizeRequest(payload: CharacterizationCreate) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.CHARACTERIZE_REQUEST}`,
+      payload,
+      { headers }
+    );
+  }
+  downloadRequest(payload: DownloadAttach) {
+    const token = 'Bearer ' + sessionStorage.getItem(SessionStorageItems.SESSION);
+    const headers = new HttpHeaders({
+      'Content-Type': 'application/json',
+      Authorization: token || '',
+    });
+    return this.http.post<BodyResponse<string>>(
+      `${environment.API_PUBLIC}${EndPointRoute.DOWNLOAD_ATTACH}`,
+      payload,
       { headers }
     );
   }

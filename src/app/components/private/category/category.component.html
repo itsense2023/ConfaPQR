@@ -6,12 +6,12 @@
     <p-button label="Crear nueva" (click)="createModality()"></p-button>
   </div>
 </div>
-<div class="row">
+<div class="row mt-auto">
   <div class="col-12">
     <p-table
       [value]="categoryList"
       [scrollable]="true"
-      scrollHeight="400px"
+      scrollHeight="500px"
       [virtualScroll]="true"
       [virtualScrollItemSize]="80"
       selectionMode="single"
@@ -23,25 +23,26 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th pSortableColumn="category_id" style="width: 5%">
+          <th pSortableColumn="category_id" style="width: 3%">
             Código<p-sortIcon field="category_id"></p-sortIcon>
           </th>
           <th style="width: 10%">Categoría</th>
-          <th style="width: 25%">Tipología</th>
-          <th style="width: 35%">Causa y/o Subtipología</th>
-          <th style="width: 2%">Modalidad</th>
+          <th style="width: 20%; max-width: 50px">Tipología</th>
+          <th style="width: 34%">Causa y/o Subtipología</th>
+          <th style="width: 20%">Modalidad</th>
           <th style="width: 10%">Estado</th>
-          <th style="width: 23%"></th>
+          <th style="width: 3%"></th>
+          <th style="width: 3%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-categoryList>
         <tr>
           <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_id }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.category_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.tipology_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.cause_name }}</td>
-          <td [ngStyle]="{ 'text-align': 'center' }">{{ categoryList.modality_name }}</td>
-          <td class="d-flex">
+          <td>{{ categoryList.category_name }}</td>
+          <td>{{ categoryList.tipology_name }}</td>
+          <td>{{ categoryList.cause_name }}</td>
+          <td>{{ categoryList.modality_name }}</td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="categoryList.is_active"
               (onChange)="inActiveCategory(categoryList)"></p-inputSwitch>
@@ -51,11 +52,13 @@
               {{ categoryList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
-          <td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
               (click)="editModality(categoryList)"></p-button>
+          </td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-eye"
               [styleClass]="'btn-icon-info'"
@@ -66,13 +69,22 @@
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
   [visible]="visibleDialog"
   [message]="message"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
 
 <app-modal-category
   *ngIf="visibleDialogCategory"

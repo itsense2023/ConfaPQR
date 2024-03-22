@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { CategoryList, ModalityList } from '../../../models/users.interface';
 import { Users } from '../../../services/users.service';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
@@ -19,32 +19,37 @@ export class ModalCategoryComponent implements OnInit {
   @Input() categoryForm?: CategoryList;
   @Output() setRta = new EventEmitter<boolean>();
   @Output() setRtaParameter = new EventEmitter<CategoryList>();
+
   inputValue: string[] = [''];
   modalityList!: ModalityList[];
+
+  //formGroup: FormGroup;
+
   constructor(
-    private formBuilder: FormBuilder,
-    private userService: Users
+    private userService: Users,
+    private formBuilder: FormBuilder
   ) {
-    this.formGroup = this.formBuilder.group({
-      category_id: ['', Validators.required],
-      category_name: ['', Validators.required],
-      tipology_name: ['', Validators.required],
-      cause_name: ['', Validators.required],
-      modality_id: ['', Validators.required],
+    this.formGroup = new FormGroup({
+      category_id: new FormControl(null, [Validators.required]),
+      category_name: new FormControl(null, [Validators.required]),
+      tipology_name: new FormControl(null, [Validators.required]),
+      cause_name: new FormControl(null),
+      modality_id: new FormControl(null, [Validators.required]),
     });
   }
   ngOnInit(): void {
     console.log(this.read_only);
     this.getModalityTable();
+    console.log(this.categoryForm);
     if (this.buttonmsg !== 'Crear' && this.categoryForm) {
-      this.categoryForm.modality_id = 2;
-      console.log('categoryForm:', this.categoryForm);
-      //this.formGroup.get('modality_id')!.setValue(2);
-      //console.log('modality_id:', this.formGroup.get('modality_id')!.value);
       this.formGroup.patchValue(this.categoryForm);
     } else {
       this.formGroup.reset();
     }
+    this.formGroup.get('category_id')?.addValidators(Validators.pattern('^[0-9]+$'));
+    this.formGroup.get('category_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
+    this.formGroup.get('tipology_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
+    this.formGroup.get('cause_name')?.addValidators(Validators.pattern('^[^#$%&]+$'));
   }
 
   formGroup: FormGroup<any> = new FormGroup<any>({});
@@ -55,10 +60,7 @@ export class ModalCategoryComponent implements OnInit {
     this.userService.getModalityList().subscribe({
       next: (response: BodyResponse<ModalityList[]>) => {
         if (response.code === 200) {
-          this.modalityList = response.data;
-          this.modalityList.forEach(item => {
-            item.is_active = item.is_active === 1 ? true : false;
-          });
+          this.modalityList = response.data.filter(obj => obj.is_active !== 0);
         } else {
         }
       },
@@ -70,6 +72,7 @@ export class ModalCategoryComponent implements OnInit {
       },
     });
   }
+
   closeDialog(value: boolean) {
     this.setRta.emit(value);
     const payload: CategoryList = {
@@ -77,7 +80,7 @@ export class ModalCategoryComponent implements OnInit {
       category_name: this.formGroup.controls['category_name'].value,
       tipology_name: this.formGroup.controls['tipology_name'].value,
       cause_name: this.formGroup.controls['cause_name'].value,
-      modality_id: this.formGroup.controls['modality_name'].value, //['modality_id'],
+      modality_id: this.formGroup.controls['modality_id'].value,
     };
     console.log(payload);
     this.setRtaParameter.emit(payload);

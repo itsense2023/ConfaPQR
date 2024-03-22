@@ -239,3 +239,21 @@
   text-align: center;
   line-height: 30px;
 }
+
+.custom-button {
+  width: 100%;
+  padding: 5px;
+  color: white;
+  background-color: $color-yellow-green;
+  border: none;
+  font-family: $font-medium;
+  &:hover {
+    background-color: lighten($color-yellow-green, 10%);
+    box-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+  }
+
+  &:active {
+    background-color: darken($color-yellow-green, 10%); /* Cambia el color al hacer clic */
+    box-shadow: none; /* Elimina la sombra al hacer clic */
+  }
+}

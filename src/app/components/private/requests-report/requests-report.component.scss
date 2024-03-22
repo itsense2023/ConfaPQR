@@ -1,0 +1,26 @@
+:host {
+  ::ng-deep .p-calendar .p-calendar-w-btn {
+    width: 100%;
+  }
+}
+.custom-calendar {
+    position: relative;
+    z-index: 1;
+  }
+  
+  .absolute-center {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 2;
+    width: 100%;
+  }
+
+  .label-select {
+    width: 100%;
+  }
+
+  .calendar {
+    width: 100%;
+  }

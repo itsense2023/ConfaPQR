@@ -30,17 +30,27 @@
              
           ],
           "perfilLinks":[
-             {
-                "modulo_id":"184",
-                "moduloNombre":"Configurar notificaciones",
-                "nombre":"Configurar notificaciones",
-                "url":"/configure-notifications",
-                "estado":true,
-                "usuarioLinks":[
-                   
-                ]
-             },
-             {
+            {
+               "modulo_id":"184",
+               "moduloNombre":"Configurar notificaciones",
+               "nombre":"Configurar notificaciones",
+               "url":"/configure_notifications",
+               "estado":true,
+               "usuarioLinks":[
+                  
+               ]
+            },
+            {
+               "modulo_id":"184",
+               "moduloNombre":"Parametrizar responsables",
+               "nombre":"Parametrizar responsables",
+               "url":"/request_manager",
+               "estado":true,
+               "usuarioLinks":[
+                  
+               ]
+            },
+            {
                 "modulo_id":"184",
                 "moduloNombre":"Parametrizar solicitantes, solicitudes y asociados",
                 "nombre":"Parametrizar solicitantes, solicitudes y asociados",
@@ -51,33 +61,46 @@
                       "modulo_id":"184",
                       "moduloNombre":"Tipo solicitante",
                       "nombre":"Tipo solicitante",
-                      "url":"/applicant-type",
+                      "url":"/applicant_type",
                       "estado":true
                    },
                    {
                       "modulo_id":"184",
                       "moduloNombre":"Tipo solicitud",
                       "nombre":"Tipo solicitud",
-                      "url":"/request-type",
+                      "url":"/request_type",
                       "estado":true
                    },
                    {
                       "modulo_id":"184",
                       "moduloNombre":"Asociar tipos de solicitud de un solicitante",
                       "nombre":"Asociar tipos de solicitud de un solicitante",
-                      "url":"/applicant-request-association",
+                      "url":"/applicant_request_association",
                       "estado":true
                    }
                 ]
              },
              {
                 "modulo_id":"184",
-                "moduloNombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
-                "nombre":"Parametrizar modalidad de solicitud, categoria, Tipología y causa asociada",
-                "url":"/modality",
+                "moduloNombre":"Parametrizar modalidad y categoria",
+                "nombre":"Parametrizar modalidad y categoria",
+                "url":"/",
                 "estado":true,
                 "perfilLinks":[
-                   
+                  {
+                     "modulo_id":"184",
+                     "moduloNombre":"Modalidad",
+                     "nombre":"Modalidad",
+                     "url":"/modality",
+                     "estado":true
+                  },
+                  {
+                     "modulo_id":"184",
+                     "moduloNombre":"Categoría",
+                     "nombre":"Categoría",
+                     "url":"/category",
+                     "estado":true
+                  }
                 ]
              }
           ]
@@ -86,7 +109,7 @@
           "modulo_id":"184",
           "moduloNombre":"Consultar solicitudes",
           "nombre":"Consultar solicitudes",
-          "url":"/search-requests",
+          "url":"/search_requests",
           "estado":true,
           "usuarioLinks":[
              
@@ -94,6 +117,19 @@
           "perfilLinks":[
              
           ]
-       }
+       },
+       {
+         "modulo_id":"184",
+         "moduloNombre":"Generar Reporte",
+         "nombre":"Generar Reporte",
+         "url":"/request_report",
+         "estado":true,
+         "usuarioLinks":[
+            
+         ],
+         "perfilLinks":[
+            
+         ]
+      }
     ]
  }

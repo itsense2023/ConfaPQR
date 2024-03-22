@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BodyResponse, ZionResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { UserList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-request-manager',
@@ -19,21 +20,24 @@ export class RequestManagerComponent implements OnInit {
   message = '';
   parameter = [''];
   buttonmsg = '';
-  twoFields = false;
+  oneField = false;
   user_details!: UserList;
   enableAction: boolean = false;
   enableDelete: boolean = false;
   informative: boolean = false;
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     //this.data = this.generateTestData(10);
     this.getUsersTable();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getUsersTable() {
     this.userService.getUsersList().subscribe({
       next: (response: BodyResponse<UserList[]>) => {
@@ -43,7 +47,7 @@ export class RequestManagerComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
-          console.log(this.userList);
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -70,14 +74,21 @@ export class RequestManagerComponent implements OnInit {
     this.userService.inactivateUser(user_details).subscribe({
       next: (response: BodyResponse<UserList[]>) => {
         if (response.code === 200) {
-          this.ngOnInit();
+          this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
         } else {
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+          if ((this.user_details.is_active = 1)) {
+            this.user_details.is_active = 0;
+          } else {
+            this.user_details.is_active = 1;
+          }
         }
       },
       error: (err: any) => {
         console.log(err);
       },
       complete: () => {
+        this.ngOnInit();
         console.log('La suscripción ha sido completada.');
       },
     });
@@ -88,6 +99,7 @@ export class RequestManagerComponent implements OnInit {
     user_details.is_visible = 0;
     this.user_details = user_details;
     this.enableDelete = true;
+    this.informative = false;
   }
   generateTestData = (count: number): IRequestManager[] => {
     const testData: IRequestManager[] = [];
@@ -101,35 +113,36 @@ export class RequestManagerComponent implements OnInit {
     }
     return testData;
   };
-
   closeDialog(value: boolean) {
+    console.log(value);
     this.visibleDialog = false;
-    if (this.informative) {
+    if (this.informative || !value) {
       return;
-    } else if (!this.enableDelete) {
+    } else if (this.enableDelete) {
       this.userService.invisibleUser(this.user_details).subscribe({
         next: (response: BodyResponse<UserList[]>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
             this.userList = response.data;
           } else {
-            console.log(this.userList);
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
   createUser() {
     this.visibleDialogInput = true;
     this.buttonmsg = 'Crear';
-    this.twoFields = false;
-    this.parameter = ['Crear Responsable', 'Escriba nombre'];
+    this.oneField = true;
+    this.parameter = ['Crear Responsable', 'Escriba usuario de red'];
     this.message = 'Crear Responsable';
     this.informative = true;
   }
@@ -147,7 +160,9 @@ export class RequestManagerComponent implements OnInit {
       this.userService.createUser(payload).subscribe({
         next: (response: BodyResponse<ZionResponse>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
             this.message = response.data.estado;
             this.visibleDialog = true;
           }
@@ -156,10 +171,10 @@ export class RequestManagerComponent implements OnInit {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
     }
-    this.ngOnInit();
   }
 }

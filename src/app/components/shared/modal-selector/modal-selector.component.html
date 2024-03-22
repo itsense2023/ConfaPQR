@@ -18,17 +18,37 @@
             <label>{{ parameter[0] }}</label>
             <p-dropdown
               formControlName="selectedApplicant"
+              (ngModelChange)="updateButtonState()"
               [options]="applicantTypeList"
               optionLabel="applicant_type_name"
               [placeholder]="parameter[0]"></p-dropdown>
+            <label
+              class="invalid"
+              for="document_type"
+              *ngIf="
+                formGroup.get('selectedApplicant')?.touched &&
+                formGroup.get('selectedApplicant')?.hasError('required')
+              ">
+              Campo Requerido</label
+            >
           </div>
           <div class="col-6">
             <label>{{ parameter[1] }}</label>
             <p-dropdown
               formControlName="selectedRequest"
+              (ngModelChange)="updateButtonState()"
               [options]="requestTypeList"
               optionLabel="request_type_name"
               [placeholder]="parameter[1]"></p-dropdown>
+            <label
+              class="invalid"
+              for="document_type"
+              *ngIf="
+                formGroup.get('selectedRequest')?.touched &&
+                formGroup.get('selectedRequest')?.hasError('required')
+              ">
+              Campo Requerido</label
+            >
           </div>
         </div>
       </form>
@@ -36,7 +56,10 @@
         <div class="row my-4 px-5">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
-            <p-button [label]="buttonmsg" (click)="closeDialog(true)"></p-button>
+            <p-button
+              [label]="buttonmsg"
+              [disabled]="isButtonDisabled"
+              (click)="closeDialog(true)"></p-button>
           </div>
         </div>
       </div>

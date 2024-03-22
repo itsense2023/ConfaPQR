@@ -23,15 +23,21 @@
       [rowsPerPageOptions]="[5, 10, 20]">
       <ng-template pTemplate="header">
         <tr>
-          <th style="width: 35%">Nombre de tipo de solicitante</th>
-          <th style="width: 15%">Estado</th>
+          <th pSortableColumn="applicant_type_name" style="width: 35%">
+            Nombre de tipo de solicitante<p-sortIcon field="applicant_type_name"></p-sortIcon>
+          </th>
+          <th pSortableColumn="is_active" style="width: 15%">
+            Estado<p-sortIcon field="is_active"></p-sortIcon>
+          </th>
           <th style="width: 15%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-applicantTypeList>
         <tr>
-          <td>{{ applicantTypeList.applicant_type_name }}</td>
-          <td class="d-flex">
+          <td>
+            {{ applicantTypeList.applicant_type_name }}
+          </td>
+          <td class="d-flex" [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="applicantTypeList.is_active"
               (onChange)="inActiveApplicant(applicantTypeList)"></p-inputSwitch>
@@ -41,7 +47,7 @@
               {{ applicantTypeList.is_active ? 'Activo' : 'Inactivo' }}
             </div>
           </td>
-          <td>
+          <td [ngStyle]="{ 'text-align': 'center' }">
             <p-button
               icon="pi pi-pencil"
               [styleClass]="'btn-icon-warning'"
@@ -52,7 +58,7 @@
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
@@ -68,6 +74,6 @@
   [buttonmsg]="buttonmsg"
   [parameter]="parameter"
   [inputForm]="inputForm"
-  [twoFields]="true"
+  [oneField]="false"
   (setRta)="closeDialogInput($event)"
   (setRtaParameter)="setParameter($event)"></app-modal-input>

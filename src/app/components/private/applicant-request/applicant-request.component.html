@@ -1,6 +1,6 @@
 <div class="row mb-2">
   <div class="col-10">
-    <div class="title-page">Asociar tipos de solicitud a solicitantes</div>
+    <div class="title-page">Asociar tipos de solicitud de un solicitante</div>
   </div>
   <div class="col-2">
     <p-button label="Asociar" (click)="associateRequestsType()"></p-button>
@@ -26,14 +26,17 @@
           <th style="width: 35%">Tipo de solicitante</th>
           <th style="width: 35%">Tipo de solicitudes</th>
           <th style="width: 15%">Estado</th>
-          <th style="width: 15%"></th>
         </tr>
       </ng-template>
       <ng-template pTemplate="body" let-applicantTypeRequestsList>
         <tr>
-          <td>{{ applicantTypeRequestsList.applicant_type_name }}</td>
-          <td>{{ applicantTypeRequestsList.request_type_name }}</td>
-          <td class="d-flex">
+          <td>
+            {{ applicantTypeRequestsList.applicant_type_name }}
+          </td>
+          <td>
+            {{ applicantTypeRequestsList.request_type_name }}
+          </td>
+          <td class="d-flex" [ngStyle]="{ 'text-align': 'center' }">
             <p-inputSwitch
               [(ngModel)]="applicantTypeRequestsList.is_active"
               (onChange)="in_active_association(applicantTypeRequestsList)"></p-inputSwitch>
@@ -48,7 +51,7 @@
     </p-table>
   </div>
 </div>
-
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
@@ -56,6 +59,15 @@
   [message]="message"
   [select]="true"
   (setRta)="closeDialog($event)"></app-modal-dinamic>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
 
 <app-modal-selector
   *ngIf="visibleDialogSelector"

@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Users } from '../../../services/users.service';
 import { ApplicantTypeList } from '../../../models/users.interface';
+import { MessageService } from 'primeng/api';
 
 @Component({
   selector: 'app-applicant-type',
@@ -23,15 +24,19 @@ export class ApplicantTypeComponent implements OnInit {
   inputForm: any[] = [];
   enableCreate: boolean = false;
   enableAction: boolean = false;
+
   constructor(
     private userService: Users,
-    private router: Router
+    private router: Router,
+    private messageService: MessageService
   ) {}
 
   ngOnInit() {
     this.getApplicantTypesList();
   }
-
+  showSuccessMessage(state: string, title: string, message: string) {
+    this.messageService.add({ severity: state, summary: title, detail: message });
+  }
   getApplicantTypesList() {
     this.userService.getApplicantTypesList().subscribe({
       next: (response: BodyResponse<ApplicantTypeList[]>) => {
@@ -41,7 +46,7 @@ export class ApplicantTypeComponent implements OnInit {
             item.is_active = item.is_active === 1 ? true : false;
           });
         } else {
-          console.log(this.applicantTypeList);
+          this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
         }
       },
       error: (err: any) => {
@@ -56,12 +61,12 @@ export class ApplicantTypeComponent implements OnInit {
   inActiveApplicant(applicant_type_details: ApplicantTypeList) {
     if (!applicant_type_details.is_active) {
       console.log('Inactivar');
-      this.message = '¿Seguro que desea Inactivar tipo de solicitante?';
+      this.message = '¿Seguro que desea Inactivar este tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 0;
     } else {
       console.log('Activar');
-      this.message = '¿Seguro que desea Activar tipo de solicitante?';
+      this.message = '¿Seguro que desea Activar este tipo de solicitante?';
       this.visibleDialog = true;
       applicant_type_details.is_active = 1;
     }
@@ -89,7 +94,7 @@ export class ApplicantTypeComponent implements OnInit {
     this.enableCreate = true;
     this.buttonmsg = 'Crear';
     this.parameter = [
-      'tipo de solicitante',
+      'Tipo de solicitante',
       'Escriba nombre',
       'Descripción del solicitante',
       'Escriba descripción',
@@ -103,18 +108,27 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.inactivateApplicant(this.applicant_type_details).subscribe({
         next: (response: BodyResponse<ApplicantTypeList[]>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
+            if ((this.applicant_type_details.is_active = 1)) {
+              this.applicant_type_details.is_active = 0;
+            } else {
+              this.applicant_type_details.is_active = 1;
+            }
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
+    } else {
+      this.ngOnInit();
     }
-    this.ngOnInit();
   }
   closeDialogInput(value: boolean) {
     this.visibleDialogInput = false;
@@ -133,14 +147,16 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.createApplicantType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
-            this.ngOnInit();
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });
@@ -153,13 +169,16 @@ export class ApplicantTypeComponent implements OnInit {
       this.userService.modifyApplicantType(payload).subscribe({
         next: (response: BodyResponse<string>) => {
           if (response.code === 200) {
+            this.showSuccessMessage('success', 'Exitoso', 'Operación exitosa!');
           } else {
+            this.showSuccessMessage('error', 'Fallida', 'Operación fallida!');
           }
         },
         error: (err: any) => {
           console.log(err);
         },
         complete: () => {
+          this.ngOnInit();
           console.log('La suscripción ha sido completada.');
         },
       });

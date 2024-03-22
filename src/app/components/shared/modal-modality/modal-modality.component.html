@@ -17,11 +17,24 @@
           <div class="col-12">
             <label> Código </label>
             <input
-              [readonly]="read_only"
+              [readonly]="this.buttonmsg !== 'Crear' ? true : false"
               formControlName="modality_id"
               pInputText
               pKeyFilter="integer"
               placeholder="000" />
+            <label class="invalid">
+              {{
+                formGroup.get('modality_id')?.hasError('required') &&
+                formGroup.get('modality_id')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('modality_id')?.hasError('pattern') &&
+                formGroup.get('modality_id')?.touched
+                  ? 'Ingrese solo números'
+                  : ''
+              }}</label
+            >
           </div>
           <div class="col-12">
             <label> Nombre de modalidad </label>
@@ -31,6 +44,19 @@
               pInputText
               pKeyFilter="string"
               placeholder="Escriba nombre" />
+            <label class="invalid">
+              {{
+                formGroup.get('modality_name')?.hasError('required') &&
+                formGroup.get('modality_name')?.touched
+                  ? 'Campo requerido'
+                  : ''
+              }}{{
+                formGroup.get('modality_name')?.hasError('pattern') &&
+                formGroup.get('modality_name')?.touched
+                  ? 'Ingrese solo letras'
+                  : ''
+              }}</label
+            >
           </div>
         </div>
       </form>
@@ -45,7 +71,10 @@
         <div class="row my-4 px-5">
           <div class="col-12 d-flex justify-content-evenly">
             <p-button label="Cancelar" severity="secondary" (click)="closeDialog(false)"></p-button>
-            <p-button [label]="buttonmsg" (click)="closeDialog(true)"></p-button>
+            <p-button
+              [label]="buttonmsg"
+              [disabled]="!formGroup.valid"
+              (click)="closeDialog(true)"></p-button>
           </div>
         </div>
       </div>

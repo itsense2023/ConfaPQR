@@ -4,7 +4,7 @@
       <img src="../../../assets/images/logo-blanco.svg" class="header-img" />
     </div>
   </div>
-  <div class="row h-100">
+  <div class="row h-100" style="overflow-y: auto">
     <div class="col-3 pe-0 menu">
       <div>
         <div class="login-form-header">
@@ -24,7 +24,11 @@
             (onNodeSelect)="nodeSelect($event)"
             (onNodeUnselect)="nodeUnselect($event)">
             <ng-template let-node pTemplate="url">
-              <div class="item-label" [ngClass]="{ 'item-label-select': node.expanded === true }">
+              <div
+                class="item-label"
+                [ngClass]="{ 'item-label-select': node.expanded === true }"
+                (click)="redirect(node.data)"
+                class="menuList">
                 {{ node.label }}
               </div>
             </ng-template>

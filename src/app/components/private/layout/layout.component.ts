@@ -15,7 +15,9 @@ export class LayoutComponent implements OnInit {
 
   ngOnInit() {
     const arrayAlmacenado = sessionStorage.getItem(SessionStorageItems.MENU);
-    this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado) : [];
+    //console.log(arrayAlmacenado);
+    //console.log(arrayAlmacenado?.replaceAll('_', '-'));
+    this.nodes = arrayAlmacenado ? JSON.parse(arrayAlmacenado.replaceAll('_', '-')) : [];
   }
 
   onNodeSelect(event: any): void {
@@ -54,5 +56,8 @@ export class LayoutComponent implements OnInit {
   private clearAuthenticationData(): void {
     // Eliminar token u otra información de autenticación del almacenamiento local
     sessionStorage.clear();
+  }
+  redirect(url: string) {
+    this.router.navigate([url]);
   }
 }

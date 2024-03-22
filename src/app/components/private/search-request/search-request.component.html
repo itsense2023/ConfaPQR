@@ -3,176 +3,228 @@
     <div class="title-page">Consultar solicitudes</div>
   </div>
 </div>
-<div class="row">
-  <div class="col-12">
-    <p-table
-      #dt
-      [value]="requestList"
-      [scrollable]="true"
-      scrollHeight="800px"
-      [virtualScroll]="true"
-      [virtualScrollItemSize]="80"
-      selectionMode="single"
-      [(selection)]="selectedRequests"
-      dataKey="id"
-      stateStorage="session"
-      stateKey="statedemo-session"
-      [exportHeader]="'customExportHeader'"
-      [paginator]="true"
-      [rows]="5"
-      [showCurrentPageReport]="true"
-      [tableStyle]="{ 'min-width': '50rem' }"
-      currentPageReportTemplate="{first} de {totalRecords}"
-      [rowsPerPageOptions]="[5, 10, 20]">
-      <ng-template pTemplate="header">
-        <tr>
-          <th pSortableColumn="filing_number" style="width: 3%">
-            Número de radicado<p-sortIcon field="filing_number"></p-sortIcon>
-          </th>
-          <th pSortableColumn="filing_date" style="width: 12%">
-            Fecha de radicación<p-sortIcon field="filing_date"></p-sortIcon>
-          </th>
-          <th pSortableColumn="applicant_type_name" style="width: 10%">
-            Tipo de solicitante<p-sortIcon field="applicant_type_name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="doc_id" style="width: 10%">
-            Número de documento<p-sortIcon field="doc_id"></p-sortIcon>
-          </th>
-          <th pSortableColumn="applicant_name" style="width: 10%">
-            Nombre empresa/Solicitante<p-sortIcon field="applicant_name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="request_type_name" style="width: 10%">
-            Tipo de solicitud<p-sortIcon field="request_type_name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="status_name" style="width: 10%">
-            Estado solicitud<p-sortIcon field="status_name"></p-sortIcon>
-          </th>
-          <th pSortableColumn="request_days" style="width: 10%">
-            Dias solicitud<p-sortIcon field="request_days"></p-sortIcon>
-          </th>
-          <th pSortableColumn="assigned_user" style="width: 10%">
-            Responsable solicitud<p-sortIcon field="assigned_user"></p-sortIcon>
-          </th>
-          <th style="width: 5%"></th>
-          <th style="width: 10%"></th>
-        </tr>
-        <!--<tr>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_number', 'contains')"
-              placeholder="Search by Name"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'filing_date', 'contains')"
-              placeholder="Search by Country"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_type_name', 'contains')"
-              placeholder="Search by Representative"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'doc_id', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'applicant_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_type_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'status_name', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'request_days', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-          <th>
-            <input
-              pInputText
-              type="text"
-              (input)="dt?.filter(($event.target as HTMLInputElement).value, 'assigned_user', 'contains')"
-              placeholder="Search by Status"
-              class="w-full" />
-          </th>
-        </tr>-->
-      </ng-template>
-      <!--<ng-template pTemplate="body" let-requestList let-columns="columns">
-        <tr [pSelectableRow]="requestList">
-          <td *ngFor="let col of columns">
-            {{ requestList[col.field] }}
-          </td>
-      <ng-template pTemplate="body" let-requestList let-columns="columns">
-        <tr [pSelectableRow]="requestList">
-          <td>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
-          </td>
-          <td>
-            <p-button
-              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
-              (click)="assignRequest(requestList)"></p-button>
-          </td>
-        </tr>
-      </ng-template>-->
-      <ng-template pTemplate="body" let-requestList>
-        <tr>
-          <td>{{ requestList.filing_number }}</td>
-          <td>{{ requestList.filing_date }}</td>
-          <td>{{ requestList.applicant_type_name }}</td>
-          <td>{{ requestList.doc_id }}</td>
-          <td>{{ requestList.applicant_name }}</td>
-          <td>{{ requestList.request_type_name }}</td>
-          <td>{{ requestList.status_name }}</td>
-          <td>{{ requestList.request_days }}</td>
-          <td>{{ requestList.assigned_user }}</td>
-          <td>
-            <p-button icon="pi pi-eye" [styleClass]="'btn-icon-info'"></p-button>
-          </td>
-          <td>
-            <p-button
-              [label]="requestList.assigned_user === null ? 'Asignar' : 'Reasignar'"
-              (click)="assignRequest(requestList)"></p-button>
-          </td>
-        </tr>
-      </ng-template>
-    </p-table>
-  </div>
+<div class="mt-auto">
+  <p-table
+    #dt3
+    [value]="requestList"
+    dataKey="id"
+    [rows]="20"
+    [showCurrentPageReport]="true"
+    [rowsPerPageOptions]="[5, 10, 20]"
+    [loading]="loading"
+    [paginator]="true"
+    currentPageReportTemplate="{first} de {totalRecords}"
+    [globalFilterFields]="[
+      'filing_number',
+      'filing_date',
+      'applicant_type_name',
+      'doc_id',
+      'applicant_name',
+      'request_type_name',
+      'status_name',
+      'request_days',
+      'assigned_user'
+    ]"
+    [tableStyle]="{ 'min-width': '60rem' }"
+    [scrollable]="true"
+    scrollHeight="500px"
+    [virtualScroll]="true"
+    [virtualScrollItemSize]="80"
+    selectionMode="single"
+    [(selection)]="selectedRequests"
+    stateStorage="session"
+    stateKey="statedemo-session"
+    [exportHeader]="'customExportHeader'">
+    <ng-template pTemplate="header">
+      <tr>
+        <th pSortableColumn="filing_number" style="width: 3%">
+          Número de radicado<p-sortIcon field="filing_number"></p-sortIcon>
+        </th>
+        <th pSortableColumn="filing_date" style="min-width: 15rem">
+          Fecha de radicación<p-sortIcon field="filing_date"></p-sortIcon>
+        </th>
+        <th pSortableColumn="applicant_type_name" style="min-width: 15rem">
+          Tipo de solicitante<p-sortIcon field="applicant_type_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="doc_id" style="min-width: 15rem">
+          Número de documento<p-sortIcon style="margin: 0 5px" field="doc_id"></p-sortIcon>
+        </th>
+        <th pSortableColumn="applicant_name" style="min-width: 15rem">
+          Nombre empresa/Solicitante<p-sortIcon field="applicant_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="request_type_name" style="min-width: 15rem">
+          Tipo de solicitud<p-sortIcon field="request_type_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="status_name" style="min-width: 15rem">
+          Estado solicitud<p-sortIcon field="status_name"></p-sortIcon>
+        </th>
+        <th pSortableColumn="request_days" style="min-width: 15rem">
+          Días solicitud<p-sortIcon field="request_days"></p-sortIcon>
+        </th>
+        <th pSortableColumn="assigned_user" style="min-width: 15rem">
+          Responsable solicitud<p-sortIcon field="assigned_user"></p-sortIcon>
+        </th>
+        <th style="width: 5%"></th>
+        <th style="width: 10%"></th>
+      </tr>
+      <tr>
+        <th>
+          <p-columnFilter style="width: 206px" type="text" field="filing_number"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            type="date"
+            field="filing_date_date"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            field="applicant_type_name"
+            matchMode="in"
+            [showMenu]="false">
+            <ng-template pTemplate="filter" let-applicant_type_name let-filter="filterCallback">
+              <p-multiSelect
+                [style]="{ heigth: '30px' }"
+                [options]="aplicantList"
+                (onChange)="filter($event.value)"
+                [ngModel]="applicant_type_name"
+                optionLabel="applicant_type_name"
+                optionValue="applicant_type_name"
+                placeholder="Seleccione">
+                <ng-template let-option pTemplate="item">
+                  <div class="inline-block vertical-align-middle">
+                    <span class="ml-1 mt-1">{{ option.applicant_type_name }}</span>
+                  </div>
+                </ng-template>
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter style="width: 206px" type="text" field="doc_id"></p-columnFilter>
+        </th>
+        <th class="custom-width">
+          <p-columnFilter style="width: 206px" type="text" field="applicant_name"></p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            [showMenu]="false"
+            field="request_type_name"
+            matchMode="in">
+            <ng-template pTemplate="filter" let-request_type_name let-filter="filterCallback">
+              <p-multiSelect
+                [style]="{ heigth: '30px' }"
+                [options]="requestTypeList"
+                (onChange)="filter($event.value)"
+                optionValue="request_type_name"
+                [ngModel]="request_type_name"
+                optionLabel="request_type_name"
+                placeholder="Seleccione">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            field="status_name"
+            matchMode="in"
+            [showMenu]="false">
+            <ng-template pTemplate="filter" let-selectedStatusOptions let-filter="filterCallback">
+              <p-multiSelect
+                (onChange)="filter($event.value)"
+                [style]="{ heigth: '30px' }"
+                [options]="statusOptions"
+                [ngModel]="selectedStatusOptions"
+                placeholder="Seleccione"
+                [showClear]="true">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            field="request_days"
+            matchMode="in"
+            [showMenu]="false">
+            <ng-template pTemplate="filter" let-selectedDaysOptions let-filter="filterCallback">
+              <p-multiSelect
+                (onChange)="filter($event.value)"
+                [style]="{ heigth: '30px' }"
+                [options]="daysOption"
+                [ngModel]="selectedDaysOptions"
+                placeholder="Seleccione"
+                [showClear]="true">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th>
+          <p-columnFilter
+            style="width: 206px"
+            field="assigned_user"
+            matchMode="in"
+            [showMenu]="false">
+            <ng-template pTemplate="filter" let-user_name let-filter="filterCallback">
+              <p-multiSelect
+                (onChange)="filter($event.value)"
+                [style]="{ heigth: '30px' }"
+                [options]="userList"
+                [ngModel]="user_name"
+                optionLabel="user_name"
+                optionValue="user_name"
+                placeholder="Seleccione"
+                [showClear]="true">
+              </p-multiSelect>
+            </ng-template>
+          </p-columnFilter>
+        </th>
+        <th style="width: 5%"></th>
+        <th style="width: 10%"></th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-requestList>
+      <tr>
+        <td>{{ requestList.filing_number }}</td>
+        <td>{{ requestList.filing_date_date | date }}</td>
+        <td>{{ requestList.applicant_type_name }}</td>
+        <td>{{ requestList.doc_id }}</td>
+        <td>{{ requestList.applicant_name }}</td>
+        <td>{{ requestList.request_type_name }}</td>
+        <td>{{ requestList.status_name }}</td>
+        <td>
+          <span
+            class="circle"
+            style="--circle-color: var(--color-{{ requestList.request_days }});"></span>
+          {{ requestList.request_days }} día(s) hábiles
+        </td>
+        <td>{{ requestList.assigned_user }}</td>
+        <td>
+          <p-button
+            icon="pi pi-eye"
+            [styleClass]="'btn-icon-info'"
+            (click)="redirectDetails(requestList.request_id)"></p-button>
+        </td>
+        <td>
+          <div *ngIf="requestList.status_name !== 'Cerrada'">
+            <button class="custom-button" (click)="assignRequest(requestList)">
+              {{
+                requestList.assigned_user === null || requestList.assigned_user === ''
+                  ? 'Asignar'
+                  : 'Reasignar'
+              }}
+            </button>
+          </div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
 </div>
 
+<p-toast></p-toast>
 <app-modal-dinamic
   *ngIf="visibleDialog"
   [select]="true"
@@ -188,3 +240,13 @@
   [parameter]="parameter"
   (setRta)="closeDialogInput($event)"
   (setRtaParameter)="setParameter($event)"></app-modal-assign-selector>
+
+<app-modal-alert
+  *ngIf="visibleDialogAlert"
+  [select]="true"
+  [visible]="visibleDialogAlert"
+  [message]="message"
+  [message2]="message2"
+  [informative]="informative"
+  [severity]="severity"
+  (setRta)="closeDialogAlert($event)"></app-modal-alert>
