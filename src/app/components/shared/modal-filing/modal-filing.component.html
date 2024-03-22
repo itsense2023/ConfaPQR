@@ -1,38 +1,46 @@
 <p-dialog [(visible)]="visible" [style]="{ width: '30vw' }" [modal]="true">
+  <!--<p-dialog [(visible)]="visible" [style]="{ width: '30vw', height: '30vh' }" [modal]="true">-->
   <ng-template pTemplate="headless">
     <div class="modal-content">
       <div class="row">
-        <div class="login-form-logo d-flex justify-content-center my-4">
+        <div class="login-form-logo d-flex justify-content-center">
           <img src="../../../assets/images/logo-login.svg" class="login-form-logo__img" />
         </div>
       </div>
+      <div
+        class="row"
+        class="login-form-logo-check d-flex justify-content-center align-items-center"
+        style="height: 50%">
+        <img src="../../../assets/images/check_button.png" class="login-form-logo__img" />
+      </div>
       <div class="modal-blue">
         <div *ngIf="requestCreation">
-          <div class="row my-4 px-5">
+          <div class="row px-5">
             <div class="col-12 text-center" style="font-size: 24px">
               Su solicitud ha sido enviada exitosamente
             </div>
           </div>
-          <div class="row my-4 px-5">
+          <div class="row px-5">
             <div class="col-12 text-center">
               <span>Número de radicado: </span>
               <span class="filing-number">{{ message }}</span>
             </div>
           </div>
-          <div class="row my-4 px-5">
+          <div class="row px-5">
             <div class="col-12 text-center" style="font-size: 12px">
               Hemos enviado una notificación relacionada con su solicitud al correo electrónico que
               ha registrado con nosotros.
             </div>
           </div>
-          <div class="row my-4 px-5">
+          <div class="row px-5">
             <div class="col-12 text-center">
               <p-button
                 type="button"
                 [style]="{
                   'border-radius': '20px',
                   'background-color': '#f3f3f3',
-                  color: '#4face9'
+                  color: '#4face9',
+                  width: '70%'
                 }"
                 label="cerrar"
                 [severity]="severity"

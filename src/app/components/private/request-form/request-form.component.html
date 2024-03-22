@@ -5,7 +5,7 @@
     </h3>
   </div>-->
   <p-card class="card-form">
-    <div class="card-form-banner">
+    <div class="card-form-banner" [style]="{ width: '46%' }">
       <h4 class="card-form-banner-title">Ingresa aquí tu solicitud</h4>
     </div>
 
@@ -245,6 +245,7 @@
     [disabled]="requestForm.invalid"
     (click)="sendRequest()"
     class="card-form-button"></p-button>
+  <p-button (onClick)="testButtton()" class="container-button"></p-button>
 </p-card>
 <p-toast></p-toast>
 <!--<app-modal-alert

@@ -1,7 +1,7 @@
-import { Component, OnChanges, SimpleChanges } from '@angular/core';
+import { Component } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Users } from '../../../services/users.service';
-import { ApplicantTypeList, RequestTypeList, RequestsList } from '../../../models/users.interface';
+import { ApplicantTypeList, RequestTypeList } from '../../../models/users.interface';
 import { BodyResponse } from '../../../models/shared/body-response.inteface';
 import { Router } from '@angular/router';
 import { RoutesApp } from '../../../enums/routes.enum';
